@@ -1,3 +1,17 @@
+# IntelliJ
+.idea/
+build/
+out/
+
+# Gradle
+.gradle/
+
+# Report
+target/
+
+# Log4J
+log/
+
 # Compiled class file
 *.class
 
