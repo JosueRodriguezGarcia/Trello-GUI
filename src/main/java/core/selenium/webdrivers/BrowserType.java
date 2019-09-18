@@ -1,5 +1,5 @@
 /*
- * @(#) IBrowser.java Copyright (c) 2019 Jala Foundation.
+ * @(#) BrowserType.java Copyright (c) 2019 Jala Foundation.
  * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
@@ -11,16 +11,14 @@
  */
 package core.selenium.webdrivers;
 
-import org.openqa.selenium.WebDriver;
-
 /**
- * This interface is used for defines the behavior of the browsers.
+ * This enum defines the browser Types.
+ *
+ * @author Josue Rodriguez Garcia.
+ * @version 0.0.1
  */
-public interface IBrowser {
-    /**
-     * This method defines the behavior for browser.
-     *
-     * @return a IBrowser
-     */
-    WebDriver initDriver();
+public enum BrowserType {
+    CHROME,
+    FIREFOX,
+    EDGE
 }

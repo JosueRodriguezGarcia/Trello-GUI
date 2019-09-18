@@ -1,4 +1,4 @@
-package trello;
+package trello.hooks;
 
 public class Hooks {
 }
