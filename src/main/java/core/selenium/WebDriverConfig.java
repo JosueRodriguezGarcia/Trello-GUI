@@ -19,7 +19,7 @@ import java.util.Properties;
 /**
  * This class reads the gradle.properties file.
  *
- * @author Josue Rodriguez Garcia.
+ * @author Josue Rodriguez Garcia
  * @version 0.0.1
  */
 public final class WebDriverConfig {
