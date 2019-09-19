@@ -27,7 +27,7 @@ import static core.selenium.webdrivers.BrowserType.FIREFOX;
 /**
  * This class implements the logic for select a browser.
  *
- * @author Josue Rodriguez Garcia.
+ * @author Josue Rodriguez Garcia
  * @version 0.0.1
  */
 public class WebDriverFactory {

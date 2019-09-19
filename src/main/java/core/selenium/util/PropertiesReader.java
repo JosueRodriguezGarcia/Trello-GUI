@@ -22,9 +22,16 @@ import java.util.Properties;
  * PropertiesReader class is used to read properties files.
  *
  * @author Melissa Román
- * @version 1.0
+ * @version 0.0.1
  */
-public abstract class PropertiesReader {
+public final class PropertiesReader {
+
+    /**
+     * Private constructor requested by checkstyle.
+     */
+    private PropertiesReader() {
+
+    }
 
     /**
      * Allows to get properties from properties file.

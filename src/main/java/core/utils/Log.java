@@ -19,7 +19,7 @@ import org.apache.log4j.PropertyConfigurator;
  * Log class is used to log as singleton.
  *
  * @author Melissa Román
- * @version 1.0
+ * @version 0.0.1
  */
 public final class Log {
     private static Logger logger = Logger.getLogger(Log.class);

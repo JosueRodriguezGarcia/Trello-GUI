@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * This class is uses for create a instance of Browser.
  *
- * @author Josue Rodriguez Garcia.
+ * @author Josue Rodriguez Garcia
  * @version 0.0.1
  */
 public final class WebDriverManager {

@@ -23,9 +23,16 @@ import java.util.List;
  * ReportGenerator class is in charge of generate the test utils.
  *
  * @author Melissa Román
- * @version 1.0
+ * @version 0.0.1
  */
-public abstract class ReportGenerator {
+public final class ReportGenerator {
+
+    /**
+     * Private constructor requested by checkstyle.
+     */
+    private ReportGenerator() {
+
+    }
 
     /**
      * Sets up and creates the cucumber report.
