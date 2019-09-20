@@ -10,13 +10,26 @@
  * with Jala Foundation.
  */
 
-package trello.hooks;
+package core.selenium.util;
+
+import org.openqa.selenium.WebElement;
 
 /**
- * Key class.
+ * WebDriverMethod class.
  *
  * @author Raul Choque
  * @version 0.0.1
  */
-public class Hooks {
+public class WebDriverMethod {
+
+    /**
+     * Sets text in the WebElement object.
+     *
+     * @param webElement to set its text.
+     * @param text is the new value to send in sendKeys parameter.
+     */
+    public static void setTxtElement(final WebElement webElement, final String text) {
+        webElement.clear();
+        webElement.sendKeys(text);
+    }
 }
