@@ -3,13 +3,15 @@
     {
       "admin": {
         "username": "put your username",
-        "password": "put your password"
+        "password": "put your password",
+        "fullName": "put your full name"
       }
     },
     {
       "invited": {
         "username": "put your username",
-        "password": "put your password"
+        "password": "put your password",
+        "fullName": "put your full name"
       }
     }
   ]

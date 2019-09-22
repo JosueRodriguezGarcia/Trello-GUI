@@ -12,9 +12,15 @@
 
 package trello.steps;
 
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.testng.Assert;
+import trello.entities.Context;
+import trello.entities.User;
+import trello.keys.NamePages;
+import trello.ui.PageTransporter;
+import trello.ui.pages.HomePage;
+import trello.ui.pages.LoginPage;
 
 /**
  * LoginSteps class.
@@ -24,15 +30,45 @@ import cucumber.api.java.en.When;
  */
 public class LoginSteps {
 
-    @Given("I am in the trello page")
-    public void i_am_in_the_trello_page() {
+    private Context context;
+    private User user;
+    private LoginPage loginPage;
+    private HomePage homePage;
+    private NamePages namePages;
+
+    /**
+     * Constructor method for share states between objects.
+     *
+     * @param context has all share entities.
+     */
+    public LoginSteps(final Context context) {
+        this.context = context;
+        this.user = context.getUser();
     }
 
-    @When("I go to the {string} page")
-    public void i_go_to_the_page(String string) {
+
+    /**
+     * Logs in as user type.
+     *
+     * @param userType use to select a user.
+     */
+    @When("I log in as {string} user")
+    public void loginAsUser(final String userType) {
+        user.initialize(userType);
+        namePages = new NamePages(context);
+        PageTransporter.navigateToURL(namePages.getLoginPage());
+        loginPage = new LoginPage();
+        loginPage.login(user);
     }
 
+    /**
+     * Sees the initial of full name of user in HomePage.
+     */
     @Then("I should see the initial user's full name")
-    public void i_should_see_the_initial_user_s_full_name() {
+    public void seeInitialUserFullName() {
+        PageTransporter.navigateToURL(namePages.getHomePage());
+        homePage = new HomePage();
+        Assert.assertEquals(homePage.getInitialFullName(), user.getInitialFullName(),
+                "This is not the user's page.");
     }
 }

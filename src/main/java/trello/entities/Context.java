@@ -19,4 +19,32 @@ package trello.entities;
  * @version 0.0.1
  */
 public class Context {
+
+    private User user;
+    private Board board;
+
+    /**
+     * Method constructor of Context class.
+     */
+    public Context() {
+        user = new User();
+    }
+
+    /**
+     * Gets User attribute of its class.
+     *
+     * @return the User attribute.
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Gets Board attribute of its class.
+     *
+     * @return the Board attribute.
+     */
+    public Board getBoard() {
+        return board;
+    }
 }

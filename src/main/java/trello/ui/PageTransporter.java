@@ -23,18 +23,16 @@ import org.openqa.selenium.WebDriver;
  */
 public class PageTransporter {
 
-    private static final String BASE_URL = "https://app.pipefy.com";
 
     /**
      * Navigate to URL use and and point.
      *
-     * @param endPoint use to complete the uri.
+     * @param namePage use to complete the uri.
      */
-    private static void navigateToURL(final String endPoint) {
+    public static void navigateToURL(final String namePage) {
         try {
-            String uri = BASE_URL + endPoint;
             WebDriver driver = WebDriverManager.getInstance().getWebDriver();
-            driver.navigate().to(uri);
+            driver.navigate().to(namePage);
         } catch (NullPointerException ex) {
             ex.printStackTrace();
             throw new NullPointerException("This url is not valid :" + ex.getMessage());

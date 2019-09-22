@@ -12,11 +12,11 @@
 
 package trello.ui.pages;
 
-import core.selenium.util.ReadJsonFile;
 import core.selenium.util.WebDriverMethod;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import trello.entities.User;
 
 /**
  * LoginPage class.
@@ -62,13 +62,13 @@ public class LoginPage extends BasePage {
 
 
     /**
-     * LogIn with username and password parameter.
+     * Login with username and password parameter from user.
      *
-     * @param userType use to search the userTyper.
+     * @param user use to get user's attribute.
      */
-    public void login(final String userType) {
-        writeInUsername(ReadJsonFile.getInstance(userType).getUsername());
-        writeInPassword(ReadJsonFile.getInstance(userType).getPassword());
+    public void login(final User user) {
+        writeInUsername(user.getUsername());
+        writeInPassword(user.getPassword());
         clickSubmit();
     }
 
