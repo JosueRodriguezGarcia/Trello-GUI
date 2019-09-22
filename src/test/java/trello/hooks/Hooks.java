@@ -13,7 +13,7 @@
 package trello.hooks;
 
 /**
- * Key class.
+ * Hooks class.
  *
  * @author Raul Choque
  * @version 0.0.1

@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "admin": {
+        "username": "put your username",
+        "password": "put your password"
+      }
+    },
+    {
+      "invited": {
+        "username": "put your username",
+        "password": "put your password"
+      }
+    }
+  ]
+}

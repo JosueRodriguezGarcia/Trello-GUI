@@ -26,14 +26,13 @@ import java.io.FileReader;
  * @version 0.0.1
  */
 public final class ReadJsonFile {
+
     private static ReadJsonFile readJsonFile;
     private JsonArray account;
     private JsonObject user;
 
     /**
      * Constructor of ReadJsonFile class.
-     *
-     * @throws NullPointerException
      */
     private ReadJsonFile() {
         try {
@@ -42,7 +41,7 @@ public final class ReadJsonFile {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
             account  = jsonObject.getAsJsonArray("users");
         } catch (FileNotFoundException fe) {
-            throw new RuntimeException(fe);
+            throw new RuntimeException("This file's path not exist" + fe);
         }
     }
 
@@ -79,20 +78,11 @@ public final class ReadJsonFile {
     }
 
     /**
-     * Gets organization name of file json.
-     *
-     * @return as string organization name of a user.
-     */
-    public String getOrganizationName() {
-        return user.get("organizationname").getAsString();
-    }
-
-    /**
      * Searches a user type of JsonArray.
      *
      * @param userType use to search a userType.
      */
-    public void searchUserType(final String userType) {
+    private void searchUserType(final String userType) {
         for (Object object: account) {
             JsonObject dataAccount = (JsonObject) object;
             if (dataAccount.has(userType)) {
