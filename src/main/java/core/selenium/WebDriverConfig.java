@@ -17,10 +17,7 @@ import core.selenium.webdrivers.BrowserType;
 import java.util.Properties;
 
 import static trello.keys.Constants.BROWSER_NAME;
-import static trello.keys.Constants.EXPLICIT_WAIT;
-import static trello.keys.Constants.IMPLICIT_WAIT;
 import static trello.keys.Constants.PATH_GRADLE_PROPERTIES_FILE;
-import static trello.keys.Constants.SLEEP_TIME;
 
 /**
  * This class reads the gradle.properties file.
@@ -38,7 +35,6 @@ public final class WebDriverConfig {
      */
     private WebDriverConfig() {
         initializes();
-
     }
 
     /**
@@ -75,7 +71,7 @@ public final class WebDriverConfig {
      * @return a implicitly wait.
      */
     public long getImplicitlyWaitTime() {
-        return Long.parseLong(properties.getProperty(IMPLICIT_WAIT));
+        return Long.parseLong(properties.getProperty("implicitWait"));
     }
 
     /**
@@ -84,7 +80,7 @@ public final class WebDriverConfig {
      * @return a explicitly wait.
      */
     public long getExplicitlWaitTime() {
-        return Long.parseLong(properties.getProperty(EXPLICIT_WAIT));
+        return Long.parseLong(properties.getProperty("explicitWait"));
     }
 
     /**
@@ -93,6 +89,6 @@ public final class WebDriverConfig {
      * @return a explicitly wait.
      */
     public long getSleepWait() {
-        return Long.parseLong(properties.getProperty(SLEEP_TIME));
+        return Long.parseLong(properties.getProperty("sleepTime"));
     }
 }

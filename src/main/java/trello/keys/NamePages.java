@@ -12,13 +12,8 @@
 
 package trello.keys;
 
-import core.selenium.util.PropertiesReader;
 import trello.entities.Context;
 import trello.entities.User;
-
-import static trello.keys.Constants.BASE_URL;
-import static trello.keys.Constants.NAME_LOGIN;
-import static trello.keys.Constants.PATH_GRADLE_PROPERTIES_FILE;
 
 /**
  * NamePages class.
@@ -29,8 +24,7 @@ import static trello.keys.Constants.PATH_GRADLE_PROPERTIES_FILE;
 public class NamePages {
 
     private User user;
-    private String baseUrl = PropertiesReader.
-            getProperties(PATH_GRADLE_PROPERTIES_FILE).getProperty(BASE_URL);
+    private String baseUrl = "https://trello.com";
 
     /**
      * Constructor method for share states between objects.
@@ -56,6 +50,6 @@ public class NamePages {
      * @return as string the uri of login page.
      */
     public String getLoginPage() {
-        return baseUrl + NAME_LOGIN;
+        return baseUrl + "/login";
     }
 }

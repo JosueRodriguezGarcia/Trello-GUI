@@ -20,16 +20,9 @@ package trello.keys;
  */
 public class Constants {
 
-
-    public static final String NAME_LOGIN = "/login";
-    public static final String BASE_URL = "baseUrl";
-
-    //name of gradle properties file.
-    public static final String BROWSER_NAME = "browserName";
-    public static final String IMPLICIT_WAIT = "implicitWait";
-    public static final String EXPLICIT_WAIT = "explicitWait";
-    public static final String SLEEP_TIME = "sleepTime";
-
     //path of gradle properties file.
     public static final String PATH_GRADLE_PROPERTIES_FILE = "gradle.properties";
+
+    //name of key of gradle properties.
+    public static final String BROWSER_NAME = "browserName";
 }
