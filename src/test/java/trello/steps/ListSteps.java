@@ -52,8 +52,6 @@ public class ListSteps {
 
     @Then("I should see the new created list with the given title")
     public void verifyListTitle() {
-        System.out.println(context.getList().getTitle());
-        System.out.println(boardPage.getListTitle());
         Assert.assertEquals(context.getList().getTitle(), boardPage.getListTitle());
     }
 }

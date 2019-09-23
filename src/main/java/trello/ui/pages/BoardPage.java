@@ -39,7 +39,7 @@ public class BoardPage extends BasePage {
     @FindBy(css = ".list-header-extras-menu")
     private WebElement listMenuBtn;
 
-    @FindBy(linkText = "Archivar esta lista")
+    @FindBy(css = ".js-close-list")
     private WebElement archiveListBtn;
 
     @FindBy(css = ".dark-hover")
