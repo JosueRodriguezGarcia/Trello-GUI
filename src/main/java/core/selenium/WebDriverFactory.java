@@ -11,7 +11,6 @@
  */
 package core.selenium;
 
-import core.selenium.webdrivers.BrowserType;
 import core.selenium.webdrivers.Chrome;
 import core.selenium.webdrivers.FireFox;
 import core.selenium.webdrivers.IBrowser;
@@ -20,10 +19,6 @@ import org.openqa.selenium.WebDriver;
 import java.util.HashMap;
 import java.util.Map;
 
-import static core.selenium.webdrivers.BrowserType.CHROME;
-import static core.selenium.webdrivers.BrowserType.FIREFOX;
-
-
 /**
  * This class implements the logic for select a browser.
  *
@@ -31,6 +26,11 @@ import static core.selenium.webdrivers.BrowserType.FIREFOX;
  * @version 0.0.1
  */
 public class WebDriverFactory {
+    private static Map<String, IBrowser> browsers = new HashMap<>();
+    static {
+        browsers.put("CHROME", new Chrome());
+        browsers.put("FIREFOX", new FireFox());
+    }
 
     /**
      * This method is used for select a Browser.
@@ -38,11 +38,7 @@ public class WebDriverFactory {
      * @param browser The browser parameter defines a input Browser
      * @return a webDriver.
      */
-    public static WebDriver getWebDriver(final BrowserType browser) {
-        Map<BrowserType, IBrowser> browsers;
-        browsers = new HashMap<>();
-        browsers.put(CHROME, new Chrome());
-        browsers.put(FIREFOX, new FireFox());
+    public static WebDriver getWebDriver(final String browser) {
         return browsers.get(browser).initDriver();
     }
 }
