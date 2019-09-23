@@ -11,6 +11,7 @@
  */
 package trello.report;
 
+import core.selenium.util.PropertiesReader;
 import net.masterthought.cucumber.Configuration;
 import net.masterthought.cucumber.ReportBuilder;
 import net.masterthought.cucumber.Reportable;
@@ -18,6 +19,10 @@ import net.masterthought.cucumber.Reportable;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
+import static trello.keys.Constants.BROWSER_NAME;
+import static trello.keys.Constants.PATH_GRADLE_PROPERTIES_FILE;
 
 /**
  * ReportGenerator class is in charge of generate the test utils.
@@ -38,6 +43,7 @@ public final class ReportGenerator {
      * Sets up and creates the cucumber report.
      */
     public static void generateReport() {
+       Properties properties = PropertiesReader.getProperties(PATH_GRADLE_PROPERTIES_FILE);
         final File reportOutputDirectory = new File("target");
         final List<String> jsonFiles = new ArrayList<>();
         jsonFiles.add("target/cucumber.json");
@@ -45,6 +51,8 @@ public final class ReportGenerator {
         final boolean runWithJenkins = false;
         final Configuration configuration = new Configuration(reportOutputDirectory, projectName);
         // additional metadata presented on main page
+        configuration.addClassifications("Platform", "Windows 10");
+        configuration.addClassifications("Browser", properties.getProperty(BROWSER_NAME));
         configuration.addClassifications("Branch", "RELEASE/1.0");
         final ReportBuilder reportBuilder = new ReportBuilder(jsonFiles, configuration);
         final Reportable result = reportBuilder.generateReports();

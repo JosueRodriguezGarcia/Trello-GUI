@@ -16,6 +16,9 @@ import core.selenium.webdrivers.BrowserType;
 
 import java.util.Properties;
 
+import static trello.keys.Constants.BROWSER_NAME;
+import static trello.keys.Constants.PATH_GRADLE_PROPERTIES_FILE;
+
 /**
  * This class reads the gradle.properties file.
  *
@@ -23,20 +26,15 @@ import java.util.Properties;
  * @version 0.0.1
  */
 public final class WebDriverConfig {
-    private static final String PROPERTIES_FILE = "webdriver.properties";
+
     private static WebDriverConfig webDriverConfig;
     private Properties properties;
-    private static final String BROWSER_NAME = "browser";
-    private static final String IMPLICIT_WAIT_TIME = "implicitly-wait";
-    private static final String EXPLICIT_WAIT_TIME = "explicitly-wait";
-    private static final String SLEEP_TIME = "sleep-time";
 
     /**
      * This is constructor for init variables.
      */
     private WebDriverConfig() {
         initializes();
-
     }
 
     /**
@@ -55,7 +53,7 @@ public final class WebDriverConfig {
      * This method reads the file 'gradle.properties' ans return its values through the object 'properties'.
      */
     private void initializes() {
-        properties = PropertiesReader.getProperties(PROPERTIES_FILE);
+        properties = PropertiesReader.getProperties(PATH_GRADLE_PROPERTIES_FILE);
     }
 
     /**
@@ -73,7 +71,7 @@ public final class WebDriverConfig {
      * @return a implicitly wait.
      */
     public long getImplicitlyWaitTime() {
-        return Long.parseLong(properties.getProperty(IMPLICIT_WAIT_TIME));
+        return Long.parseLong(properties.getProperty("implicitWait"));
     }
 
     /**
@@ -82,7 +80,7 @@ public final class WebDriverConfig {
      * @return a explicitly wait.
      */
     public long getExplicitlWaitTime() {
-        return Long.parseLong(properties.getProperty(EXPLICIT_WAIT_TIME));
+        return Long.parseLong(properties.getProperty("explicitWait"));
     }
 
     /**
@@ -91,6 +89,6 @@ public final class WebDriverConfig {
      * @return a explicitly wait.
      */
     public long getSleepWait() {
-        return Long.parseLong(properties.getProperty(SLEEP_TIME));
+        return Long.parseLong(properties.getProperty("sleepTime"));
     }
 }

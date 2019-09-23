@@ -26,6 +26,7 @@ import java.io.FileReader;
  * @version 0.0.1
  */
 public final class ReadJsonFile {
+
     private static ReadJsonFile readJsonFile;
     private JsonArray account;
     private JsonObject user;
@@ -33,30 +34,30 @@ public final class ReadJsonFile {
     /**
      * Constructor of ReadJsonFile class.
      *
-     * @throws NullPointerException
+     * @param userType uses to search the userType.
      */
-    private ReadJsonFile() {
+    private ReadJsonFile(final String userType) {
         try {
             JsonParser parser = new JsonParser();
             JsonElement jsonElement = parser.parse(new FileReader("./user.json"));
             JsonObject jsonObject = jsonElement.getAsJsonObject();
             account  = jsonObject.getAsJsonArray("users");
+            searchUserType(userType);
         } catch (FileNotFoundException fe) {
-            throw new RuntimeException(fe);
+            throw new RuntimeException("This file's path not exist" + fe);
         }
     }
 
     /**
      * Gets only instance of ReadJsonFile class.
      *
-     * @param userType uses to search the userType.
+     * @param userType uses to select a user.
      * @return a ReadJsonFile object.
      */
     public static ReadJsonFile getInstance(final String userType) {
         if (readJsonFile == null) {
-            readJsonFile = new ReadJsonFile();
+            readJsonFile = new ReadJsonFile(userType);
         }
-        readJsonFile.searchUserType(userType);
         return readJsonFile;
     }
 
@@ -79,12 +80,12 @@ public final class ReadJsonFile {
     }
 
     /**
-     * Gets organization name of file json.
+     * Gets fullName of file json.
      *
-     * @return as string organization name of a user.
+     * @return as string fullName of a user.
      */
-    public String getOrganizationName() {
-        return user.get("organizationname").getAsString();
+    public String getFullName() {
+        return user.get("fullName").getAsString();
     }
 
     /**
@@ -92,7 +93,7 @@ public final class ReadJsonFile {
      *
      * @param userType use to search a userType.
      */
-    public void searchUserType(final String userType) {
+    private void searchUserType(final String userType) {
         for (Object object: account) {
             JsonObject dataAccount = (JsonObject) object;
             if (dataAccount.has(userType)) {

@@ -35,7 +35,7 @@ task cucumber() {
     }
 }
 
-test{
+test {
     useTestNG()
 }
 
