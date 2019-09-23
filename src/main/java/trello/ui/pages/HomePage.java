@@ -24,7 +24,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
  */
 public class HomePage extends BasePage {
 
-
     @FindBy(className = "_1q-xxtNvcdFBca")
     private WebElement trelloLogoTxt;
 

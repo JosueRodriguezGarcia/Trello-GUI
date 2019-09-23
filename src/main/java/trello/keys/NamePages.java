@@ -24,7 +24,7 @@ import trello.entities.User;
 public class NamePages {
 
     private User user;
-    private String baseUrl = "https://trello.com";
+    private static final String BASE_URL = "https://trello.com";
 
     /**
      * Constructor method for share states between objects.
@@ -41,7 +41,7 @@ public class NamePages {
      * @return as string the uri of home page.
      */
     public String getHomePage() {
-        return baseUrl + "/" + user.getUsername() + "/board";
+        return BASE_URL + "/" + user.getUsername() + "/boards";
     }
 
     /**
@@ -50,6 +50,6 @@ public class NamePages {
      * @return as string the uri of login page.
      */
     public String getLoginPage() {
-        return baseUrl + "/login";
+        return BASE_URL + "/login";
     }
 }

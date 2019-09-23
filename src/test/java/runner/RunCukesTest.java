@@ -28,9 +28,9 @@ import trello.report.ReportGenerator;
                 "html:target/cucumber",
                 "json:target/cucumber.json"},
         glue = {"trello/steps", "trello/hooks"},
-        features = {"src/test/resources/features/"},
+        features = {"src/test/resources/features"},
         monochrome = true)
-public class    RunCukesTest extends AbstractTestNGCucumberTests {
+public class RunCukesTest extends AbstractTestNGCucumberTests {
 
     /**
      * Generates de utils after the test execution. Also quits from the browser.
@@ -41,4 +41,3 @@ public class    RunCukesTest extends AbstractTestNGCucumberTests {
         WebDriverManager.getInstance().getWebDriver().quit();
     }
 }
-
