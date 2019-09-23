@@ -22,12 +22,14 @@ public class Context {
 
     private User user;
     private Board board;
+    private List list;
 
     /**
      * Method constructor of Context class.
      */
     public Context() {
         user = new User();
+        list = new List();
     }
 
     /**
@@ -46,5 +48,14 @@ public class Context {
      */
     public Board getBoard() {
         return board;
+    }
+
+    /**
+     * Gets the context's list.
+     *
+     * @return the list that is on the context.
+     */
+    public List getList() {
+        return list;
     }
 }

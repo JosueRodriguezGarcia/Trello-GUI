@@ -41,7 +41,7 @@ public class NamePages {
      * @return as string the uri of home page.
      */
     public String getHomePage() {
-        return baseUrl + "/" + user.getUsername() + "/board";
+        return baseUrl + "/" + user.getUsername() + "/boards";
     }
 
     /**
