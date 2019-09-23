@@ -46,7 +46,6 @@ public class LoginSteps {
         this.user = context.getUser();
     }
 
-
     /**
      * Logs in as user type.
      *

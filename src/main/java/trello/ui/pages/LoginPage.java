@@ -60,7 +60,6 @@ public class LoginPage extends BasePage {
         logInBtn.click();
     }
 
-
     /**
      * Login with username and password parameter from user.
      *

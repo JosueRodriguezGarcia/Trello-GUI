@@ -23,7 +23,6 @@ import org.openqa.selenium.WebDriver;
  */
 public class PageTransporter {
 
-
     /**
      * Navigate to URL use and and point.
      *
