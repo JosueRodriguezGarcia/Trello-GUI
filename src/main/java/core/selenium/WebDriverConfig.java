@@ -12,7 +12,6 @@
 package core.selenium;
 
 import core.selenium.util.PropertiesReader;
-import core.selenium.webdrivers.BrowserType;
 
 import java.util.Properties;
 
@@ -61,8 +60,8 @@ public final class WebDriverConfig {
      *
      * @return a browser.
      */
-    public BrowserType getBrowser() {
-        return BrowserType.valueOf(properties.getProperty(BROWSER_NAME).toUpperCase());
+    public String getBrowser() {
+        return properties.getProperty(BROWSER_NAME).toUpperCase();
     }
 
     /**
