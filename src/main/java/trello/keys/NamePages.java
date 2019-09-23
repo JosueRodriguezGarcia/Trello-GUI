@@ -42,6 +42,7 @@ public class NamePages {
      */
     public String getHomePage() {
         return BASE_URL + "/" + user.getUsername() + "/boards";
+
     }
 
     /**

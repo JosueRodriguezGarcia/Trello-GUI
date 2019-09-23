@@ -30,6 +30,9 @@ public class HomePage extends BasePage {
     @FindBy(className = "_24AWINHReYjNBf")
     private WebElement initialFullNameUserBtton;
 
+    @FindBy(css = ".board-tile-details")
+    private WebElement boardButton;
+
     /**
      * Wait until Page object was find for.
      */
@@ -45,5 +48,12 @@ public class HomePage extends BasePage {
      */
     public String getInitialFullName() {
         return initialFullNameUserBtton.getText();
+    }
+
+    /**
+     * Gets to the board page.
+     */
+    public void clickOnABoard() {
+        boardButton.click();
     }
 }
