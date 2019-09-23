@@ -35,8 +35,29 @@ task cucumber() {
     }
 }
 
-test {
+tasks.withType(Test) {
+   
     useTestNG()
+    testLogging.showStandardStreams = true
+    scanForTestClasses = false
+    reports.html.enabled = true
+    ignoreFailures = false
+
+    systemProperty "browserName", browserName
+    systemProperty "implicitWait", implicitWait
+    systemProperty "explicitWait", explicitWait
+}
+
+task runFeatures(type: Test) {
+    options {
+        useDefaultListeners = false
+        jvmArgs = ['-Dcucumber options= ' +
+                           '--glue trello.steps ' +
+                           '--glue trello.hooks ' +
+                           '--plugin pretty ' +
+                           '--plugin json:target/cucumber.json ' +
+                           'classpath:' + "src/test/resources/features"]
+    }
 }
 
 dependencies {
