@@ -31,7 +31,7 @@ public class HomePage extends BasePage {
     @FindBy(className = "_24AWINHReYjNBf")
     private WebElement initialFullNameUserBtton;
 
-    private String CSS_TO_BOARD = "div[title=\"%s\"]";
+    private static final String CSS_TO_BOARD = "div[title=\"%s\"]";
 
     /**
      * Wait until Page object was find for.
@@ -51,7 +51,8 @@ public class HomePage extends BasePage {
     }
 
     /**
-     * Gets to the board page.
+     * Goes to the board page.
+     * @param boardTitle is the title of the board.
      */
     public void clickOnABoard(final String boardTitle) {
         String boardCss = String.format(CSS_TO_BOARD, boardTitle);

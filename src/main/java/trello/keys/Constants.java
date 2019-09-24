@@ -18,11 +18,18 @@ package trello.keys;
  * @author Raul Choque
  * @version 0.0.1
  */
-public class Constants {
+public final class Constants {
 
     //path of gradle properties file.
     public static final String PATH_GRADLE_PROPERTIES_FILE = "gradle.properties";
 
     //name of key of gradle properties.
     public static final String BROWSER_NAME = "browserName";
+
+    /**
+     * Private constructor requested by checkstyle.
+     */
+    private Constants() {
+
+    }
 }

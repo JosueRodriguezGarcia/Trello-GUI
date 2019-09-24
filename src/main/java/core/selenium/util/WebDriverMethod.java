@@ -20,7 +20,14 @@ import org.openqa.selenium.WebElement;
  * @author Raul Choque
  * @version 0.0.1
  */
-public class WebDriverMethod {
+public final class WebDriverMethod {
+
+    /**
+     * Private constructor requested by checkstyle.
+     */
+    private WebDriverMethod() {
+
+    }
 
     /**
      * Sets text in the WebElement object.

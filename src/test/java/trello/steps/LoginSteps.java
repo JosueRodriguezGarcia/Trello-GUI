@@ -37,12 +37,12 @@ public class LoginSteps {
     private NamePages namePages;
 
     /**
-     * Constructor method for share states between objects.
+     * Constructor method to share states between objects.
      *
-     * @param context has all share entities.
+     * @param currentContext has all share entities.
      */
-    public LoginSteps(final Context context) {
-        this.context = context;
+    public LoginSteps(final Context currentContext) {
+        this.context = currentContext;
         this.user = context.getUser();
     }
 
@@ -63,7 +63,7 @@ public class LoginSteps {
     /**
      * Sees the initial of full name of user in HomePage.
      */
-    @Then("I should see the initial user's full name")
+    @Then("I should see the user's full name initials")
     public void seeInitialUserFullName() {
         PageTransporter.navigateToURL(namePages.getHomePage());
         homePage = new HomePage();

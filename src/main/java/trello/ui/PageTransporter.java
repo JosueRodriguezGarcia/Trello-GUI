@@ -21,7 +21,14 @@ import org.openqa.selenium.WebDriver;
  * @author Raul Choque
  * @version 0.0.1
  */
-public class PageTransporter {
+public final class PageTransporter {
+
+    /**
+     * Private constructor requested by checkstyle.
+     */
+    private PageTransporter() {
+
+    }
 
     /**
      * Navigate to URL use and and point.
