@@ -51,7 +51,7 @@ public class LoginSteps {
      *
      * @param userType use to select a user.
      */
-    @When("I log in as {string} user")
+    @When("I log in as (.*) user")
     public void loginAsUser(final String userType) {
         user.initialize(userType);
         namePages = new NamePages(context);

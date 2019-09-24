@@ -12,6 +12,7 @@
 
 package trello.ui.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -30,8 +31,7 @@ public class HomePage extends BasePage {
     @FindBy(className = "_24AWINHReYjNBf")
     private WebElement initialFullNameUserBtton;
 
-    @FindBy(css = ".board-tile-details")
-    private WebElement boardButton;
+    private String CSS_TO_BOARD = "div[title=\"%s\"]";
 
     /**
      * Wait until Page object was find for.
@@ -53,7 +53,9 @@ public class HomePage extends BasePage {
     /**
      * Gets to the board page.
      */
-    public void clickOnABoard() {
+    public void clickOnABoard(final String boardTitle) {
+        String boardCss = String.format(CSS_TO_BOARD, boardTitle);
+        WebElement boardButton = driver.findElement(By.cssSelector(boardCss));
         boardButton.click();
     }
 }

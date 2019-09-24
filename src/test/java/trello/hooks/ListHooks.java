@@ -36,6 +36,6 @@ public class ListHooks {
     @After("@ArchiveList")
     public void archiveList() {
         boardPage = new BoardPage();
-        boardPage.removeList();
+        boardPage.removeList(context.getList().getTitle());
     }
 }

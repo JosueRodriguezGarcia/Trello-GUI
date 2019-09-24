@@ -20,7 +20,6 @@ import trello.entities.Context;
 import trello.ui.pages.BoardPage;
 import trello.ui.pages.HomePage;
 
-
 /**
  * ListSteps class.
  *
@@ -37,13 +36,13 @@ public class ListSteps {
         this.context = context;
     }
 
-    @When("I select a board")
-    public void selectABoard() {
+    @When("I select (.*) board")
+    public void selectABoard(final String boardTitle) {
         homePage = new HomePage();
-        homePage.clickOnABoard();
+        homePage.clickOnABoard(boardTitle);
     }
 
-    @And("I create a new list with (.*) title")
+    @And("I create a new list with {string} as title")
     public void createNewList(final String listTitle) {
         boardPage = new BoardPage();
         context.getList().setTitle(listTitle);
@@ -51,7 +50,8 @@ public class ListSteps {
     }
 
     @Then("I should see the new created list with the given title")
-    public void verifyListTitle() {
-        Assert.assertEquals(context.getList().getTitle(), boardPage.getListTitle());
+    public void verifyList() {
+        boardPage = new BoardPage();
+        Assert.assertTrue(boardPage.isThereThisList(context.getList().getTitle()));
     }
 }
