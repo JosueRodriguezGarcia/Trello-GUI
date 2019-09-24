@@ -13,13 +13,14 @@
 package trello.ui.pages;
 
 import core.selenium.util.WebDriverMethod;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 /**
  * BoardPage class.
  *
- * @author Raul Choque
+ * @author Raul Choque, Melissa Román
  * @version 0.0.1
  */
 public class BoardPage extends BasePage {
@@ -33,18 +34,11 @@ public class BoardPage extends BasePage {
     @FindBy(css = ".primary")
     private WebElement addNewListBtn;
 
-    @FindBy(css = ".list-header-name")
-    private WebElement newListHeader;
-
-    @FindBy(css = ".list-header-extras-menu")
-    private WebElement listMenuBtn;
-
-    @FindBy(css = ".js-close-list")
+    @FindBy(css = "a[class='js-close-list']")
     private WebElement archiveListBtn;
 
-    @FindBy(css = ".dark-hover")
-    private WebElement btn;
-
+    private static final String BOARD_TITLE_XPATH = "//h2[contains(text(), \"%s\")]";
+    private static final String BOARD_MENU_SUFFIX = "/following-sibling::div";
 
     /**
      * Creates a new list.
@@ -58,25 +52,30 @@ public class BoardPage extends BasePage {
     }
 
     /**
-     * Gets new list name.
+     * Verifies is the list is on the board.
      *
-     * @return the name of the list.
+     * @param listTitle is the title of the list that is requested to find.
+     * @return true is the list is on the board.
      */
-    public String getListTitle() {
-        return newListHeader.getText();
+    public boolean isThereThisListByTitle(final String listTitle) {
+        String boardTitleXpath = String.format(BOARD_TITLE_XPATH, listTitle);
+        WebElement listHeader = driver.findElement(By.xpath(boardTitleXpath));
+        return listHeader.getAttribute("textContent").equals(listTitle);
     }
 
     /**
-     * Gets new list name.
+     * Archives list by list title.
+     * @param listTitle is the title of the list that is requested to archive.
      */
-    public void removeList() {
+    public void archiveListByTitle(final String listTitle) {
+        String boardMenuXpath = String.format(BOARD_TITLE_XPATH + BOARD_MENU_SUFFIX, listTitle);
+        WebElement listMenuBtn = driver.findElement(By.xpath(boardMenuXpath));
         listMenuBtn.click();
         archiveListBtn.click();
-        btn.click();
     }
 
     /**
-     * Wait until Page object was find for.
+     * Wait until Page object is found.
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {

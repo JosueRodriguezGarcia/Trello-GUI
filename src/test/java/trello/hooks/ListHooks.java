@@ -13,9 +13,7 @@
 package trello.hooks;
 
 import cucumber.api.java.After;
-import org.checkerframework.checker.units.qual.C;
 import trello.entities.Context;
-import trello.entities.List;
 import trello.ui.pages.BoardPage;
 
 /**
@@ -29,13 +27,21 @@ public class ListHooks {
     private Context context;
     private BoardPage boardPage;
 
-    public ListHooks(Context context) {
-        this.context = context;
+    /**
+     * Constructor method to share states between objects.
+     *
+     * @param currentContext has all share entities.
+     */
+    public ListHooks(final Context currentContext) {
+        this.context = currentContext;
     }
 
+    /**
+     * Archives the context's list.
+     */
     @After("@ArchiveList")
     public void archiveList() {
         boardPage = new BoardPage();
-        boardPage.removeList();
+        boardPage.archiveListByTitle(context.getList().getTitle());
     }
 }

@@ -25,10 +25,10 @@ public class List {
     /**
      * Sets the list title.
      *
-     * @param title is the name that will be set to the title.
+     * @param listTitle is the name that will be set to the title.
      */
-    public void setTitle(final String title) {
-        this.title = title;
+    public void setTitle(final String listTitle) {
+        this.title = listTitle;
     }
 
     /**

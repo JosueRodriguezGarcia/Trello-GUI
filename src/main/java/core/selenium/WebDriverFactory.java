@@ -25,12 +25,20 @@ import java.util.Map;
  * @author Josue Rodriguez Garcia
  * @version 0.0.1
  */
-public class WebDriverFactory {
+public final class WebDriverFactory {
     private static Map<String, IBrowser> browsers = new HashMap<>();
     static {
         browsers.put("CHROME", new Chrome());
         browsers.put("FIREFOX", new FireFox());
     }
+
+    /**
+     * Private constructor requested by checkstyle.
+     */
+    private WebDriverFactory() {
+
+    }
+
     /**
      * This method is used for select a Browser.
      *
