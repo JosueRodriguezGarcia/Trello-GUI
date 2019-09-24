@@ -14,7 +14,7 @@ package core.selenium.webdrivers;
 import org.openqa.selenium.WebDriver;
 
 /**
- * This interface is used for defines the behavior of the browsers.
+ * IBrowser interface.
  *
  * @author Josue Rodriguez Garcia
  * @version 0.0.1
