@@ -91,7 +91,7 @@ public class LoginPage extends BasePage {
         } finally {
             driver.manage()
                     .timeouts()
-                    .implicitlyWait(WebDriverConfig.getInstance().getImplicitlyWaitTime(), TimeUnit.SECONDS);
+                    .implicitlyWait(WebDriverConfig.getInstance().getImplicitWaitTime(), TimeUnit.SECONDS);
         }
     }
 
