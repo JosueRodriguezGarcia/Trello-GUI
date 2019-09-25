@@ -62,17 +62,6 @@ public class LoginSteps {
         PageTransporter.navigateToURL(namePages.getLoginPage());
         loginPage = new LoginPage();
         loginPage.login(user);
-        try {
-            homePage = new HomePage();
-            homePage.getInitialFullName();
-        }catch (NoSuchElementException e){
-            System.out.println("holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            atlassianPage = new AtlassianPage();
-            atlassianPage.login(user);
-        }
-////
-//        atlassianPage = new AtlassianPage();
-//        atlassianPage.login(user);
     }
 
     /**

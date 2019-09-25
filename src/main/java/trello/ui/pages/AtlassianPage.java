@@ -1,6 +1,5 @@
 package trello.ui.pages;
 
-import core.selenium.util.ReadJsonFile;
 import core.selenium.util.WebDriverMethod;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,6 +12,7 @@ import trello.entities.User;
  * @version 0.0.1
  */
 public class AtlassianPage extends BasePage {
+
     @FindBy(id = "username")
     private WebElement usernameField;
     @FindBy(id = "password")
@@ -53,8 +53,9 @@ public class AtlassianPage extends BasePage {
         fillPasswordField(user.getPassword());
         clickLoginSubmitButton();
     }
+
     @Override
     protected void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.elementToBeClickable(passwordField));
+        wait.until(ExpectedConditions.elementToBeClickable(loginSubmitButton));
     }
 }
