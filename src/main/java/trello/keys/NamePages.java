@@ -53,4 +53,13 @@ public class NamePages {
     public String getLoginPage() {
         return BASE_URL + "/login";
     }
+
+    /**
+     * Gets the base url.
+     *
+     * @return as string the base url.
+     */
+    public static String getBaseUrl() {
+        return BASE_URL;
+    }
 }
