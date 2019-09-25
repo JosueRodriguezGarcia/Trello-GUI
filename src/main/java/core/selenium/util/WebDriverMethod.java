@@ -14,7 +14,6 @@ package core.selenium.util;
 
 import org.openqa.selenium.WebElement;
 
-
 /**
  * WebDriverMethod class.
  *

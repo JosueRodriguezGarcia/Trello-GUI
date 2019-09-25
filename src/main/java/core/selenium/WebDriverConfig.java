@@ -61,7 +61,7 @@ public final class WebDriverConfig {
      * @return a browser.
      */
     public String getBrowser() {
-        return properties.getProperty(BROWSER_NAME).toUpperCase();
+        return System.getProperty(BROWSER_NAME).toUpperCase();
     }
 
     /**
@@ -69,7 +69,7 @@ public final class WebDriverConfig {
      *
      * @return a implicitly wait.
      */
-    public long getImplicitlyWaitTime() {
+    public long getImplicitWaitTime() {
         return Long.parseLong(properties.getProperty("implicitWait"));
     }
 
@@ -78,7 +78,7 @@ public final class WebDriverConfig {
      *
      * @return a explicitly wait.
      */
-    public long getExplicitlyWaitTime() {
+    public long getExplicitWaitTime() {
         return Long.parseLong(properties.getProperty("explicitWait"));
     }
 
