@@ -25,6 +25,7 @@ public class User {
     private String username;
     private String  password;
     private String fullName;
+    private String email;
 
     /**
      * Method constructor of User class.
@@ -35,6 +36,7 @@ public class User {
         username = ReadJsonFile.getInstance(userType.toLowerCase()).getUsername();
         password = ReadJsonFile.getInstance(userType.toLowerCase()).getPassword();
         fullName = ReadJsonFile.getInstance(userType.toLowerCase()).getFullName();
+        email = ReadJsonFile.getInstance(userType.toLowerCase()).getEmail();
     }
 
     /**
@@ -69,6 +71,14 @@ public class User {
         return fullName;
     }
 
+    /**
+     * Gets the email attribute of its class.
+     *
+     * @return as string the email attribute.
+     */
+    public String getEmail() {
+        return email;
+    }
     /**
      * Gets the initial of full name attribute of this class.
      *

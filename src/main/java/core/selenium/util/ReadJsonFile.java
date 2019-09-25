@@ -89,6 +89,15 @@ public final class ReadJsonFile {
     }
 
     /**
+     * Gets username of file json.
+     *
+     * @return as string email of a user.
+     */
+    public String getEmail() {
+        return user.get("email").getAsString();
+    }
+
+    /**
      * Searches a user type of JsonArray.
      *
      * @param userType use to search a userType.

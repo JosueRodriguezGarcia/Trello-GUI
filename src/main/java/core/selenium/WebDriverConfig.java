@@ -69,7 +69,7 @@ public final class WebDriverConfig {
      *
      * @return a implicitly wait.
      */
-    public long getImplicitlyWaitTime() {
+    public long getImplicitWaitTime() {
         return Long.parseLong(properties.getProperty("implicitWait"));
     }
 
@@ -78,7 +78,7 @@ public final class WebDriverConfig {
      *
      * @return a explicitly wait.
      */
-    public long getExplicitlWaitTime() {
+    public long getExplicitWaitTime() {
         return Long.parseLong(properties.getProperty("explicitWait"));
     }
 
