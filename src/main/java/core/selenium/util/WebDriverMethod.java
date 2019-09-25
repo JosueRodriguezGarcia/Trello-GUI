@@ -12,7 +12,12 @@
 
 package core.selenium.util;
 
+import core.selenium.WebDriverManager;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * WebDriverMethod class.
@@ -38,5 +43,19 @@ public final class WebDriverMethod {
     public static void setTxtElement(final WebElement webElement, final String text) {
         webElement.clear();
         webElement.sendKeys(text);
+    }
+
+    public static boolean isElementPresent(final WebDriver webDriver, WebDriverWait wait,  final By elementBy) {
+        wait = new WebDriverWait(webDriver, 5);
+        boolean isDisplayed;
+        try {
+            webDriver.findElement(elementBy);
+            isDisplayed = true;
+        } catch (NoSuchElementException e) {
+            isDisplayed = false;
+        } finally {
+            wait = WebDriverManager.getInstance().getWebDriverWait();
+        }
+        return isDisplayed;
     }
 }
