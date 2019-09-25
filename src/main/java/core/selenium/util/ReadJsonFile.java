@@ -22,8 +22,8 @@ import java.io.FileReader;
 /**
  * ReadJsonFile class, read the file of users.
  *
- * @author Raul Choque
- * @version 0.0.1
+ * @author Raul Choque, Josue Rodriguez.
+ * @version 0.0.2
  */
 public final class ReadJsonFile {
 
@@ -95,6 +95,38 @@ public final class ReadJsonFile {
      */
     public String getEmail() {
         return user.get("email").getAsString();
+    }
+
+    /**
+     * Gets consumerKey of file json.
+     * @return as string consumerKey of a user.
+     */
+    public String getConsumerKey() {
+        return user.get("consumerKey").getAsString();
+    }
+
+    /**
+     * Gets consumerSecret of file json.
+     * @return as string consumerSecret of a user.
+     */
+    public String getConsumerSecret() {
+        return user.get("consumerSecret").getAsString();
+    }
+
+    /**
+     * Gets accessToken of file json.
+     * @return as string accessToken of a user.
+     */
+    public String getAccessToken() {
+        return user.get("accessToken").getAsString();
+    }
+
+    /**
+     * Gets tokenSecret of file json.
+     * @return as string tokenSecret of a user.
+     */
+    public String getTokenSecret() {
+        return user.get("tokenSecret").getAsString();
     }
 
     /**

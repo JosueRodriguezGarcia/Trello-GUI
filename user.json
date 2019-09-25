@@ -5,7 +5,11 @@
         "username": "put your username",
         "password": "put your password",
         "fullName": "put your full name",
-        "email": "put your email"
+        "email": "put your email",
+        "consumerKey": "put your key",
+        "consumerSecret": "put your secret",
+        "accessToken": "put your token",
+        "tokenSecret": "put your token"
       }
     },
     {
@@ -13,7 +17,11 @@
         "username": "put your username",
         "password": "put your password",
         "fullName": "put your full name",
-        "email": "put your email"
+        "email": "put your email",
+        "consumerKey": "put your key",
+        "consumerSecret": "put your secret",
+        "accessToken": "put your token",
+        "tokenSecret": "put your token"
       }
     }
   ]
