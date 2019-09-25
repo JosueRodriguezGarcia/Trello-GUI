@@ -19,11 +19,8 @@ import trello.entities.Context;
 import trello.entities.User;
 import trello.keys.NamePages;
 import trello.ui.PageTransporter;
-import trello.ui.pages.AtlassianPage;
 import trello.ui.pages.HomePage;
 import trello.ui.pages.LoginPage;
-
-import java.util.NoSuchElementException;
 
 /**
  * LoginSteps class.
@@ -32,13 +29,8 @@ import java.util.NoSuchElementException;
  * @version 0.0.1
  */
 public class LoginSteps {
-
     private Context context;
     private User user;
-    private LoginPage loginPage;
-    private AtlassianPage atlassianPage;
-    private HomePage homePage;
-    private NamePages namePages;
 
     /**
      * Constructor method to share states between objects.
@@ -58,9 +50,9 @@ public class LoginSteps {
     @When("I log in as (.*) user")
     public void loginAsUser(final String userType) {
         user.initialize(userType);
-        namePages = new NamePages(context);
+        NamePages namePages = new NamePages(context);
         PageTransporter.navigateToURL(namePages.getLoginPage());
-        loginPage = new LoginPage();
+        LoginPage loginPage = new LoginPage();
         loginPage.login(user);
     }
 
@@ -69,7 +61,7 @@ public class LoginSteps {
      */
     @Then("I should see the user's full name initials")
     public void seeInitialUserFullName() {
-        homePage = new HomePage();
+        HomePage homePage = new HomePage();
         Assert.assertEquals(homePage.getInitialFullName(), user.getInitialFullName(),
                 "This is not the user's page.");
     }

@@ -78,7 +78,7 @@ public final class WebDriverConfig {
      *
      * @return a explicitly wait.
      */
-    public long getExplicitlWaitTime() {
+    public long getExplicitlyWaitTime() {
         return Long.parseLong(properties.getProperty("explicitWait"));
     }
 

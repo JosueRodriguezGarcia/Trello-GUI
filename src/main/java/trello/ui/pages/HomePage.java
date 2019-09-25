@@ -25,9 +25,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
  */
 public class HomePage extends BasePage {
 
-    @FindBy(className = "_1q-xxtNvcdFBca")
-    private WebElement trelloLogoTxt;
-
     @FindBy(className = "_24AWINHReYjNBf")
     private WebElement initialFullNameUserBtton;
 
@@ -38,7 +35,7 @@ public class HomePage extends BasePage {
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
-//        wait.until(ExpectedConditions.visibilityOf(trelloLogoTxt));
+        wait.until(ExpectedConditions.elementToBeClickable(initialFullNameUserBtton));
     }
 
     /**

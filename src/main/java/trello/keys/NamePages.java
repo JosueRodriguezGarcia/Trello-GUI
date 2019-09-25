@@ -53,13 +53,4 @@ public class NamePages {
     public String getLoginPage() {
         return BASE_URL + "/login";
     }
-
-    /**
-     * Gets the uri of login page.
-     *
-     * @return as string the uri of login page.
-     */
-    public String getAtlassianPage() {
-        return "https://id.atlassian.com/login?application=trello&continue=https%3A%2F%2Fauth.atlassian.com%2Fauthorize%3Fclient_id%3DmQz6pdKujUewiC7UYHDic39K2ruzZ400%26scope%3Dopenid%2520email%2520profile%26response_type%3Dcode%26redirect_uri%3Dhttps%253A%252F%252Ftrello.com%252Fauth%252Fcallback%26state%3DreturnUrl%253D%25252F%2526provider%253Datlassian%2526locale%253Den-US%2526tosAccepted%253D%2526confirmNew%253D1%2526csrf%253DfpFu4XEsHPR9HH0owAUi5nV51t2m31DR1%25252BjisQ7jfnE%25253D&prompt=select_account";
-    }
 }

@@ -13,14 +13,12 @@
 package trello.ui.pages;
 
 import core.selenium.WebDriverConfig;
-import core.selenium.WebDriverManager;
 import core.selenium.util.WebDriverMethod;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import trello.entities.User;
 
 import java.util.concurrent.TimeUnit;
@@ -28,11 +26,10 @@ import java.util.concurrent.TimeUnit;
 /**
  * LoginPage class.
  *
- * @author Raul Choque
+ * @author Raul Choque, Josue Rodriguez Garcia
  * @version 0.0.1
  */
 public class LoginPage extends BasePage {
-
     @FindBy(id = "user")
     private WebElement usernameTxt;
 
@@ -52,7 +49,7 @@ public class LoginPage extends BasePage {
      *
      * @param username is to write in usernameTxt WebElement.
      */
-    public void writeInUsername(final String username) {
+    private void writeInUsername(final String username) {
         WebDriverMethod.setTxtElement(usernameTxt, username);
     }
 
@@ -61,14 +58,14 @@ public class LoginPage extends BasePage {
      *
      * @param password is to write in passwordTxt WebElement.
      */
-    public void writeInPassword(final String password) {
+    private void writeInPassword(final String password) {
         WebDriverMethod.setTxtElement(passwordTxt, password);
     }
 
     /**
      * Clicks to submit login form.
      */
-    public void clickSubmit() {
+    private void clickSubmit() {
         logInBtn.click();
     }
 
@@ -78,11 +75,11 @@ public class LoginPage extends BasePage {
      * @param user use to get user's attribute.
      */
     public void login(final User user) {
+        final long time = 5;
         writeInUsername(user.getUsername());
         driver.manage()
                 .timeouts()
-                .implicitlyWait(5, TimeUnit.SECONDS);
-        boolean isDisplayed;
+                .implicitlyWait(time, TimeUnit.SECONDS);
         try {
             driver.findElement(By.cssSelector(signOffID));
             clickSubmit();

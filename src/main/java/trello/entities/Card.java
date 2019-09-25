@@ -13,7 +13,7 @@
 package trello.entities;
 
 /**
- * Card class
+ * Card class.
  * @author Josue Rodriguez Garcia.
  * @version 0.0.1
  */
@@ -33,12 +33,12 @@ public class Card {
      * This method is used to set id.
      * @param id defines of input string with the id.
      */
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
     /**
-     * This method is used get name;
+     * This method is used get name.
      * @return a string with the name of card.
      */
     public String getName() {
@@ -49,7 +49,7 @@ public class Card {
      * This method is used to set name.
      * @param name defines of input string with the name.
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 }
