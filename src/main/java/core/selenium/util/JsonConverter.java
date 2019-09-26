@@ -9,6 +9,7 @@
  * accordance with the terms of the license agreement you entered into
  * with Jala Foundation.
  */
+
 package core.selenium.util;
 
 import com.google.gson.Gson;
@@ -35,7 +36,7 @@ public final class JsonConverter {
      * @param userData is the data that will be converted to User object.
      * @return a User object.
      */
-    public static User jsonToUser(JsonObject userData) {
+    public static User jsonToUser(final JsonObject userData) {
         Gson gson = new Gson();
         return gson.fromJson(userData, User.class);
     }

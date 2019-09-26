@@ -12,8 +12,6 @@
 
 package trello.entities;
 
-import core.selenium.util.ReadJsonFile;
-
 /**
  * User class.
  *
@@ -87,51 +85,111 @@ public class User {
         return res;
     }
 
-    public void setUsername(String username) {
+    /**
+     * Sets username to the user.
+     *
+     * @param username is the username to be set.
+     */
+    public void setUsername(final String username) {
         this.username = username;
     }
 
-    public void setPassword(String password) {
+    /**
+     * Sets password to the user.
+     *
+     * @param password is the password to be used.
+     */
+    public void setPassword(final String password) {
         this.password = password;
     }
 
-    public void setFullName(String fullName) {
+    /**
+     * Sets full name to the user.
+     *
+     * @param fullName is the full name to be set.
+     */
+    public void setFullName(final String fullName) {
         this.fullName = fullName;
     }
 
-    public void setEmail(String email) {
+    /**
+     * Sets email to the user.
+     *
+     * @param email is the email to be set.
+     */
+    public void setEmail(final String email) {
         this.email = email;
     }
 
+    /**
+     * Gets the consumer key.
+     *
+     * @return the user's consumer key.
+     */
     public String getConsumerKey() {
         return consumerKey;
     }
 
-    public void setConsumerKey(String consumerKey) {
+    /**
+     * Sets the consumer key to the user.
+     *
+     * @param consumerKey is the consumer key to be set.
+     */
+    public void setConsumerKey(final String consumerKey) {
         this.consumerKey = consumerKey;
     }
 
+    /**
+     * Gets the consumer secret.
+     *
+     * @return the user's consumer secret.
+     */
     public String getConsumerSecret() {
         return consumerSecret;
     }
 
-    public void setConsumerSecret(String consumerSecret) {
+    /**
+     * Sets the consumer secret to the user.
+     *
+     * @param consumerSecret is the consumer key to be set.
+     */
+    public void setConsumerSecret(final String consumerSecret) {
         this.consumerSecret = consumerSecret;
     }
 
+    /**
+     * Gets the access token.
+     *
+     * @return the user's access token.
+     */
     public String getAccessToken() {
         return accessToken;
     }
 
-    public void setAccessToken(String accessToken) {
+    /**
+     * Sets the access token to the user.
+     *
+     * @param accessToken is the access token to be set.
+     */
+    public void setAccessToken(final String accessToken) {
         this.accessToken = accessToken;
     }
 
+    /**
+     * Gets the token secret.
+     *
+     * @return the user's token secret.
+     */
     public String getTokenSecret() {
         return tokenSecret;
     }
 
-    public void setTokenSecret(String tokenSecret) {
+    /**
+     * Sets the token secret to the user.
+     *
+     * @param tokenSecret is the token secret to be set.
+     */
+    public void setTokenSecret(final String tokenSecret) {
         this.tokenSecret = tokenSecret;
     }
 }

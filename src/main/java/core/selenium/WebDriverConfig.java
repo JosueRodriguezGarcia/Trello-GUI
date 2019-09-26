@@ -1,5 +1,5 @@
 /*
- * @(#) WedDriverConfig.java Copyright (c) 2019 Jala Foundation.
+ * Copyright (c) 2019 Jala Foundation.
  * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
@@ -9,6 +9,7 @@
  * accordance with the terms of the license agreement you entered into
  * with Jala Foundation.
  */
+
 package core.selenium;
 
 import core.selenium.util.PropertiesReader;

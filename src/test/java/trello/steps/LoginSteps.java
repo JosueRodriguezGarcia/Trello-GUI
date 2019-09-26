@@ -52,8 +52,6 @@ public class LoginSteps {
     @When("I log in as (.*) user")
     public void loginAsUser(final String userType) {
         user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType(userType));
-        System.out.println(user);
-        System.out.println(user.getFullName());
         NamePages namePages = new NamePages(context);
         PageTransporter.navigateToURL(namePages.getLoginPage());
         LoginPage loginPage = new LoginPage();

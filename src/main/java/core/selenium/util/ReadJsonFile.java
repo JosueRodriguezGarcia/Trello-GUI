@@ -9,6 +9,7 @@
  * accordance with the terms of the license agreement you entered into
  * with Jala Foundation.
  */
+
 package core.selenium.util;
 
 import com.google.gson.JsonArray;
