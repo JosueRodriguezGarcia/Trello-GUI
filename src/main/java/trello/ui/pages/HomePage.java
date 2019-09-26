@@ -28,6 +28,9 @@ public class HomePage extends BasePage {
     @FindBy(className = "_24AWINHReYjNBf")
     private WebElement initialFullNameUserBtton;
 
+    @FindBy(className = "_1uK2vQ_aMRS2NU")
+    private WebElement logOutButton;
+
     private static final String CSS_TO_BOARD = "div[title=\"%s\"]";
 
     /**
@@ -56,4 +59,26 @@ public class HomePage extends BasePage {
         WebElement boardButton = driver.findElement(By.cssSelector(boardCss));
         boardButton.click();
     }
+
+    /**
+     * This is method is used to click in logo out button.
+     */
+    private void clicKinItialFullNameUserBtton() {
+        initialFullNameUserBtton.click();
+    }
+    /**
+     * This is method is used to click in logo out button.
+     */
+    private void clickLogOutButton() {
+        logOutButton.click();
+    }
+
+    /**
+     * This method is used to log out in homepage.
+     */
+    public void logOut() {
+        clicKinItialFullNameUserBtton();
+        clickLogOutButton();
+    }
+
 }

@@ -18,21 +18,22 @@ import trello.entities.User;
 /**
  * NamePages class.
  *
- * @author Raul Choque
+ * @author Raul Choque, Melissa Román
  * @version 0.0.1
  */
 public class NamePages {
 
     private User user;
     private static final String BASE_URL = "https://trello.com";
+    private static final String BASE_URL_API = "https://api.trello.com/1";
 
     /**
-     * Constructor method for share states between objects.
+     * Constructs NamePages setting the given user.
      *
-     * @param context has all share entities.
+     * @param user is the user to be user to form the URLs.
      */
-    public NamePages(final Context context) {
-        this.user = context.getUser();
+    public NamePages(final User user) {
+        this.user = user;
     }
 
     /**
@@ -61,5 +62,13 @@ public class NamePages {
      */
     public static String getBaseUrl() {
         return BASE_URL;
+    }
+
+    /**
+     * Gets the uri of API.
+     * @return as string  the uri of API.
+     */
+    public static String getBaseUrlAPI() {
+        return BASE_URL_API;
     }
 }

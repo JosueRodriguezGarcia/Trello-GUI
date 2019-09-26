@@ -1,33 +1,33 @@
-package trello.api.request;
+package trello.api.rest;
 
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
 /**
- * RequestGet class.
+ * RequestDelete class.
  *
- * @author Josue Rodriguez, Raul Choque.
+ * @author Josue Rodriguez, Raul Choque
  * @version 0.0.1
  */
-public class RequestGet extends RequestManagerAbstract {
+public class RequestDelete extends RequestManagerAbstract {
 
     /**
      * Call the method initializeValue from RequestManagerAbstract class.
      */
-    public RequestGet() {
+    public RequestDelete() {
         super.initializeValue();
     }
 
     /**
-     * Makes a get request and returns its response.
+     * Makes a delete request and returns its response.
      *
-     * @return a Response of a get request.
+     * @return a Response of a delete request.
      */
     public Response makeRequest() {
         return given().
                 spec(super.getRequest()).
                 when().
-                get(super.getEndPoint());
+                delete(super.getEndPoint());
     }
 }

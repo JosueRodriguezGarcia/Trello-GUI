@@ -1,4 +1,4 @@
-package trello.api.request;
+package trello.api.rest;
 
 import io.restassured.response.Response;
 
@@ -6,24 +6,24 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 
 /**
- * RequestPut class.
+ * RequestPost class.
  *
- * @author JosueRodriguez, Raul Choque
+ * @author Josue Rodriguez, Raul Choque
  * @version 0.0.1
  */
-public class RequestPut extends RequestManagerAbstract {
+public class RequestPost extends RequestManagerAbstract {
 
     /**
      * Call the method initializeValue from RequestManagerAbstract class.
      */
-    public RequestPut() {
+    public RequestPost() {
         super.initializeValue();
     }
 
     /**
-     * Makes a put request and returns its response.
+     * Makes a post request and returns its response.
      *
-     * @return a Response of a put request.
+     * @return a Response of a post request.
      */
     public Response makeRequest() {
         return given().
@@ -31,6 +31,6 @@ public class RequestPut extends RequestManagerAbstract {
                 contentType(JSON).
                 body(getData()).
                 when().
-                put(getEndPoint());
+                post(getEndPoint());
     }
 }

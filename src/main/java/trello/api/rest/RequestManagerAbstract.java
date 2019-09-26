@@ -1,8 +1,8 @@
-package trello.api.request;
+package trello.api.rest;
 
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import trello.api.utils.Authentication;
+import trello.api.rest.client.RestClientAPI;
 
 /**
  * RequestManagerAbstract class.
@@ -75,7 +75,7 @@ public abstract class RequestManagerAbstract {
      * @return a RequestSpecification.
      */
     public RequestSpecification getRequest() {
-        return Authentication.getInstance().getRequestSpecification();
+        return RestClientAPI.getInstance().getRequestSpecification();
     }
 
     /**

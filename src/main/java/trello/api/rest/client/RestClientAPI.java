@@ -1,9 +1,9 @@
-package trello.api.utils;
+package trello.api.rest.client;
 
-import core.selenium.util.ReadJsonFile;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
+import trello.entities.User;
 import trello.keys.NamePages;
 
 /**
@@ -11,21 +11,21 @@ import trello.keys.NamePages;
  *
  * @author JosueRodriguez, Andres Burgos
  */
-public final class Authentication {
+public final class RestClientAPI {
 
-    private static Authentication oauth;
+    private static RestClientAPI oauth;
     private RequestSpecification request;
 
     /**
      * This is constructor that initializes variables.
      */
-    private Authentication() {
-        //ReadConfiguration reader = ReadConfiguration.getInstance();
-        String consumerKey = ReadJsonFile.getInstance("users").getConsumerKey(); //reader.getConsumerKey();
-        String consumerSecret = ReadJsonFile.getInstance("users").getConsumerSecret(); //reader.getConsumerSecret();
-        String accessToken = ReadJsonFile.getInstance("users").getAccessToken(); //reader.getAccessToken();
-        String tokenSecret = ReadJsonFile.getInstance("users").getTokenSecret(); //reader.getTokenSecret();
-        String baseUrl = NamePages.getBaseUrl(); //reader.getUrlBase();
+    private RestClientAPI() {
+        User user = new User();
+        String consumerKey = user.getConsumerKey();
+        String consumerSecret = user.getConsumerSecret();
+        String accessToken = user.getAccessToken();
+        String tokenSecret = user.getTokenSecret();
+        String baseUrl = NamePages.getBaseUrlAPI();
         request = new RequestSpecBuilder().setAuth(RestAssured.oauth(consumerKey, consumerSecret,
                 accessToken, tokenSecret)).setBaseUri(baseUrl).build();
     }
@@ -35,9 +35,9 @@ public final class Authentication {
      *
      * @return an instance.
      */
-    public static Authentication getInstance() {
+    public static RestClientAPI getInstance() {
         if (oauth == null) {
-            oauth = new Authentication();
+            oauth = new RestClientAPI();
         }
         return oauth;
     }

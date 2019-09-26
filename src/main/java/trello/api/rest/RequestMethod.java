@@ -1,4 +1,4 @@
-package trello.api.request;
+package trello.api.rest;
 
 /**
  * RequestMethod enum.
