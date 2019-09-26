@@ -9,6 +9,7 @@
  * accordance with the terms of the license agreement you entered into
  * with Jala Foundation.
  */
+
 package core.selenium.util;
 
 import com.google.gson.JsonArray;
@@ -22,27 +23,23 @@ import java.io.FileReader;
 /**
  * ReadJsonFile class, read the file of users.
  *
- * @author Raul Choque
+ * @author Raul Choque, Melissa Román
  * @version 0.0.1
  */
 public final class ReadJsonFile {
 
     private static ReadJsonFile readJsonFile;
     private JsonArray account;
-    private JsonObject user;
 
     /**
      * Constructor of ReadJsonFile class.
-     *
-     * @param userType uses to search the userType.
      */
-    private ReadJsonFile(final String userType) {
+    private ReadJsonFile() {
         try {
             JsonParser parser = new JsonParser();
             JsonElement jsonElement = parser.parse(new FileReader("./user.json"));
             JsonObject jsonObject = jsonElement.getAsJsonObject();
-            account  = jsonObject.getAsJsonArray("users");
-            searchUserType(userType);
+            account = jsonObject.getAsJsonArray("users");
         } catch (FileNotFoundException fe) {
             throw new RuntimeException("This file's path not exist" + fe);
         }
@@ -51,64 +48,30 @@ public final class ReadJsonFile {
     /**
      * Gets only instance of ReadJsonFile class.
      *
-     * @param userType uses to select a user.
      * @return a ReadJsonFile object.
      */
-    public static ReadJsonFile getInstance(final String userType) {
+    public static ReadJsonFile getInstance() {
         if (readJsonFile == null) {
-            readJsonFile = new ReadJsonFile(userType);
+            readJsonFile = new ReadJsonFile();
         }
         return readJsonFile;
     }
 
     /**
-     * Gets username of file json.
+     * Gets user data according to given user type.
      *
-     * @return as string username of a user.
+     * @param userType is the type of requested user.
+     * @return data of the requested user.
      */
-    public String getUsername() {
-        return user.get("username").getAsString();
-    }
-
-    /**
-     * Gets password of file json.
-     *
-     * @return as string password of a user.
-     */
-    public String getPassword() {
-        return user.get("password").getAsString();
-    }
-
-    /**
-     * Gets fullName of file json.
-     *
-     * @return as string fullName of a user.
-     */
-    public String getFullName() {
-        return user.get("fullName").getAsString();
-    }
-
-    /**
-     * Gets username of file json.
-     *
-     * @return as string email of a user.
-     */
-    public String getEmail() {
-        return user.get("email").getAsString();
-    }
-
-    /**
-     * Searches a user type of JsonArray.
-     *
-     * @param userType use to search a userType.
-     */
-    private void searchUserType(final String userType) {
-        for (Object object: account) {
+    public JsonObject getDataByUserType(final String userType) {
+        JsonObject userData = new JsonObject();
+        for (Object object : account) {
             JsonObject dataAccount = (JsonObject) object;
             if (dataAccount.has(userType)) {
-                user = dataAccount.get(userType).getAsJsonObject();
+                userData = dataAccount.get(userType).getAsJsonObject();
                 break;
             }
         }
+        return userData;
     }
 }
