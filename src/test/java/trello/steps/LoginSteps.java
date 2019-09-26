@@ -12,6 +12,8 @@
 
 package trello.steps;
 
+import core.selenium.util.JsonConverter;
+import core.selenium.util.ReadJsonFile;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.testng.Assert;
@@ -49,7 +51,9 @@ public class LoginSteps {
      */
     @When("I log in as (.*) user")
     public void loginAsUser(final String userType) {
-        user.initialize(userType);
+        user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType(userType));
+        System.out.println(user);
+        System.out.println(user.getFullName());
         NamePages namePages = new NamePages(context);
         PageTransporter.navigateToURL(namePages.getLoginPage());
         LoginPage loginPage = new LoginPage();
@@ -62,7 +66,7 @@ public class LoginSteps {
     @Then("I should see the user's full name initials")
     public void seeInitialUserFullName() {
         HomePage homePage = new HomePage();
-        Assert.assertEquals(homePage.getInitialFullName(), user.getInitialFullName(),
+        Assert.assertEquals(homePage.getInitialFullName(), user.getFullNameInitials(),
                 "This is not the user's page.");
     }
 }

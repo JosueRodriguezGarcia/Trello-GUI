@@ -23,26 +23,19 @@ import core.selenium.util.ReadJsonFile;
 public class User {
 
     private String username;
-    private String  password;
+    private String password;
     private String fullName;
     private String email;
-
-    /**
-     * Method constructor of User class.
-     *
-     * @param userType to create a user instance.
-     */
-    public void initialize(final String userType) {
-        username = ReadJsonFile.getInstance(userType.toLowerCase()).getUsername();
-        password = ReadJsonFile.getInstance(userType.toLowerCase()).getPassword();
-        fullName = ReadJsonFile.getInstance(userType.toLowerCase()).getFullName();
-        email = ReadJsonFile.getInstance(userType.toLowerCase()).getEmail();
-    }
+    private String consumerKey;
+    private String consumerSecret;
+    private String accessToken;
+    private String tokenSecret;
 
     /**
      * Method constructor empty of User class.
      */
-    public User() { }
+    public User() {
+    }
 
     /**
      * Gets the user name attribute of its class.
@@ -79,17 +72,66 @@ public class User {
     public String getEmail() {
         return email;
     }
+
     /**
      * Gets the initial of full name attribute of this class.
      *
      * @return as string the initial full name attribute.
      */
-    public String getInitialFullName() {
+    public String getFullNameInitials() {
         String res = "";
         String[] splitName = getFullName().split("\\s+");
-        for (String initLetter: splitName) {
+        for (String initLetter : splitName) {
             res = res + initLetter.substring(0, 1).toUpperCase();
         }
         return res;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getConsumerKey() {
+        return consumerKey;
+    }
+
+    public void setConsumerKey(String consumerKey) {
+        this.consumerKey = consumerKey;
+    }
+
+    public String getConsumerSecret() {
+        return consumerSecret;
+    }
+
+    public void setConsumerSecret(String consumerSecret) {
+        this.consumerSecret = consumerSecret;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getTokenSecret() {
+        return tokenSecret;
+    }
+
+    public void setTokenSecret(String tokenSecret) {
+        this.tokenSecret = tokenSecret;
     }
 }
