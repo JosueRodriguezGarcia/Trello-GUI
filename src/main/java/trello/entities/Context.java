@@ -42,6 +42,15 @@ public class Context {
     }
 
     /**
+     * Sets context's user.
+     *
+     * @param user is the user to be shared in context.
+     */
+    public void setUser(final User user) {
+        this.user = user;
+    }
+
+    /**
      * Gets Board attribute of its class.
      *
      * @return the Board attribute.
