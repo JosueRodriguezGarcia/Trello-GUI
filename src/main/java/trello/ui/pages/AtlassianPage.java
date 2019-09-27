@@ -27,8 +27,10 @@ public class AtlassianPage extends BasePage {
 
     @FindBy(id = "username")
     private WebElement usernameField;
+
     @FindBy(id = "password")
     private WebElement passwordField;
+
     @FindBy(id = "login-submit")
     private WebElement loginSubmitButton;
 

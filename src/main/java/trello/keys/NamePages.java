@@ -12,7 +12,6 @@
 
 package trello.keys;
 
-import trello.entities.Context;
 import trello.entities.User;
 
 /**
@@ -42,7 +41,6 @@ public class NamePages {
      */
     public String getHomePage() {
         return BASE_URL + "/" + user.getUsername() + "/boards";
-
     }
 
     /**

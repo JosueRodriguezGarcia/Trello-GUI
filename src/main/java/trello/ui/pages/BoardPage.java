@@ -26,16 +26,16 @@ import org.openqa.selenium.support.FindBy;
 public class BoardPage extends BasePage {
 
     @FindBy(css = ".placeholder")
-    private WebElement newListBtn;
+    private WebElement newListButton;
 
     @FindBy(name = "name")
-    private WebElement newListNameTxtBox;
+    private WebElement newListNameField;
 
     @FindBy(css = ".primary")
-    private WebElement addNewListBtn;
+    private WebElement addNewListButton;
 
     @FindBy(css = "a[class='js-close-list']")
-    private WebElement archiveListBtn;
+    private WebElement archiveListButton;
 
     private static final String BOARD_TITLE_XPATH = "//h2[contains(text(), \"%s\")]";
     private static final String BOARD_MENU_SUFFIX = "/following-sibling::div";
@@ -46,9 +46,9 @@ public class BoardPage extends BasePage {
      * @param listTitle is the list name that will be assigned to the list.
      */
     public void createNewList(final String listTitle) {
-        newListBtn.click();
-        WebDriverMethod.setTxtElement(newListNameTxtBox, listTitle);
-        addNewListBtn.click();
+        newListButton.click();
+        WebDriverMethod.setTxtElement(newListNameField, listTitle);
+        addNewListButton.click();
     }
 
     /**
@@ -71,7 +71,7 @@ public class BoardPage extends BasePage {
         String boardMenuXpath = String.format(BOARD_TITLE_XPATH + BOARD_MENU_SUFFIX, listTitle);
         WebElement listMenuBtn = driver.findElement(By.xpath(boardMenuXpath));
         listMenuBtn.click();
-        archiveListBtn.click();
+        archiveListButton.click();
     }
 
     /**

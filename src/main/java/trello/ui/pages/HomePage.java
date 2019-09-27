@@ -26,7 +26,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class HomePage extends BasePage {
 
     @FindBy(className = "_24AWINHReYjNBf")
-    private WebElement initialFullNameUserBtton;
+    private WebElement initialFullNameUserButton;
 
     private static final String CSS_TO_BOARD = "div[title=\"%s\"]";
 
@@ -35,7 +35,7 @@ public class HomePage extends BasePage {
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.elementToBeClickable(initialFullNameUserBtton));
+        wait.until(ExpectedConditions.elementToBeClickable(initialFullNameUserButton));
     }
 
     /**
@@ -44,7 +44,7 @@ public class HomePage extends BasePage {
      * @return as string the initial of full name.
      */
     public String getInitialFullName() {
-        return initialFullNameUserBtton.getText();
+        return initialFullNameUserButton.getText();
     }
 
     /**

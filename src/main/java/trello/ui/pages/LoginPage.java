@@ -31,42 +31,42 @@ import java.util.concurrent.TimeUnit;
  */
 public class LoginPage extends BasePage {
     @FindBy(id = "user")
-    private WebElement usernameTxt;
+    private WebElement usernameField;
 
     @FindBy(id = "password")
-    private WebElement passwordTxt;
+    private WebElement passwordField;
 
     @FindBy(css = signOffID)
-    private WebElement passwordHiddenTxt;
+    private WebElement passwordHiddenField;
+
+    @FindBy(id = "login")
+    private WebElement loginButton;
 
     private final String signOffID = "div.show-when-password.hidden";
 
-    @FindBy(id = "login")
-    private WebElement logInBtn;
-
     /**
-     * Writes in usernameTxt WebElement the username parameter.
+     * Writes in usernameField WebElement the username parameter.
      *
-     * @param username is to write in usernameTxt WebElement.
+     * @param username is to write in usernameField WebElement.
      */
     private void writeInUsername(final String username) {
-        WebDriverMethod.setTxtElement(usernameTxt, username);
+        WebDriverMethod.setTxtElement(usernameField, username);
     }
 
     /**
-     * Writes in passwordTxt WebElement the password parameter.
+     * Writes in passwordField WebElement the password parameter.
      *
-     * @param password is to write in passwordTxt WebElement.
+     * @param password is to write in passwordField WebElement.
      */
     private void writeInPassword(final String password) {
-        WebDriverMethod.setTxtElement(passwordTxt, password);
+        WebDriverMethod.setTxtElement(passwordField, password);
     }
 
     /**
      * Clicks to submit login form.
      */
     private void clickSubmit() {
-        logInBtn.click();
+        loginButton.click();
     }
 
     /**
@@ -100,6 +100,6 @@ public class LoginPage extends BasePage {
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.elementToBeClickable(logInBtn));
+        wait.until(ExpectedConditions.elementToBeClickable(loginButton));
     }
 }
