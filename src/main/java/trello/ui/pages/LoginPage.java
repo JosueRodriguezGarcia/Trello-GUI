@@ -32,15 +32,8 @@ public class LoginPage extends BasePage {
     @FindBy(id = "password")
     private WebElement passwordField;
 
-    @FindBy(css = SIGN_OFF_ID)
-    private WebElement passwordHiddenField;
-
-    private static final String SIGN_OFF_ID = "div.show-when-password.hidden";
-
     @FindBy(id = "login")
     private WebElement loginButton;
-
-    private final String signOffID = "div.show-when-password.hidden";
 
     /**
      * Writes in usernameField WebElement the username parameter.
@@ -74,14 +67,8 @@ public class LoginPage extends BasePage {
      */
     public void login(final User user) {
         writeInUsername(user.getUsername());
-        if (WebDriverMethod.findElementInDom(driver, SIGN_OFF_ID)) {
-            clickSubmit();
-            AtlassianPage atlassianPage = new AtlassianPage();
-            atlassianPage.login(user);
-        } else {
-            writeInPassword(user.getPassword());
-            clickSubmit();
-        }
+        writeInPassword(user.getPassword());
+        clickSubmit();
     }
 
     /**
