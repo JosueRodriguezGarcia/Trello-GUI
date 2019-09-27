@@ -17,7 +17,7 @@ import trello.ui.pages.HomePage;
 /**
  * Context class.
  *
- * @author Raul Choque
+ * @author Raul Choque, Josue Rodriguez.
  * @version 0.0.1
  */
 public class Context {
@@ -25,15 +25,16 @@ public class Context {
     private User user;
     private Board board;
     private List list;
-    private HomePage homePage;
+    private Card card;
 
     /**
      * Method constructor of Context class.
      */
     public Context() {
         user = new User();
+        board = new Board();
         list = new List();
-        homePage = new HomePage();
+        card = new Card();
     }
 
     /**
@@ -64,6 +65,15 @@ public class Context {
     }
 
     /**
+     * Sets context's user.
+     *
+     * @param board is the user to be shared in context.
+     */
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    /**
      * Gets the context's list.
      *
      * @return the list that is on the context.
@@ -73,20 +83,29 @@ public class Context {
     }
 
     /**
-     * Gets HomePage attribute of its class.
+     * Sets context's user.
      *
-     * @return the HomePage attribute.
+     * @param list is the user to be shared in context.
      */
-    public HomePage getHomePage() {
-        return homePage;
+    public void setList(List list) {
+        this.list = list;
+    }
+
+    /**
+     * Gets the context's card.
+     *
+     * @return the card that is on the context.
+     */
+    public Card getCard() {
+        return card;
     }
 
     /**
      * Sets context's user.
      *
-     * @param homePage is the user to be shared in context.
+     * @param card is the user to be shared in context.
      */
-    public void setHomePage(final HomePage homePage) {
-        this.homePage = homePage;
+    public void setCard(Card card) {
+        this.card = card;
     }
 }

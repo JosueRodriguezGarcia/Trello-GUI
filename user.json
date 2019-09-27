@@ -6,10 +6,10 @@
         "password": "Control123!",
         "fullName": "demo user",
         "email": "demo.user.test@mail.com",
-        "consumerKey": "f62b4eb60493a2e4112c6e4befbafa86",
-        "consumerSecret": "996e9591d9d4925ee5a4151d466aa84c695bff1c06444bda5ea380dc19b038dd",
-        "accessToken": "e119186b99a9df084dd871beb4193d3a762b84b0c24299e29b323b6f41bc081b",
-        "tokenSecret": "e119186b99a9df084dd871beb4193d3a762b84b0c24299e29b323b6f41bc081b"
+        "consumerKey": "eb984803f01e44f1269062699233ef33",
+        "consumerSecret": "e174c26efa97420013afd49bbf1a4816c9164d8ce327f4cee827d28b6daa30ed",
+        "accessToken": "79ae09680be51043ac171f4996d106bc0f1c978182d3a3b69f523c02e5bf6d4b",
+        "tokenSecret": "79ae09680be51043ac171f4996d106bc0f1c978182d3a3b69f523c02e5bf6d4b"
       }
     },
     {

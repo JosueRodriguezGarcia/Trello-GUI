@@ -1,5 +1,7 @@
 package trello.api.rest.client;
 
+import core.selenium.util.JsonConverter;
+import core.selenium.util.ReadJsonFile;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
@@ -9,7 +11,7 @@ import trello.keys.NamePages;
 /**
  * This class is used for authentication.
  *
- * @author JosueRodriguez, Andres Burgos
+ * @author JosueRodriguez
  */
 public final class RestClientAPI {
 
@@ -20,7 +22,7 @@ public final class RestClientAPI {
      * This is constructor that initializes variables.
      */
     private RestClientAPI() {
-        User user = new User();
+        User user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType("admin"));
         String consumerKey = user.getConsumerKey();
         String consumerSecret = user.getConsumerSecret();
         String accessToken = user.getAccessToken();
