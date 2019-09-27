@@ -39,7 +39,7 @@ public class NamePages {
      *
      * @return as string the uri of home page.
      */
-    public String getHomePage() {
+    public String getHomePageUrl() {
         return BASE_URL + "/" + user.getUsername() + "/boards";
     }
 
@@ -48,7 +48,7 @@ public class NamePages {
      *
      * @return as string the uri of login page.
      */
-    public String getLoginPage() {
+    public String getLoginPageUrl() {
         return BASE_URL + "/login";
     }
 }

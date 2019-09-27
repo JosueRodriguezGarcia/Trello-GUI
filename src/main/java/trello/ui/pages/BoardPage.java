@@ -25,16 +25,16 @@ import org.openqa.selenium.support.FindBy;
  */
 public class BoardPage extends BasePage {
 
-    @FindBy(css = ".placeholder")
+    @FindBy(className = "placeholder")
     private WebElement newListButton;
 
-    @FindBy(name = "name")
+    @FindBy(className = "list-name-input")
     private WebElement newListNameField;
 
-    @FindBy(css = ".primary")
+    @FindBy(className = "primary")
     private WebElement addNewListButton;
 
-    @FindBy(css = "a[class='js-close-list']")
+    @FindBy(className = "js-close-list")
     private WebElement archiveListButton;
 
     private static final String BOARD_TITLE_XPATH = "//h2[contains(text(), \"%s\")]";
@@ -71,6 +71,7 @@ public class BoardPage extends BasePage {
         String boardMenuXpath = String.format(BOARD_TITLE_XPATH + BOARD_MENU_SUFFIX, listTitle);
         WebElement listMenuBtn = driver.findElement(By.xpath(boardMenuXpath));
         listMenuBtn.click();
+        //wait.until(ExpectedConditions.presenceOfElementLocated(By.id("whatever")));
         archiveListButton.click();
     }
 

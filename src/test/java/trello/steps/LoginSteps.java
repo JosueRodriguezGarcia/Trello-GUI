@@ -53,7 +53,7 @@ public class LoginSteps {
         User user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType(userType));
         context.setUser(user);
         NamePages namePages = new NamePages(context.getUser());
-        PageTransporter.navigateToURL(namePages.getLoginPage());
+        PageTransporter.navigateToURL(namePages.getLoginPageUrl());
         LoginPage loginPage = new LoginPage();
         loginPage.login(user);
     }
