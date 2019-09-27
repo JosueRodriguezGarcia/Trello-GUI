@@ -12,16 +12,11 @@
 
 package trello.ui.pages;
 
-import core.selenium.WebDriverConfig;
 import core.selenium.util.WebDriverMethod;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import trello.entities.User;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * LoginPage class.
@@ -30,14 +25,17 @@ import java.util.concurrent.TimeUnit;
  * @version 0.0.1
  */
 public class LoginPage extends BasePage {
+
     @FindBy(id = "user")
     private WebElement usernameField;
 
     @FindBy(id = "password")
     private WebElement passwordField;
 
-    @FindBy(css = signOffID)
+    @FindBy(css = SIGN_OFF_ID)
     private WebElement passwordHiddenField;
+
+    private static final String SIGN_OFF_ID = "div.show-when-password.hidden";
 
     @FindBy(id = "login")
     private WebElement loginButton;
@@ -75,23 +73,14 @@ public class LoginPage extends BasePage {
      * @param user use to get user's attribute.
      */
     public void login(final User user) {
-        final long time = 5;
         writeInUsername(user.getUsername());
-        driver.manage()
-                .timeouts()
-                .implicitlyWait(time, TimeUnit.SECONDS);
-        try {
-            driver.findElement(By.cssSelector(signOffID));
+        if (WebDriverMethod.findElementInDom(driver, SIGN_OFF_ID)) {
             clickSubmit();
             AtlassianPage atlassianPage = new AtlassianPage();
             atlassianPage.login(user);
-        } catch (NoSuchElementException e) {
+        } else {
             writeInPassword(user.getPassword());
             clickSubmit();
-        } finally {
-            driver.manage()
-                    .timeouts()
-                    .implicitlyWait(WebDriverConfig.getInstance().getImplicitWaitTime(), TimeUnit.SECONDS);
         }
     }
 

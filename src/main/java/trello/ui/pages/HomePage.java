@@ -12,10 +12,12 @@
 
 package trello.ui.pages;
 
+import core.selenium.util.WebDriverMethod;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
  * HomePage class.
@@ -25,9 +27,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
  */
 public class HomePage extends BasePage {
 
-    @FindBy(className = "_24AWINHReYjNBf")
+    @FindBy(className = INITIAL_NAME_CLASS)
     private WebElement initialFullNameUserButton;
 
+    private static final String INITIAL_NAME_CLASS = "_24AWINHReYjNBf";
     private static final String CSS_TO_BOARD = "div[title=\"%s\"]";
 
     /**
@@ -35,7 +38,12 @@ public class HomePage extends BasePage {
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.elementToBeClickable(initialFullNameUserButton));
+        //wait until the webElement has text.
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(final WebDriver driver) {
+                return driver.findElement(By.className(INITIAL_NAME_CLASS)).getText().length() != 0;
+            }
+        });
     }
 
     /**
@@ -44,11 +52,13 @@ public class HomePage extends BasePage {
      * @return as string the initial of full name.
      */
     public String getInitialFullName() {
+        WebDriverMethod.findElementBeClickable(driver, initialFullNameUserButton);
         return initialFullNameUserButton.getText();
     }
 
     /**
      * Goes to the board page.
+     *
      * @param boardTitle is the title of the board.
      */
     public void clickOnABoard(final String boardTitle) {
