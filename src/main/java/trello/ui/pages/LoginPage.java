@@ -21,7 +21,7 @@ import trello.entities.User;
 /**
  * LoginPage class.
  *
- * @author Raul Choque
+ * @author Raul Choque, Josue Rodriguez Garcia
  * @version 0.0.1
  */
 public class LoginPage extends BasePage {
@@ -32,6 +32,11 @@ public class LoginPage extends BasePage {
     @FindBy(id = "password")
     private WebElement passwordTxt;
 
+    @FindBy(css = SIGN_OFF_ID)
+    private WebElement passwordHiddenTxt;
+
+    private static final String SIGN_OFF_ID = "div.show-when-password.hidden";
+
     @FindBy(id = "login")
     private WebElement logInBtn;
 
@@ -40,7 +45,7 @@ public class LoginPage extends BasePage {
      *
      * @param username is to write in usernameTxt WebElement.
      */
-    public void writeInUsername(final String username) {
+    private void writeInUsername(final String username) {
         WebDriverMethod.setTxtElement(usernameTxt, username);
     }
 
@@ -49,14 +54,14 @@ public class LoginPage extends BasePage {
      *
      * @param password is to write in passwordTxt WebElement.
      */
-    public void writeInPassword(final String password) {
+    private void writeInPassword(final String password) {
         WebDriverMethod.setTxtElement(passwordTxt, password);
     }
 
     /**
      * Clicks to submit login form.
      */
-    public void clickSubmit() {
+    private void clickSubmit() {
         logInBtn.click();
     }
 
@@ -67,8 +72,14 @@ public class LoginPage extends BasePage {
      */
     public void login(final User user) {
         writeInUsername(user.getUsername());
-        writeInPassword(user.getPassword());
-        clickSubmit();
+        if (WebDriverMethod.findElementInDom(driver, SIGN_OFF_ID)) {
+            clickSubmit();
+            AtlassianPage atlassianPage = new AtlassianPage();
+            atlassianPage.login(user);
+        } else {
+            writeInPassword(user.getPassword());
+            clickSubmit();
+        }
     }
 
     /**

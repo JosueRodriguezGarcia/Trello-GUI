@@ -1,5 +1,5 @@
 /*
- * @(#) WedDriverManager.java Copyright (c) 2019 Jala Foundation.
+ * Copyright (c) 2019 Jala Foundation.
  * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
@@ -9,6 +9,7 @@
  * accordance with the terms of the license agreement you entered into
  * with Jala Foundation.
  */
+
 package core.selenium;
 
 import org.openqa.selenium.WebDriver;
@@ -54,8 +55,8 @@ public final class WebDriverManager {
         this.webDriver.manage().window().maximize();
         this.webDriver.manage()
                 .timeouts()
-                .implicitlyWait(WebDriverConfig.getInstance().getImplicitlyWaitTime(), TimeUnit.SECONDS);
-        webDriverWait = new WebDriverWait(webDriver, WebDriverConfig.getInstance().getExplicitlWaitTime(),
+                .implicitlyWait(WebDriverConfig.getInstance().getImplicitWaitTime(), TimeUnit.SECONDS);
+        webDriverWait = new WebDriverWait(webDriver, WebDriverConfig.getInstance().getExplicitWaitTime(),
                 WebDriverConfig.getInstance().getSleepWait());
     }
 
