@@ -33,6 +33,7 @@ import trello.ui.pages.LoginPage;
 public class LoginSteps {
 
     private Context context;
+    private User user;
 
     /**
      * Constructor method to share states between objects.
@@ -41,6 +42,7 @@ public class LoginSteps {
      */
     public LoginSteps(final Context currentContext) {
         this.context = currentContext;
+        this.user = context.getUser();
     }
 
     /**
@@ -50,10 +52,8 @@ public class LoginSteps {
      */
     @When("I log in as (.*) user")
     public void loginAsUser(final String userType) {
-        User user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType(userType));
-        context.setUser(user);
-        NamePages namePages = new NamePages(context.getUser());
-        PageTransporter.navigateToURL(namePages.getLoginPage());
+        user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType(userType));
+        PageTransporter.navigateToURL(NamePages.getLoginPageUrl());
         LoginPage loginPage = new LoginPage();
         loginPage.login(user);
     }
@@ -62,9 +62,9 @@ public class LoginSteps {
      * Sees the initial of full name of user in HomePage.
      */
     @Then("I should see the user's full name initials")
-    public void seeInitialUserFullName() {
+    public void verifyFullNameInitials() {
         HomePage homePage = new HomePage();
-        Assert.assertEquals(homePage.getInitialFullName(), context.getUser().getFullNameInitials(),
-                "This is not the user's page.");
+        Assert.assertEquals(homePage.getFullNameInitials(), user.getFullNameInitials(),
+                "This is not the user's home page.");
     }
 }

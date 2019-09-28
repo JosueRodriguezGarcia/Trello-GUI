@@ -27,42 +27,37 @@ import trello.entities.User;
 public class LoginPage extends BasePage {
 
     @FindBy(id = "user")
-    private WebElement usernameTxt;
+    private WebElement usernameField;
 
     @FindBy(id = "password")
-    private WebElement passwordTxt;
-
-    @FindBy(css = SIGN_OFF_ID)
-    private WebElement passwordHiddenTxt;
-
-    private static final String SIGN_OFF_ID = "div.show-when-password.hidden";
+    private WebElement passwordField;
 
     @FindBy(id = "login")
-    private WebElement logInBtn;
+    private WebElement loginButton;
 
     /**
-     * Writes in usernameTxt WebElement the username parameter.
+     * Writes in usernameField WebElement the username parameter.
      *
-     * @param username is to write in usernameTxt WebElement.
+     * @param username is to write in usernameField WebElement.
      */
     private void writeInUsername(final String username) {
-        WebDriverMethod.setTxtElement(usernameTxt, username);
+        WebDriverMethod.setTxtElement(usernameField, username);
     }
 
     /**
-     * Writes in passwordTxt WebElement the password parameter.
+     * Writes in passwordField WebElement the password parameter.
      *
-     * @param password is to write in passwordTxt WebElement.
+     * @param password is to write in passwordField WebElement.
      */
     private void writeInPassword(final String password) {
-        WebDriverMethod.setTxtElement(passwordTxt, password);
+        WebDriverMethod.setTxtElement(passwordField, password);
     }
 
     /**
      * Clicks to submit login form.
      */
     private void clickSubmit() {
-        logInBtn.click();
+        loginButton.click();
     }
 
     /**
@@ -72,14 +67,8 @@ public class LoginPage extends BasePage {
      */
     public void login(final User user) {
         writeInUsername(user.getUsername());
-        if (WebDriverMethod.findElementInDom(driver, SIGN_OFF_ID)) {
-            clickSubmit();
-            AtlassianPage atlassianPage = new AtlassianPage();
-            atlassianPage.login(user);
-        } else {
-            writeInPassword(user.getPassword());
-            clickSubmit();
-        }
+        writeInPassword(user.getPassword());
+        clickSubmit();
     }
 
     /**
@@ -87,6 +76,6 @@ public class LoginPage extends BasePage {
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.elementToBeClickable(logInBtn));
+        wait.until(ExpectedConditions.elementToBeClickable(loginButton));
     }
 }

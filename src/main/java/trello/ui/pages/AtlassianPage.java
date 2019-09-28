@@ -50,7 +50,7 @@ public class AtlassianPage extends BasePage {
      * @param password defines a input string with password.
      */
     private void fillPasswordField(final String password) {
-        WebDriverMethod.findElementBeClickable(driver, passwordField);
+        WebDriverMethod.waitElementBeClickable(driver, passwordField);
         WebDriverMethod.setTxtElement(passwordField, password);
     }
 
