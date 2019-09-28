@@ -50,15 +50,30 @@ public class Board {
         return name;
     }
 
-    public void setId(String id) {
+    /**
+     * Sets id to the user.
+     *
+     * @param id is the username to be set.
+     */
+    public void setId(final String id) {
         this.id = id;
     }
 
-    public void setNumber(int number) {
+    /**
+     * Sets number to the user.
+     *
+     * @param number is the username to be set.
+     */
+    public void setNumber(final int number) {
         this.number = number;
     }
 
-    public void setName(String name) {
+    /**
+     * Sets name to the user.
+     *
+     * @param name is the username to be set.
+     */
+    public void setName(final String name) {
         this.name = name;
     }
 }

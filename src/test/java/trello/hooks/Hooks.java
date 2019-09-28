@@ -12,10 +12,6 @@
 
 package trello.hooks;
 
-import org.checkerframework.checker.units.qual.C;
-import trello.entities.Context;
-import trello.ui.pages.HomePage;
-
 /**
  * Hooks class.
  *

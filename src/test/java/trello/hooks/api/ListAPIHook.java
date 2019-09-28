@@ -13,7 +13,6 @@
 package trello.hooks.api;
 
 import core.utils.Log;
-import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
 import trello.api.rest.RequestFactory;
@@ -21,57 +20,45 @@ import trello.api.rest.RequestManager;
 import trello.entities.Context;
 
 /**
- * BoardHook class.
+ * ListAPIHook class.
  *
  * @author Josue Rodriguez.
  * @version 0.0.1
  */
-public class BoardAPIHook {
+public class ListAPIHook {
     private Context context;
-    private Response response;
-    private RequestManager requestManager;
 
     /**
      * This method constructor initializes the variables.
      *
      * @param context initializes context attribute.
      */
-    public BoardAPIHook(final Context context) {
+    public ListAPIHook(final Context context) {
         this.context = context;
     }
 
     /**
-     * Makes a request for delete a Board by id.
+     * Makes a request for create a List.
      */
-    @After("@delete-board")
-    public void afterScenario() {
-        String id = context.getBoard().getId();
-        String endPoint = "boards/".concat(id);
-        String method = "delete";
-        requestManager = RequestFactory.getRequest(method);
-        requestManager.setMethod(method);
-        requestManager.setMethod(endPoint);
-        response = requestManager.makeRequest();
-        Log.getInstance().getLogger().info(response);
-    }
 
-    /**
-     * Makes a request for create a Board.
-     */
-    @Before("@create-board")
+    @Before("@create-list")
     public void beforeScenario() {
-        String endPoint = "/boards/";
+        String endPoint = "/lists/";
         String method = "post";
-        String name = "TestBoard";
-        String data = "{ \"name\":\"" + name + "\"}";
-        requestManager = RequestFactory.getRequest(method);
-        requestManager.setEndPoint(endPoint);
+        String name = "TestList";
+        String idBoard = context.getBoard().getId();
+        String data = "{ \"name\":\"" + name + "\" ,"
+                + "\"idBoard\":\"" + idBoard + "\"}";
+        RequestManager requestManager = RequestFactory.getRequest(method);
         requestManager.setMethod(method);
+        requestManager.setEndPoint(endPoint);
         requestManager.setData(data);
-        response = requestManager.makeRequest();
+        Response response = requestManager.makeRequest();
         Log.getInstance().getLogger().info(response);
-        context.getBoard().setId(response.jsonPath().get("id"));
+        context.getList().setId(response.jsonPath().get("id"));
     }
 }
+
+
 
 

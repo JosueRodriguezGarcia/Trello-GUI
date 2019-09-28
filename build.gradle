@@ -53,4 +53,6 @@ dependencies {
     compile group: 'io.rest-assured', name: 'rest-assured', version: '4.1.1'
     compile group: 'io.rest-assured', name: 'json-path', version: '4.1.1'
     compile group: 'io.rest-assured', name: 'xml-path', version: '4.1.1'
+    compile group: 'io.rest-assured', name: 'json-schema-validator', version: '4.1.1'
+    compile group: 'com.github.scribejava', name: 'scribejava-apis', version: '2.5.2'
 }

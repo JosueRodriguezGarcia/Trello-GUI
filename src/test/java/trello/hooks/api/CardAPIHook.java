@@ -21,57 +21,57 @@ import trello.api.rest.RequestManager;
 import trello.entities.Context;
 
 /**
- * BoardHook class.
+ * CardAPIHook class.
  *
  * @author Josue Rodriguez.
  * @version 0.0.1
  */
-public class BoardAPIHook {
+public class CardAPIHook {
     private Context context;
     private Response response;
     private RequestManager requestManager;
 
     /**
-     * This method constructor initializes the variables.
+     * Constructor method initializes the attributes.
      *
      * @param context initializes context attribute.
      */
-    public BoardAPIHook(final Context context) {
+    public CardAPIHook(final Context context) {
         this.context = context;
     }
 
     /**
-     * Makes a request for delete a Board by id.
+     * Makes a request for delete a Card by id.
      */
-    @After("@delete-board")
+    @After("@delete-card")
     public void afterScenario() {
         String id = context.getBoard().getId();
-        String endPoint = "boards/".concat(id);
+        String endPoint = "/cards/".concat(id);
         String method = "delete";
         requestManager = RequestFactory.getRequest(method);
         requestManager.setMethod(method);
-        requestManager.setMethod(endPoint);
+        requestManager.setEndPoint(endPoint);
         response = requestManager.makeRequest();
         Log.getInstance().getLogger().info(response);
     }
 
     /**
-     * Makes a request for create a Board.
+     * Makes a request for create a Card.
      */
-    @Before("@create-board")
+    @Before("@create-card")
     public void beforeScenario() {
-        String endPoint = "/boards/";
+        String endPoint = "/cards/";
         String method = "post";
-        String name = "TestBoard";
-        String data = "{ \"name\":\"" + name + "\"}";
+        String name = "testCard";
+        String idList = context.getList().getId();
+        String data = "{ \"name\":\"" + name + "\" ,"
+                + "\"idList\":\"" + idList + "\"}";
         requestManager = RequestFactory.getRequest(method);
-        requestManager.setEndPoint(endPoint);
         requestManager.setMethod(method);
+        requestManager.setEndPoint(endPoint);
         requestManager.setData(data);
         response = requestManager.makeRequest();
         Log.getInstance().getLogger().info(response);
-        context.getBoard().setId(response.jsonPath().get("id"));
+        context.getCard().setId(response.jsonPath().get("id"));
     }
 }
-
-

@@ -12,7 +12,6 @@
 
 package trello.entities;
 
-import trello.ui.pages.HomePage;
 
 /**
  * Context class.
@@ -69,7 +68,7 @@ public class Context {
      *
      * @param board is the user to be shared in context.
      */
-    public void setBoard(Board board) {
+    public void setBoard(final Board board) {
         this.board = board;
     }
 
@@ -87,7 +86,7 @@ public class Context {
      *
      * @param list is the user to be shared in context.
      */
-    public void setList(List list) {
+    public void setList(final List list) {
         this.list = list;
     }
 
@@ -105,7 +104,7 @@ public class Context {
      *
      * @param card is the user to be shared in context.
      */
-    public void setCard(Card card) {
+    public void setCard(final Card card) {
         this.card = card;
     }
 }

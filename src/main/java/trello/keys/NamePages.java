@@ -12,7 +12,6 @@
 
 package trello.keys;
 
-import trello.entities.Context;
 import trello.entities.User;
 
 /**
