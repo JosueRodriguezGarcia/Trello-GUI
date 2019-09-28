@@ -15,10 +15,9 @@ import core.utils.Log;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
-import trello.api.rest.FactoryRequest;
-import trello.api.rest.RequestManagerAbstract;
+import trello.api.rest.RequestFactory;
+import trello.api.rest.RequestManager;
 import trello.entities.Context;
-import trello.entities.User;
 
 /**
  * BoardHook class create the tagger hooks for the steps.
@@ -29,7 +28,7 @@ import trello.entities.User;
 public class BoardAPIHook {
     private Context context;
     private Response response;
-    private RequestManagerAbstract requestManager;
+    private RequestManager requestManager;
 
     /**
      * This method constructor initializes the variables.
@@ -46,11 +45,11 @@ public class BoardAPIHook {
     @After("@delete-board")
     public void afterScenario() {
         String id = context.getBoard().getId();
-        String endPoint = "/boards/".concat(id);
+        String endPoint = "boards/".concat(id);
         String method = "delete";
-        requestManager = FactoryRequest.getRequest(method);
+        requestManager = RequestFactory.getRequest(method);
         requestManager.setMethod(method);
-        requestManager.setEndPoint(endPoint);
+        requestManager.setMethod(endPoint);
         response = requestManager.makeRequest();
         Log.getInstance().getLogger().info(response);
     }
@@ -64,13 +63,13 @@ public class BoardAPIHook {
         String method = "post";
         String name = "New Board";
         String data = "{ \"name\":\"" + name + "\"}";
-        requestManager = FactoryRequest.getRequest(method);
+        requestManager = RequestFactory.getRequest(method);
+        requestManager.setEndpoint(endPoint);
         requestManager.setMethod(method);
-        requestManager.setEndPoint(endPoint);
         requestManager.setData(data);
         response = requestManager.makeRequest();
-        //Log.getInstance().getLogger().info(response);
-        context.getBoard().setId(response.jsonPath().get("id"));
+        //Log.getInstance().getLogger().info(trello.api.rest.response);
+//        context.getBoard().setId(response.jsonPath().get("id"));
     }
 }
 

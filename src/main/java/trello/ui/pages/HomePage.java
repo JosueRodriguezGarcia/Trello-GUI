@@ -38,7 +38,7 @@ public class HomePage extends BasePage {
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.elementToBeClickable(initialFullNameUserBtton));
+        wait.until(ExpectedConditions.visibilityOf(initialFullNameUserBtton));
     }
 
     /**

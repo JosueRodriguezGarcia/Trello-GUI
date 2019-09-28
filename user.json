@@ -2,14 +2,14 @@
   "users": [
     {
       "admin": {
-        "username": "demouser88",
+        "username": "josuerodriguez07",
         "password": "Control123!",
-        "fullName": "demo user",
-        "email": "demo.user.test@mail.com",
-        "consumerKey": "eb984803f01e44f1269062699233ef33",
-        "consumerSecret": "e174c26efa97420013afd49bbf1a4816c9164d8ce327f4cee827d28b6daa30ed",
-        "accessToken": "79ae09680be51043ac171f4996d106bc0f1c978182d3a3b69f523c02e5bf6d4b",
-        "tokenSecret": "79ae09680be51043ac171f4996d106bc0f1c978182d3a3b69f523c02e5bf6d4b"
+        "fullName": "Josue Rodriguez",
+        "email": "jrg.ikaro@gmail.com",
+        "consumerKey": "b8172176637075376d6f3fa6da4c33c6",
+        "consumerSecret": "6be522fdaf553f92d7a8ef6f275295c8eda8b64ea9b9771e0bc0471c10efcc55",
+        "accessToken": "f77dcce84606a39e0ddbca303dfb92371b28fd3d10b3942597dfd43c18332e3f",
+        "tokenSecret": "f77dcce84606a39e0ddbca303dfb92371b28fd3d10b3942597dfd43c18332e3f"
       }
     },
     {

@@ -1,4 +1,4 @@
-package trello.api.rest.client;
+package trello.api.rest;
 
 import core.selenium.util.JsonConverter;
 import core.selenium.util.ReadJsonFile;
@@ -11,7 +11,7 @@ import trello.keys.NamePages;
 /**
  * This class is used for authentication.
  *
- * @author JosueRodriguez
+ * @author Josue Rodriguez
  */
 public final class RestClientAPI {
 
@@ -23,11 +23,15 @@ public final class RestClientAPI {
      */
     private RestClientAPI() {
         User user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType("admin"));
-        String consumerKey = user.getConsumerKey();
-        String consumerSecret = user.getConsumerSecret();
-        String accessToken = user.getAccessToken();
-        String tokenSecret = user.getTokenSecret();
-        String baseUrl = NamePages.getBaseUrlAPI();
+//        "consumerKey": "b8172176637075376d6f3fa6da4c33c6",
+//                "consumerSecret": "6be522fdaf553f92d7a8ef6f275295c8eda8b64ea9b9771e0bc0471c10efcc55",
+//                "accessToken": "f77dcce84606a39e0ddbca303dfb92371b28fd3d10b3942597dfd43c18332e3f",
+//                "tokenSecret": "f77dcce84606a39e0ddbca303dfb92371b28fd3d10b3942597dfd43c18332e3f"
+        String consumerKey = "b8172176637075376d6f3fa6da4c33c6";//user.getConsumerKey();
+        String consumerSecret = "6be522fdaf553f92d7a8ef6f275295c8eda8b64ea9b9771e0bc0471c10efcc55";//user.getConsumerSecret();
+        String accessToken = "f77dcce84606a39e0ddbca303dfb92371b28fd3d10b3942597dfd43c18332e3f";//user.getAccessToken();
+        String tokenSecret = "f77dcce84606a39e0ddbca303dfb92371b28fd3d10b3942597dfd43c18332e3f";//user.getTokenSecret();
+        String baseUrl = "https://api.trello.com/1/";//NamePages.getBaseUrlAPI();
         request = new RequestSpecBuilder().setAuth(RestAssured.oauth(consumerKey, consumerSecret,
                 accessToken, tokenSecret)).setBaseUri(baseUrl).build();
     }
