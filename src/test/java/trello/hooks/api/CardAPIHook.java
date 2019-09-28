@@ -27,6 +27,7 @@ import trello.entities.Context;
  * @version 0.0.1
  */
 public class CardAPIHook {
+
     private Context context;
     private Response response;
     private RequestManager requestManager;

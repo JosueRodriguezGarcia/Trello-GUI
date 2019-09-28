@@ -26,10 +26,11 @@ import java.util.Map;
  * @version 0.0.1
  */
 public final class RequestFactory {
+
     private static Map<String, RequestManager> requestMap = new HashMap<>();
 
     /**
-     *Private constructor requested by checkstyle.
+     * Private constructor requested by checkstyle.
      */
     private RequestFactory() {
 

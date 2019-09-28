@@ -1,5 +1,5 @@
 /*
- * @(#) RunCukesTest.java Copyright (c) 2019 Jala Foundation.
+ * Copyright (c) 2019 Jala Foundation.
  * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
@@ -21,6 +21,7 @@ import io.restassured.specification.RequestSpecification;
  * @version 0.0.1
  */
 public abstract class RequestManager {
+
     private String endPoint;
     private String data;
     private String method;

@@ -12,7 +12,6 @@
 
 package trello.entities;
 
-
 /**
  * Context class.
  *
@@ -64,34 +63,34 @@ public class Context {
     }
 
     /**
-     * Sets context's user.
+     * Sets board.
      *
-     * @param board is the user to be shared in context.
+     * @param board is the card to be set.
      */
     public void setBoard(final Board board) {
         this.board = board;
     }
 
     /**
-     * Gets the context's list.
+     * Gets list.
      *
-     * @return the list that is on the context.
+     * @return the list.
      */
     public List getList() {
         return list;
     }
 
     /**
-     * Sets context's user.
+     * Sets list.
      *
-     * @param list is the user to be shared in context.
+     * @param list is the list to be set.
      */
     public void setList(final List list) {
         this.list = list;
     }
 
     /**
-     * Gets the context's card.
+     * Gets card.
      *
      * @return the card that is on the context.
      */
@@ -100,9 +99,9 @@ public class Context {
     }
 
     /**
-     * Sets context's user.
+     * Sets card.
      *
-     * @param card is the user to be shared in context.
+     * @param card is the card to be set.
      */
     public void setCard(final Card card) {
         this.card = card;
