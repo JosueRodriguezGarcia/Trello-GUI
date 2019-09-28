@@ -12,10 +12,10 @@
 
 package trello.ui.pages;
 
+import core.selenium.util.WebDriverMethod;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 /**
  * HomePage class.
@@ -25,12 +25,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
  */
 public class HomePage extends BasePage {
 
-    @FindBy(className = "_24AWINHReYjNBf")
-    private WebElement initialFullNameUserBtton;
+    @FindBy(className = INITIAL_CLASS_NAME)
+    private WebElement fullNameInitialsButton;
 
-    @FindBy(className = "_1uK2vQ_aMRS2NU")
-    private WebElement logOutButton;
-
+    private static final String INITIAL_CLASS_NAME = "_24AWINHReYjNBf";
     private static final String CSS_TO_BOARD = "div[title=\"%s\"]";
 
     /**
@@ -38,7 +36,7 @@ public class HomePage extends BasePage {
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.visibilityOf(initialFullNameUserBtton));
+        WebDriverMethod.waitForATextInWebElement(wait, "className", INITIAL_CLASS_NAME);
     }
 
     /**
@@ -46,12 +44,14 @@ public class HomePage extends BasePage {
      *
      * @return as string the initial of full name.
      */
-    public String getInitialFullName() {
-        return initialFullNameUserBtton.getText();
+    public String getFullNameInitials() {
+        WebDriverMethod.waitElementBeClickable(driver, fullNameInitialsButton);
+        return fullNameInitialsButton.getText();
     }
 
     /**
      * Goes to the board page.
+     *
      * @param boardTitle is the title of the board.
      */
     public void clickOnABoard(final String boardTitle) {
@@ -59,26 +59,4 @@ public class HomePage extends BasePage {
         WebElement boardButton = driver.findElement(By.cssSelector(boardCss));
         boardButton.click();
     }
-
-    /**
-     * This is method is used to click in logo out button.
-     */
-    private void clicKinItialFullNameUserBtton() {
-        initialFullNameUserBtton.click();
-    }
-    /**
-     * This is method is used to click in logo out button.
-     */
-    private void clickLogOutButton() {
-        logOutButton.click();
-    }
-
-    /**
-     * This method is used to log out in homepage.
-     */
-    public void logOut() {
-        clicKinItialFullNameUserBtton();
-        clickLogOutButton();
-    }
-
 }

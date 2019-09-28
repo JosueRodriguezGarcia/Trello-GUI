@@ -12,16 +12,11 @@
 
 package trello.ui.pages;
 
-import core.selenium.WebDriverConfig;
 import core.selenium.util.WebDriverMethod;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import trello.entities.User;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * LoginPage class.
@@ -30,43 +25,39 @@ import java.util.concurrent.TimeUnit;
  * @version 0.0.1
  */
 public class LoginPage extends BasePage {
+
     @FindBy(id = "user")
-    private WebElement usernameTxt;
+    private WebElement usernameField;
 
     @FindBy(id = "password")
-    private WebElement passwordTxt;
-
-    @FindBy(css = signOffID)
-    private WebElement passwordHiddenTxt;
-
-    private final String signOffID = "div.show-when-password.hidden";
+    private WebElement passwordField;
 
     @FindBy(id = "login")
-    private WebElement logInBtn;
+    private WebElement loginButton;
 
     /**
-     * Writes in usernameTxt WebElement the username parameter.
+     * Writes in usernameField WebElement the username parameter.
      *
-     * @param username is to write in usernameTxt WebElement.
+     * @param username is to write in usernameField WebElement.
      */
     private void writeInUsername(final String username) {
-        WebDriverMethod.setTxtElement(usernameTxt, username);
+        WebDriverMethod.setTxtElement(usernameField, username);
     }
 
     /**
-     * Writes in passwordTxt WebElement the password parameter.
+     * Writes in passwordField WebElement the password parameter.
      *
-     * @param password is to write in passwordTxt WebElement.
+     * @param password is to write in passwordField WebElement.
      */
     private void writeInPassword(final String password) {
-        WebDriverMethod.setTxtElement(passwordTxt, password);
+        WebDriverMethod.setTxtElement(passwordField, password);
     }
 
     /**
      * Clicks to submit login form.
      */
     private void clickSubmit() {
-        logInBtn.click();
+        loginButton.click();
     }
 
     /**
@@ -75,24 +66,9 @@ public class LoginPage extends BasePage {
      * @param user use to get user's attribute.
      */
     public void login(final User user) {
-        final long time = 5;
         writeInUsername(user.getUsername());
-        driver.manage()
-                .timeouts()
-                .implicitlyWait(time, TimeUnit.SECONDS);
-        try {
-            driver.findElement(By.cssSelector(signOffID));
-            clickSubmit();
-            AtlassianPage atlassianPage = new AtlassianPage();
-            atlassianPage.login(user);
-        } catch (NoSuchElementException e) {
-            writeInPassword(user.getPassword());
-            clickSubmit();
-        } finally {
-            driver.manage()
-                    .timeouts()
-                    .implicitlyWait(WebDriverConfig.getInstance().getImplicitWaitTime(), TimeUnit.SECONDS);
-        }
+        writeInPassword(user.getPassword());
+        clickSubmit();
     }
 
     /**
@@ -100,6 +76,6 @@ public class LoginPage extends BasePage {
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.elementToBeClickable(logInBtn));
+        wait.until(ExpectedConditions.elementToBeClickable(loginButton));
     }
 }
