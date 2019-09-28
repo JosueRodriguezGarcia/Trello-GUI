@@ -13,13 +13,17 @@
 package core.selenium.util;
 
 import core.selenium.WebDriverConfig;
+import core.utils.Log;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -29,6 +33,7 @@ import java.util.concurrent.TimeUnit;
  * @version 0.0.1
  */
 public final class WebDriverMethod {
+    private static HashMap<String, By> byLocator = new HashMap<>();
 
     /**
      * Private constructor requested by checkstyle.
@@ -51,11 +56,12 @@ public final class WebDriverMethod {
     /**
      * Finds webElement in DOM by locator css.
      *
-     * @param webDriver  use to sut up the explicitWait of Driver.
-     * @param elementCss use to search the webElement.
-     * @return as boolean value equal true is whether is find the webElement.
+     * @param webDriver   is the explicitWait of Driver.
+     * @param locatorType is the type of the given locator.
+     * @param locator     is the locator of the web element.
+     * @return a boolean value equal true is whether is find the webElement.
      */
-    public static boolean findElementInDom(final WebDriver webDriver, final String elementCss) {
+    public static boolean findElementInDom(final WebDriver webDriver, final String locatorType, final String locator) {
         boolean result = false;
         final long time = 1;
         webDriver.
@@ -63,11 +69,11 @@ public final class WebDriverMethod {
                 timeouts().
                 implicitlyWait(time, TimeUnit.SECONDS);
         try {
-            webDriver.findElement(By.cssSelector(elementCss));
+            fillMapAccordingLocator(locator);
+            webDriver.findElement(byLocator.get(locatorType));
             result = true;
-            //TODO add log please, log in Atlassian page more
         } catch (NoSuchElementException e) {
-            //TODO add log please, log in login page
+            Log.getInstance().getLogger().info("Not found element: " + locator);
         } finally {
             webDriver.
                     manage().
@@ -83,15 +89,41 @@ public final class WebDriverMethod {
      * @param webDriver  use to set up WebDriverWait.
      * @param webElement use to search the webElement.
      */
-    public static void findElementBeClickable(final WebDriver webDriver, final WebElement webElement) {
+    public static void waitElementBeClickable(final WebDriver webDriver, final WebElement webElement) {
         final long time = 1;
         WebDriverWait webDriverWait = new WebDriverWait(webDriver, time);
         try {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(webElement));
         } catch (NoSuchElementException e) {
-            throw new NullPointerException("Not found element" + webElement);
-        } finally {
-            webDriverWait = new WebDriverWait(webDriver, WebDriverConfig.getInstance().getExplicitWaitTime());
+            throw new ElementClickInterceptedException("This element could not be clickable: " + webElement);
         }
+    }
+
+    /**
+     * Waits for the text to be shown in the web element searched by class name.
+     *
+     * @param webDriverWait is the web driver wait of the used driver.
+     * @param locatorType   is the type of the given locator.
+     * @param locator       is the locator to find the web element. It should be by class.
+     */
+    public static void waitForATextInWebElement(final WebDriverWait webDriverWait, final String locatorType,
+                                                final String locator) {
+        webDriverWait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(final WebDriver driver) {
+                fillMapAccordingLocator(locator);
+                return driver.findElement(byLocator.get(locatorType)).getText().length() != 0;
+            }
+        });
+    }
+
+    /**
+     * Fills the by according to the locator.
+     *
+     * @param locator is the locator to be used.
+     */
+    private static void fillMapAccordingLocator(final String locator) {
+        byLocator.put("className", By.className(locator));
+        byLocator.put("css", By.cssSelector(locator));
+        byLocator.put("id", By.id(locator));
     }
 }

@@ -12,35 +12,31 @@
 
 package trello.keys;
 
-import trello.entities.User;
-
 /**
  * NamePages class.
  *
  * @author Raul Choque, Melissa Román
  * @version 0.0.1
  */
-public class NamePages {
+public final class NamePages {
 
-    private User user;
     private static final String BASE_URL = "https://trello.com";
 
     /**
-     * Constructs NamePages setting the given user.
-     *
-     * @param user is the user to be user to form the URLs.
+     * Empty constructor requested by checkstyle.
      */
-    public NamePages(final User user) {
-        this.user = user;
+    private NamePages() {
+
     }
 
     /**
-     * Gets the uri of home page.
+     * Gets home page URL.
      *
-     * @return as string the uri of home page.
+     * @param username is the username of the user.
+     * @return the home page URL.
      */
-    public String getHomePageUrl() {
-        return BASE_URL + "/" + user.getUsername() + "/boards";
+    public static String getHomePageUrl(final String username) {
+        return BASE_URL + "/" + username + "/boards";
     }
 
     /**
@@ -48,7 +44,7 @@ public class NamePages {
      *
      * @return as string the uri of login page.
      */
-    public String getLoginPageUrl() {
+    public static String getLoginPageUrl() {
         return BASE_URL + "/login";
     }
 }
