@@ -14,8 +14,11 @@ package trello.ui.pages;
 
 import core.selenium.WebDriverManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import javax.swing.*;
 
 /**
  * BasePage class.
@@ -27,6 +30,7 @@ public abstract class BasePage {
 
     protected WebDriver driver;
     protected WebDriverWait wait;
+    protected Actions builder;
 
     /**
      * Constructor of BasePage class.
@@ -34,6 +38,7 @@ public abstract class BasePage {
     public BasePage() {
         this.driver = WebDriverManager.getInstance().getWebDriver();
         this.wait = WebDriverManager.getInstance().getWebDriverWait();
+        builder = new Actions(this.driver);
         PageFactory.initElements(driver, this);
         waitUntilPageObjectIsLoaded();
     }

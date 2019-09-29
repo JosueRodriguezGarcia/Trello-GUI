@@ -39,6 +39,7 @@ public class BoardPage extends BasePage {
 
     private static final String BOARD_TITLE_XPATH = "//h2[contains(text(), \"%s\")]";
     private static final String BOARD_MENU_SUFFIX = "/following-sibling::div";
+    private static final String NEXT_BOARD_POSITION = "/../../../following-sibling::div/div";
 
     /**
      * Creates a new list.
@@ -73,6 +74,12 @@ public class BoardPage extends BasePage {
         listMenuBtn.click();
         //wait.until(ExpectedConditions.presenceOfElementLocated(By.id("whatever")));
         archiveListButton.click();
+    }
+
+    public void moveList(final String listTitle) {
+        String boardTitleXpath = String.format(BOARD_TITLE_XPATH, listTitle);
+        String nextBoardXpath = String.format(BOARD_TITLE_XPATH + NEXT_BOARD_POSITION, listTitle);
+        builder.dragAndDrop(driver.findElement(By.xpath(boardTitleXpath)), driver.findElement(By.xpath(nextBoardXpath)));
     }
 
     /**

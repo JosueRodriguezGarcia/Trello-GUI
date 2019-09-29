@@ -72,4 +72,10 @@ public class ListSteps {
         boardPage = new BoardPage();
         Assert.assertTrue(boardPage.isThereThisListByTitle(context.getList().getTitle()));
     }
+
+    @When("I move (.*) from first to last position")
+    public void moveList(final String listTitle) {
+        boardPage = new BoardPage();
+        boardPage.moveList(listTitle);
+    }
 }
