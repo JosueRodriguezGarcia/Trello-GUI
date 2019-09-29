@@ -19,4 +19,5 @@ package trello.hooks;
  * @version 0.0.1
  */
 public class Hooks {
+
 }
