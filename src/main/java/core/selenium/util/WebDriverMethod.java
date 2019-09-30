@@ -126,4 +126,17 @@ public final class WebDriverMethod {
         byLocator.put("css", By.cssSelector(locator));
         byLocator.put("id", By.id(locator));
     }
+
+    /**
+     * Creates a WebElement that is find in the DOM.
+     *
+     * @param driver is to get the DOM.
+     * @param locatorType is to type of locator to search a element.
+     * @param locator is to find the element into the DOM.
+     * @return a object of Web Element.
+     */
+    public static WebElement createWebElement(final WebDriver driver, final String locatorType, final String locator) {
+        fillMapAccordingLocator(locator);
+        return driver.findElement(byLocator.get(locatorType));
+    }
 }
