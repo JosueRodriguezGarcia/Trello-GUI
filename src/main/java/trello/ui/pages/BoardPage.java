@@ -14,7 +14,9 @@ package trello.ui.pages;
 
 import core.selenium.util.WebDriverMethod;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 /**
@@ -77,10 +79,27 @@ public class BoardPage extends BasePage {
     }
 
     public void moveList(final String listTitle) {
+
         String boardTitleXpath = String.format(BOARD_TITLE_XPATH, listTitle);
         String nextBoardXpath = String.format(BOARD_TITLE_XPATH + NEXT_BOARD_POSITION, listTitle);
-        builder.dragAndDrop(driver.findElement(By.xpath(boardTitleXpath)), driver.findElement(By.xpath(nextBoardXpath)));
+        WebElement nextBoard = driver.findElement(By.xpath(nextBoardXpath));
+        WebElement from = driver.findElement(By.xpath(boardTitleXpath));
+
+        Point nextBoardPoint = nextBoard.getLocation();
+        builder.dragAndDropBy(from, nextBoardPoint.getX(), nextBoardPoint.getY()).build().perform();
+        System.out.println(nextBoardPoint.getX());
+        System.out.println(nextBoardPoint.getY());
+
+
+/*
+        builder.moveToElement(from).clickAndHold().perform();
+        builder.moveToElement(nextBoard).perform();
+        builder.moveToElement(from).release().perform();
+
+ */
     }
+
+
 
     /**
      * Wait until Page object is found.
