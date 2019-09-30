@@ -13,12 +13,12 @@
 package trello.ui.components;
 
 /**
- * Element interface.
+ * IElement interface.
  *
  * @author Raul Choque
  * @version 0.0.1
  */
-public interface Element {
+public interface IElement {
 
     /**
      * Opens the page selected.

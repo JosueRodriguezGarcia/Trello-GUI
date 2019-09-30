@@ -18,6 +18,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import trello.ui.pages.BasePage;
 
+import static org.openqa.selenium.By.cssSelector;
+
 /**
  * TopMenu class.
  *
@@ -47,24 +49,24 @@ public class TopMenu extends BasePage {
     /**
      * Gets the option home in the TopMenu.
      *
-     * @return a object of Element.
+     * @return a object of IElement.
      */
-    public Element getHome() {
+    public IElement getHome() {
         return new Link(homeLink);
     }
 
     /**
      * Gets the option Add in the TopMenu.
      *
-     * @return a object of Element.
+     * @return a object of IElement.
      */
-    public Element getAdd() {
+    public IElement getAdd() {
         Menu menuAdd = new Menu(addButton);
-        WebElement addBoardButton = driver.findElement(By.
-                cssSelector("button[class='_2jR0BZMM5cBReR'] span[name='board']"));
+        By boardByCss = cssSelector("button[class='_2jR0BZMM5cBReR'] span[name='board']");
+        WebElement addBoardButton = driver.findElement(boardByCss);
         Link createBoard = new Link(addBoardButton);
-        WebElement addTeamButton = driver.findElement(By.
-                cssSelector("button[class='_2jR0BZMM5cBReR'] span[name='organization']"));
+        By teamByCss = cssSelector("button[class='_2jR0BZMM5cBReR'] span[name='organization']");
+        WebElement addTeamButton = driver.findElement(teamByCss);
         Link createCreate = new Link(addTeamButton);
         menuAdd.addElement("addBoard", createBoard);
         menuAdd.addElement("addTeam", createCreate);
@@ -74,18 +76,22 @@ public class TopMenu extends BasePage {
     /**
      * Gets the option User in the TopMenu.
      *
-     * @return a object of Element.
+     * @return a object of IElement.
      */
-    public Element getUserOption() {
+    public IElement getUserOption() {
+        String linkCss = "div[data-test-id='header-member-menu-popover'] a[href*='%s']";
         Menu menuUser = new Menu(userButton);
-        WebElement logOutButton = driver.findElement(By.
-                cssSelector("button[data-test-id='header-member-menu-logout'] span[class='_1uK2vQ_aMRS2NU']"));
+        By logOutByCss = cssSelector("button[data-test-id='header-member-menu-logout'] span[class='_1uK2vQ_aMRS2NU']");
+        WebElement logOutButton = driver.findElement(logOutByCss);
         Link logOut = new Link(logOutButton);
-        WebElement profileLink = driver.findElement(By.cssSelector("a[href*='profile']"));
+        By profileByCss = cssSelector(String.format(linkCss, "profile"));
+        WebElement profileLink = driver.findElement(profileByCss);
         Link profile = new Link(profileLink);
-        WebElement cardsLink = driver.findElement(By.cssSelector("a[href*='cards']"));
+        By cardsByCss = cssSelector(String.format(linkCss, "cards"));
+        WebElement cardsLink = driver.findElement(cardsByCss);
         Link cards = new Link(cardsLink);
-        WebElement activityLink = driver.findElement(By.cssSelector("a[href*='activity']"));
+        By activityByCss = cssSelector(String.format(linkCss, "activity"));
+        WebElement activityLink = driver.findElement(activityByCss);
         Link activity = new Link(activityLink);
         menuUser.addElement("logOut", logOut);
         menuUser.addElement("profile", profile);

@@ -23,10 +23,10 @@ import java.util.Map;
  * @author Raul Choque
  * @version 0.0.1
  */
-public class Menu implements Element {
+public class Menu implements IElement {
 
     private final WebElement element;
-    private final Map<String, Element> elements = new HashMap<>();
+    private final Map<String, IElement> elements = new HashMap<>();
 
     /**
      * Constructor for create object of this class.
@@ -61,7 +61,7 @@ public class Menu implements Element {
      * @param name is the key into the map.
      * @param element is the value into the map.
      */
-    public void addElement(final String name, final Element element) {
+    public void addElement(final String name, final IElement element) {
         elements.put(name, element);
     }
 }

@@ -20,7 +20,7 @@ import org.openqa.selenium.WebElement;
  * @author Raul Choque
  * @version 0.0.1
  */
-public class Link implements Element {
+public class Link implements IElement {
 
     private WebElement element;
 
