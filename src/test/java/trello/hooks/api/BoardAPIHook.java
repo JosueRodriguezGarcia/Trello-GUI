@@ -63,7 +63,7 @@ public class BoardAPIHook {
     public void beforeScenario() {
         String endPoint = "/boards/";
         String method = "post";
-        String name = "TestBoard";
+        String name = "TestBoard02";
         String data = "{ \"name\":\"" + name + "\"}";
         requestManager = RequestFactory.getRequest(method);
         requestManager.setEndPoint(endPoint);
