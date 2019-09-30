@@ -15,7 +15,7 @@ package trello.entities;
 /**
  * Context class.
  *
- * @author Raul Choque
+ * @author Raul Choque, Josue Rodriguez.
  * @version 0.0.1
  */
 public class Context {
@@ -23,13 +23,16 @@ public class Context {
     private User user;
     private Board board;
     private List list;
+    private Card card;
 
     /**
      * Method constructor of Context class.
      */
     public Context() {
         user = new User();
+        board = new Board();
         list = new List();
+        card = new Card();
     }
 
     /**
@@ -60,11 +63,47 @@ public class Context {
     }
 
     /**
-     * Gets the context's list.
+     * Sets board.
      *
-     * @return the list that is on the context.
+     * @param board is the card to be set.
+     */
+    public void setBoard(final Board board) {
+        this.board = board;
+    }
+
+    /**
+     * Gets list.
+     *
+     * @return the list.
      */
     public List getList() {
         return list;
+    }
+
+    /**
+     * Sets list.
+     *
+     * @param list is the list to be set.
+     */
+    public void setList(final List list) {
+        this.list = list;
+    }
+
+    /**
+     * Gets card.
+     *
+     * @return the card that is on the context.
+     */
+    public Card getCard() {
+        return card;
+    }
+
+    /**
+     * Sets card.
+     *
+     * @param card is the card to be set.
+     */
+    public void setCard(final Card card) {
+        this.card = card;
     }
 }

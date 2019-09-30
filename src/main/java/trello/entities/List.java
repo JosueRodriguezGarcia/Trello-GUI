@@ -20,6 +20,7 @@ package trello.entities;
  */
 public class List {
 
+    private String id;
     private String title;
 
     /**
@@ -38,5 +39,23 @@ public class List {
      */
     public String getTitle() {
         return title;
+    }
+
+    /**
+     * Gets the id attribute of its class.
+     *
+     * @return as string the id attribute.
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Sets id to the user.
+     *
+     * @param id is the username to be set.
+     */
+    public void setId(final String id) {
+        this.id = id;
     }
 }
