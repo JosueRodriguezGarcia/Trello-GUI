@@ -28,7 +28,6 @@ public class Menu implements Element {
     private final WebElement element;
     private final Map<String, Element> elements = new HashMap<>();
 
-
     /**
      * Constructor for create object of this class.
      *
