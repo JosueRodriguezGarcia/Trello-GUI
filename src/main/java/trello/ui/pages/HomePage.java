@@ -36,6 +36,7 @@ public class HomePage extends ApplicationBasePage {
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
+        System.out.println("##################wait for text");
         WebDriverMethod.waitForATextInWebElement(wait, "className", INITIAL_CLASS_NAME);
     }
 

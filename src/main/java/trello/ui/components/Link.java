@@ -38,6 +38,7 @@ public class Link implements Element {
      */
     @Override
     public void openPage() {
+        System.out.println("--------------------press Link");
         element.click();
     }
 }

@@ -29,69 +29,101 @@ public class TopMenu extends BasePage {
     @FindBy(name = "house")
     private WebElement homeLink;
 
-    @FindBy(css = "div[class='TMI28E0KnYSK9p'] span[name='add']")
+    @FindBy(name = "add")
     private WebElement addButton;
 
+    @FindBy(css = "button[class='_2jR0BZMM5cBReR'] span[name='board']")
+    private WebElement createBoardButton;
+
+    @FindBy(css = "button[class='_2jR0BZMM5cBReR'] span[name='organization']")
+    private WebElement createTeamButton;
+
     @FindBy(className = USER_CLASS_NAME)
-    private WebElement userButton;
+    private WebElement userActionButton;
 
     private static final String USER_CLASS_NAME = "_24AWINHReYjNBf";
 
-    /**
-     * Constructor method for create an object of it's class.
-     */
-    public TopMenu() {
+    @FindBy(css = "div[data-test-id='header-member-menu-popover'] a[href*='profile']")
+    private WebElement settingUserLink;
 
+    @FindBy(css = "div[data-test-id='header-member-menu-popover'] a[href*='activity']")
+    private WebElement activityUsersLink;
+
+    @FindBy(css = "div[data-test-id='header-member-menu-popover'] a[href*='cards']")
+    private WebElement userCardsLink;
+
+    @FindBy(css = "button[data-test-id='header-member-menu-logout'] span[class='_1uK2vQ_aMRS2NU']")
+    private WebElement logoutButton;
+
+
+    /**
+     * Opens the Home page from the TopMenu.
+     */
+    public void openHomePage() {
+        System.out.println("press the link home");
+        homeLink.click();
     }
 
     /**
-     * Gets the option home in the TopMenu.
-     *
-     * @return a object of Element.
+     * Open the menu from addButton.
      */
-    public Element getHome() {
-        return new Link(homeLink);
+    private void openAddButton() {
+        addButton.click();
     }
 
     /**
-     * Gets the option Add in the TopMenu.
-     *
-     * @return a object of Element.
+     * Opens the create Board.
      */
-    public Element getAdd() {
-        Menu menuAdd = new Menu(addButton);
-        WebElement addBoardButton = driver.findElement(By.
-                cssSelector("button[class='_2jR0BZMM5cBReR'] span[name='board']"));
-        Link createBoard = new Link(addBoardButton);
-        WebElement addTeamButton = driver.findElement(By.
-                cssSelector("button[class='_2jR0BZMM5cBReR'] span[name='organization']"));
-        Link createCreate = new Link(addTeamButton);
-        menuAdd.addElement("addBoard", createBoard);
-        menuAdd.addElement("addTeam", createCreate);
-        return menuAdd;
+    public void createBoard() {
+        openAddButton();
+        createBoardButton.click();
     }
 
     /**
-     * Gets the option User in the TopMenu.
-     *
-     * @return a object of Element.
+     * Opens the create Team.
      */
-    public Element getUserOption() {
-        Menu menuUser = new Menu(userButton);
-        WebElement logOutButton = driver.findElement(By.
-                cssSelector("button[data-test-id='header-member-menu-logout'] span[class='_1uK2vQ_aMRS2NU']"));
-        Link logOut = new Link(logOutButton);
-        WebElement profileLink = driver.findElement(By.cssSelector("a[href*='profile']"));
-        Link profile = new Link(profileLink);
-        WebElement cardsLink = driver.findElement(By.cssSelector("a[href*='cards']"));
-        Link cards = new Link(cardsLink);
-        WebElement activityLink = driver.findElement(By.cssSelector("a[href*='activity']"));
-        Link activity = new Link(activityLink);
-        menuUser.addElement("logOut", logOut);
-        menuUser.addElement("profile", profile);
-        menuUser.addElement("cards", cards);
-        menuUser.addElement("activity", activity);
-        return menuUser;
+    public void createTeam() {
+        openAddButton();
+        createTeamButton.click();
+    }
+
+    /**
+     * Opens the menu from userActionButton.
+     */
+    private void openUserActionButton() {
+        userActionButton.click();
+    }
+
+    /**
+     * Opens the etting user page.
+     */
+    public void openSettingUserPage() {
+        openUserActionButton();
+        settingUserLink.click();
+    }
+
+    /**
+     * Opens the activity users page.
+     */
+    public void openActivityUserPage() {
+        openUserActionButton();
+        activityUsersLink.click();
+    }
+
+    /**
+     * Opens the user cards page.
+     */
+    public void openUserCardsPage() {
+        openUserActionButton();
+        userCardsLink.click();
+    }
+
+    /**
+     * Logout from the page.
+     */
+    public void logoutPage() {
+        openUserActionButton();
+        logoutButton.click();
     }
 
     /**
@@ -101,4 +133,80 @@ public class TopMenu extends BasePage {
     protected void waitUntilPageObjectIsLoaded() {
         WebDriverMethod.waitForATextInWebElement(wait, "className", USER_CLASS_NAME);
     }
+
+//    @FindBy(name = "house")
+//    private WebElement homeLink;
+//
+//    @FindBy(css = "div[class='TMI28E0KnYSK9p'] span[name='add']")
+//    private WebElement addButton;
+//
+//    @FindBy(className = USER_CLASS_NAME)
+//    private WebElement userButton;
+//
+//    private static final String USER_CLASS_NAME = "_24AWINHReYjNBf";
+//
+//    /**
+//     * Constructor method for create an object of it's class.
+//     */
+//    public TopMenu() {
+//
+//    }
+//
+//    /**
+//     * Gets the option home in the TopMenu.
+//     *
+//     * @return a object of Element.
+//     */
+//    public Element getHome() {
+//        return new Link(homeLink);
+//    }
+//
+//    /**
+//     * Gets the option Add in the TopMenu.
+//     *
+//     * @return a object of Element.
+//     */
+//    public Element getAdd() {
+//        Menu menuAdd = new Menu(addButton);
+//        WebElement addBoardButton = driver.findElement(By.
+//                cssSelector("button[class='_2jR0BZMM5cBReR'] span[name='board']"));
+//        Link createBoard = new Link(addBoardButton);
+//        WebElement addTeamButton = driver.findElement(By.
+//                cssSelector("button[class='_2jR0BZMM5cBReR'] span[name='organization']"));
+//        Link createCreate = new Link(addTeamButton);
+//        menuAdd.addElement("addBoard", createBoard);
+//        menuAdd.addElement("addTeam", createCreate);
+//        return menuAdd;
+//    }
+//
+//    /**
+//     * Gets the option User in the TopMenu.
+//     *
+//     * @return a object of Element.
+//     */
+//    public Element getUserOption() {
+//        Menu menuUser = new Menu(userButton);
+//        WebElement logOutButton = driver.findElement(By.
+//                cssSelector("button[data-test-id='header-member-menu-logout'] span[class='_1uK2vQ_aMRS2NU']"));
+//        Link logOut = new Link(logOutButton);
+//        WebElement profileLink = driver.findElement(By.cssSelector("a[href*='profile']"));
+//        Link profile = new Link(profileLink);
+//        WebElement cardsLink = driver.findElement(By.cssSelector("a[href*='cards']"));
+//        Link cards = new Link(cardsLink);
+//        WebElement activityLink = driver.findElement(By.cssSelector("a[href*='activity']"));
+//        Link activity = new Link(activityLink);
+//        menuUser.addElement("logOut", logOut);
+//        menuUser.addElement("profile", profile);
+//        menuUser.addElement("cards", cards);
+//        menuUser.addElement("activity", activity);
+//        return menuUser;
+//    }
+//
+//    /**
+//     * Waits until that element is loaded its text.
+//     */
+//    @Override
+//    protected void waitUntilPageObjectIsLoaded() {
+//        WebDriverMethod.waitForATextInWebElement(wait, "className", USER_CLASS_NAME);
+//    }
 }
