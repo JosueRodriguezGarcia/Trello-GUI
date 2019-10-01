@@ -23,7 +23,7 @@ import org.openqa.selenium.support.FindBy;
  * @author Raul Choque
  * @version 0.0.1
  */
-public class HomePage extends BasePage {
+public class HomePage extends ApplicationBasePage {
 
     @FindBy(className = INITIAL_CLASS_NAME)
     private WebElement fullNameInitialsButton;
