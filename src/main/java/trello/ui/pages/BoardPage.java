@@ -17,6 +17,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * BoardPage class.
  *
@@ -39,6 +42,24 @@ public class BoardPage extends BasePage {
 
     private static final String BOARD_TITLE_XPATH = "//h2[contains(text(), \"%s\")]";
     private static final String BOARD_MENU_SUFFIX = "/following-sibling::div";
+
+    @FindBy(id = "board")
+    private WebElement board;
+
+    @FindBy(css = "div.list")
+    private List<WebElement> lists;
+
+    @FindBy(className = "js-card-title")
+    private WebElement titleCard;
+
+    @FindBy(className = "js-add-card")
+    private WebElement addCard;
+
+    @FindBy(className = "js-add-another-card")
+    private WebElement addAnotherCard;
+
+    @FindBy(className = "js-add-a-card")
+    private WebElement addACard;
 
     /**
      * Creates a new list.
@@ -65,6 +86,7 @@ public class BoardPage extends BasePage {
 
     /**
      * Archives list by list title.
+     *
      * @param listTitle is the title of the list that is requested to archive.
      */
     public void archiveListByTitle(final String listTitle) {
@@ -73,6 +95,58 @@ public class BoardPage extends BasePage {
         listMenuBtn.click();
         //wait.until(ExpectedConditions.presenceOfElementLocated(By.id("whatever")));
         archiveListButton.click();
+    }
+
+    /**
+     * Adds a new card to a list.
+     * @param listTitle defines the lists where add a card.
+     * @param cardTitle defines the card  to be add.
+     */
+    public void addCardInList(final String listTitle, final String cardTitle) {
+        for (WebElement list : lists) {
+            if (list.findElement(By.className("js-list-name-input")).getText().equals(listTitle)) {
+                if (list.findElement(By.className("js-add-a-card")).isDisplayed()) {
+                    list.findElement(By.className("js-add-a-card")).click();
+                } else {
+                    list.findElement(By.className("js-add-another-card")).click();
+                }
+                titleCard.sendKeys(cardTitle);
+                addCard.click();
+            }
+
+        }
+    }
+
+    /**
+     * Searches a card in a list.
+     * @param listTitle defines of list in that search.
+     * @param cardTitle defines the card that search.
+     * @return a boolean with value true if card exist in list.
+     */
+    public boolean searchCardInList(final String listTitle, final String cardTitle) {
+        boolean result = false;
+        List<WebElement> cards = cardsInList(listTitle);
+        for (WebElement card : cards) {
+            if (card.findElement(By.className("js-card-name")).getText().equals(cardTitle)) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Gets a List with the cards of a list.
+     * @param listTitle defines the list that search.
+     * @return a List<WebElement>.
+     */
+    public List<WebElement> cardsInList(final String listTitle) {
+        List<WebElement> cardsInList = new ArrayList<WebElement>();
+        for (WebElement list : lists) {
+            if (list.findElement(By.className("js-list-name-input")).getText().equals(listTitle)) {
+                cardsInList = list.findElements(By.className("js-card-details"));
+            }
+        }
+        return cardsInList;
     }
 
     /**
