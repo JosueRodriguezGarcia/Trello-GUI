@@ -64,8 +64,7 @@ public class LoginSteps {
     @Then("I should see the user's full name initials")
     public void verifyFullNameInitials() {
         HomePage homePage = new HomePage();
-        homePage.getTopMenu().openHomePage();
-//        Assert.assertEquals(homePage.getFullNameInitials(), user.getFullNameInitials(),
-//                "This is not the user's home page.");
+        Assert.assertEquals(homePage.getFullNameInitials(), user.getFullNameInitials(),
+                "This is not the user's home page.");
     }
 }

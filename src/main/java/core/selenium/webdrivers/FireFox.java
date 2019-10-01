@@ -31,7 +31,7 @@ public class FireFox implements IBrowser {
      * @return a WebDriver with configuration the Firefox browser.
      */
     public WebDriver initDriver() {
-        FirefoxDriverManager.getInstance().version("0.24.0").setup();
+        FirefoxDriverManager.getInstance().version("0.25.0").setup();
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         return new FirefoxDriver(firefoxOptions);
     }

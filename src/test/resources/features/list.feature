@@ -1,6 +1,6 @@
 Feature: List actions
 
-  @ArchiveList
+  @ArchiveList @LogOut
   Scenario: New list creation
     Given I log in as admin user
     When I select TestBoard board

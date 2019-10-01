@@ -21,6 +21,7 @@ package trello.keys;
 public final class NamePages {
 
     private static final String BASE_URL = "https://trello.com";
+    private static final String BASE_URL_API = "https://api.trello.com/1";
 
     /**
      * Empty constructor requested by checkstyle.
@@ -46,5 +47,23 @@ public final class NamePages {
      */
     public static String getLoginPageUrl() {
         return BASE_URL + "/login";
+    }
+
+    /**
+     * Gets the base url.
+     *
+     * @return as string the base url.
+     */
+    public static String getBaseUrl() {
+        return BASE_URL;
+    }
+
+    /**
+     * Gets the uri of API.
+     *
+     * @return as string  the uri of API.
+     */
+    public static String getBaseUrlAPI() {
+        return BASE_URL_API;
     }
 }

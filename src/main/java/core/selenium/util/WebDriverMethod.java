@@ -133,7 +133,7 @@ public final class WebDriverMethod {
      * @param driver is to get the DOM.
      * @param locatorType is to type of locator to search a element.
      * @param locator is to find the element into the DOM.
-     * @return a object of Web Element.
+     * @return a object of Web IElement.
      */
     public static WebElement createWebElement(final WebDriver driver, final String locatorType, final String locator) {
         fillMapAccordingLocator(locator);
