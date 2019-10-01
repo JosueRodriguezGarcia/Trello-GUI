@@ -22,11 +22,23 @@ import trello.keys.NamePages;
 
 /**
  * Authentication class.
- * @autor Josue Rodriguez Garcia.
+ *
+ * @author Josue Rodriguez Garcia.
  * @version 0.0.1.
  */
-public class Authentication {
+public final class Authentication {
 
+    /**
+     * Private constructor requested by checkstyle.
+     */
+    private Authentication() {
+
+    }
+
+    /**
+     * Gets the RequestSpecification for the authentication type oauth.
+     * @return a RequestSpecification.
+     */
     public static RequestSpecification getRequestSpecification() {
         User user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType("admin"));
         String consumerKey = user.getConsumerKey();

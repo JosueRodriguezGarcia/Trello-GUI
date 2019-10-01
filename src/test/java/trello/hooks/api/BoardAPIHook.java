@@ -12,7 +12,6 @@
 
 package trello.hooks.api;
 
-import core.utils.Log;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
@@ -33,7 +32,9 @@ public class BoardAPIHook {
 
     private Context context;
     private Response response;
-    RestClientAPI request;
+    private RestClientAPI request;
+    private final int orderAfter = 3;
+    private final int orderBefore = 1;
 //    private RequestSpecification requestSpecification;
 
     /**
@@ -49,22 +50,22 @@ public class BoardAPIHook {
     /**
      * Makes a requestBoard for delete a Board by id.
      */
-    @After(order = 100, value = "@delete-board")
+    @After(order = orderAfter, value = "@delete-board")
     public void afterScenario() {
         String id = context.getBoard().getId();
         String endPoint = "/boards/".concat(id);
-        response = request.delete(endPoint);;
+        response = request.delete(endPoint);
     }
 
     /**
      * Makes a requestBoard for create a Board.
      */
-    @Before(order = 1, value = "@create-board")
+    @Before(order = orderBefore, value = "@create-board")
     public void beforeScenario() {
         String endPoint = "/boards/";
-        String name = "TestBoard";
-        Map<String, String> data =  new HashMap<>();
-        data.put("name",name);
+        String name = "TestBoard2";
+        Map<String, String> data = new HashMap<>();
+        data.put("name", name);
         request.buildSpec(data);
         response = request.post(endPoint);
         context.getBoard().setId(response.getBody().jsonPath().get("id"));

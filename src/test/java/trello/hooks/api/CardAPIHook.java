@@ -12,10 +12,10 @@
 
 package trello.hooks.api;
 
-import core.utils.Log;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
+import trello.api.rest.Authentication;
 import trello.api.rest.RestClientAPI;
 import trello.entities.Context;
 
@@ -32,7 +32,9 @@ public class CardAPIHook {
 
     private Context context;
     private Response response;
-    RestClientAPI request;
+    private RestClientAPI request;
+    private final int orderAfter = 1;
+    private final int orderBefore = 3;
 
     /**
      * Constructor method initializes the attributes.
@@ -41,34 +43,33 @@ public class CardAPIHook {
      */
     public CardAPIHook(final Context context) {
         this.context = context;
+        request = new RestClientAPI(Authentication.getRequestSpecification());
     }
 
     /**
      * Makes a requestBoard for delete a Card by id.
      */
-    @After("@delete-card")
+    @After(order = orderAfter, value = "@delete-card")
     public void afterScenario() {
         String id = context.getCard().getId();
         String endPoint = "/cards/".concat(id);
         response = request.delete(endPoint);
-        Log.getInstance().getLogger().info(response);
     }
 
     /**
      * Makes a requestBoard for create a Card.
      */
-    @Before("@create-card")
+    @Before(order = orderBefore, value = "@create-card")
     public void beforeScenario() {
         String endPoint = "/cards/";
         String method = "post";
         String name = "testCard";
         String idList = context.getList().getId();
-        Map<String, String> data =  new HashMap<>();
-        data.put("name",name);
-        data.put("idList",idList);
+        Map<String, String> data = new HashMap<>();
+        data.put("name", name);
+        data.put("idList", idList);
         request.buildSpec(data);
         response = request.post(endPoint);
-        Log.getInstance().getLogger().info(response);
         context.getCard().setId(response.jsonPath().get("id"));
     }
 }
