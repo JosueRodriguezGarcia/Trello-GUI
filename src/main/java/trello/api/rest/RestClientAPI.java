@@ -1,68 +1,55 @@
-/*
- * Copyright (c) 2019 Jala Foundation.
- * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
- * All rights reserved.
- *
- * This software is the confidential and proprietary information of
- * Jala Foundation, ("Confidential Information").  You shall not
- * disclose such Confidential Information and shall use it only in
- * accordance with the terms of the license agreement you entered into
- * with Jala Foundation.
- */
-
 package trello.api.rest;
 
-import core.selenium.util.JsonConverter;
-import core.selenium.util.ReadJsonFile;
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import trello.entities.User;
-import trello.keys.NamePages;
+import java.util.Map;
 
-/**
- * RestClientAPI class.
- *
- * @author Josue Rodriguez.
- * @version 0.0.1
- */
-public final class RestClientAPI {
+import static io.restassured.RestAssured.given;
+import static io.restassured.http.ContentType.JSON;
 
-    private static RestClientAPI oauth;
-    private RequestSpecification request;
 
-    /**
-     * This is constructor that initializes variables.
-     */
-    private RestClientAPI() {
-        User user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType("admin"));
-        String consumerKey = user.getConsumerKey();
-        String consumerSecret = user.getConsumerSecret();
-        String accessToken = user.getAccessToken();
-        String tokenSecret = user.getTokenSecret();
-        String baseUrl = NamePages.getBaseUrlAPI();
-        request = new RequestSpecBuilder().setAuth(RestAssured.oauth(consumerKey, consumerSecret,
-                accessToken, tokenSecret)).setBaseUri(baseUrl).build();
+public class RestClientAPI {
+    private RequestSpecification requestSpecification;
+
+    public RestClientAPI(RequestSpecification requestSpecification) {
+        this.requestSpecification = requestSpecification;
+    }
+    public Response get(String endpoint){
+        return apiResponse("GET",endpoint);
+    }
+    public Response put(String endpoint){
+        return apiResponse("PUT", endpoint);
+    }
+    public Response post(String endpoint){
+        return apiResponse("POST", endpoint);
+    }
+    public Response delete(String endpoint){
+        return apiResponse("DELETE", endpoint);
     }
 
-    /**
-     * Gives the class instance according Singleton pattern.
-     *
-     * @return an instance.
-     */
-    public static RestClientAPI getInstance() {
-        if (oauth == null) {
-            oauth = new RestClientAPI();
-        }
-        return oauth;
+    public RequestSpecification getRequest() {
+        return requestSpecification;
     }
 
-    /**
-     * Gives the request specification resultant of oauth.
-     *
-     * @return an request specification.
-     */
-    public RequestSpecification getRequestSpecification() {
-        return request;
+    public void setRequest(RequestSpecification requestSpecification) {
+        this.requestSpecification = requestSpecification;
+    }
+
+    private Response apiResponse(String httpMethod, String endpoint){
+        return given().
+                spec(requestSpecification).
+                when().
+                request(httpMethod, endpoint);
+    }
+
+    public void buildSpec(final Map body){
+        String json =  new Gson().toJson(body);
+         requestSpecification = given().
+                spec(requestSpecification).
+                contentType(JSON).
+                body(json);
+
     }
 }

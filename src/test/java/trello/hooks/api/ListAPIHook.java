@@ -15,9 +15,11 @@ package trello.hooks.api;
 import core.utils.Log;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
-import trello.api.rest.RequestFactory;
-import trello.api.rest.RequestManager;
+import trello.api.rest.RestClientAPI;
 import trello.entities.Context;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ListAPIHook class.
@@ -28,6 +30,8 @@ import trello.entities.Context;
 public class ListAPIHook {
 
     private Context context;
+    private Response response;
+    RestClientAPI request;
 
     /**
      * This method constructor initializes the variables.
@@ -39,24 +43,20 @@ public class ListAPIHook {
     }
 
     /**
-     * Makes a request for create a List.
+     * Makes a requestBoard for create a List.
      */
 
-    @Before("@create-list")
+    @Before(order = 2, value = "@create-list")
     public void beforeScenario() {
-        String endPoint = "/lists/";
-        String method = "post";
+        String endPoint = "/lists";
         String name = "TestList";
         String idBoard = context.getBoard().getId();
-        String data = "{ \"name\":\"" + name + "\" ,"
-                + "\"idBoard\":\"" + idBoard + "\"}";
-        RequestManager requestManager = RequestFactory.getRequest(method);
-        requestManager.setMethod(method);
-        requestManager.setEndPoint(endPoint);
-        requestManager.setData(data);
-        Response response = requestManager.makeRequest();
-        Log.getInstance().getLogger().info(response);
-        context.getList().setId(response.jsonPath().get("id"));
+        Map<String, String> data =  new HashMap<>();
+        data.put("name",name);
+        data.put("idBoard",idBoard);
+        request.buildSpec(data);
+        response = request.post(endPoint);
+        context.getList().setId(response.getBody().jsonPath().get("id"));
     }
 }
 

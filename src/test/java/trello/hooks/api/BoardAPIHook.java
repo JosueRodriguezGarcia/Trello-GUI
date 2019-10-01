@@ -16,9 +16,12 @@ import core.utils.Log;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
-import trello.api.rest.RequestFactory;
-import trello.api.rest.RequestManager;
+import trello.api.rest.Authentication;
+import trello.api.rest.RestClientAPI;
 import trello.entities.Context;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * BoardHook class.
@@ -30,7 +33,8 @@ public class BoardAPIHook {
 
     private Context context;
     private Response response;
-    private RequestManager requestManager;
+    RestClientAPI request;
+//    private RequestSpecification requestSpecification;
 
     /**
      * This method constructor initializes the variables.
@@ -39,39 +43,31 @@ public class BoardAPIHook {
      */
     public BoardAPIHook(final Context context) {
         this.context = context;
+        request = new RestClientAPI(Authentication.getRequestSpecification());
     }
 
     /**
-     * Makes a request for delete a Board by id.
+     * Makes a requestBoard for delete a Board by id.
      */
-    @After("@delete-board")
+    @After(order = 100, value = "@delete-board")
     public void afterScenario() {
         String id = context.getBoard().getId();
-        String endPoint = "boards/".concat(id);
-        String method = "delete";
-        requestManager = RequestFactory.getRequest(method);
-        requestManager.setMethod(method);
-        requestManager.setMethod(endPoint);
-        response = requestManager.makeRequest();
-        Log.getInstance().getLogger().info(response);
+        String endPoint = "/boards/".concat(id);
+        response = request.delete(endPoint);;
     }
 
     /**
-     * Makes a request for create a Board.
+     * Makes a requestBoard for create a Board.
      */
-    @Before("@create-board")
+    @Before(order = 1, value = "@create-board")
     public void beforeScenario() {
         String endPoint = "/boards/";
-        String method = "post";
         String name = "TestBoard";
-        String data = "{ \"name\":\"" + name + "\"}";
-        requestManager = RequestFactory.getRequest(method);
-        requestManager.setEndPoint(endPoint);
-        requestManager.setMethod(method);
-        requestManager.setData(data);
-        response = requestManager.makeRequest();
-        Log.getInstance().getLogger().info(response);
-        context.getBoard().setId(response.jsonPath().get("id"));
+        Map<String, String> data =  new HashMap<>();
+        data.put("name",name);
+        request.buildSpec(data);
+        response = request.post(endPoint);
+        context.getBoard().setId(response.getBody().jsonPath().get("id"));
     }
 }
 

@@ -1,6 +1,6 @@
 Feature: Log in into the page Trello as Admin user
 
-  @create-board
+  @create-board @create-list @delete-board
   Scenario: Successful log in as Admin user
     When I log in as admin user
     Then I should see the user's full name initials
