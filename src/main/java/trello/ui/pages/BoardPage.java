@@ -103,7 +103,7 @@ public class BoardPage extends BasePage {
     }
 
     public void moveAllCards(final String listFrom, final String listTarget) {
-        getCardsFromList(listFrom);
+        getCardsInList(listFrom);
         dropdownListMenu(listFrom);
         moveAllCardsButton.click();
         String targetListButtonXpath = String.format(TARGET_LIST_TITLE_XPATH, listTarget);
@@ -112,7 +112,8 @@ public class BoardPage extends BasePage {
         targetListButton.click();
     }
 
-    public ArrayList<Card> getCardsFromList(final String listFrom) {
+    public ArrayList<Card> getCardsInList(final String listFrom) {
+        ArrayList<Card> cardsInList = new ArrayList<>();
         WebElement numberCardsElement = driver.findElement(By.xpath(String.format(LIST_NUMBER_CARDS, listFrom)));
         String textInNumberCards = numberCardsElement.getAttribute("textContent");
         String numberString = textInNumberCards.replaceAll("\\D+","");
@@ -123,8 +124,9 @@ public class BoardPage extends BasePage {
         System.out.println("The number of cards is: " + elementsInList.size());
 
         for (int index = 0; index < elementsInList.size(); index++) {
-            WebElement card = driver.findElement(By.xpath(String.format(NEXT_CARD_XPATH, listFrom)));
-            System.out.println(card.getAttribute("textContent"));
+            Card cardInIndex = new Card();
+            //in progress... joshua is working on it.
+            cardsInList.add(cardInIndex);
         }
         return null;
     }

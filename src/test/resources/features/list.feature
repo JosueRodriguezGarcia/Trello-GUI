@@ -17,7 +17,7 @@ Feature: List actions
     Given I am logged in as admin user
     When I select TestBoard board
     And I sort cards in Tasks1 by card name
-    Then all cards should be correctly sorted.
+    Then all cards should be correctly sorted
 
   Scenario: Copy a card to other list
     Given I am logged in as admin user
