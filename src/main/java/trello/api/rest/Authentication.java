@@ -38,6 +38,7 @@ public final class Authentication {
     /**
      * Gets the RequestSpecification for the authentication type oauth.
      *
+     * @param userType defines the type of user that used the framework.
      * @return a RequestSpecification.
      */
     public static RequestSpecification getRequestSpecification(final String userType) {

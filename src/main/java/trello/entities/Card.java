@@ -14,15 +14,18 @@ package trello.entities;
 
 /**
  * Card class.
+ *
  * @author Josue Rodriguez Garcia.
  * @version 0.0.1
  */
 public class Card {
+
     private String id;
-    private String name;
+    private String title;
 
     /**
      * This method is used to get id.
+     *
      * @return a string with the id of card.
      */
     public String getId() {
@@ -31,6 +34,7 @@ public class Card {
 
     /**
      * This method is used to set id.
+     *
      * @param id defines of input string with the id.
      */
     public void setId(final String id) {
@@ -38,18 +42,20 @@ public class Card {
     }
 
     /**
-     * This method is used get name.
-     * @return a string with the name of card.
+     * This method is used get title.
+     *
+     * @return a string with the title of card.
      */
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     /**
-     * This method is used to set name.
-     * @param name defines of input string with the name.
+     * This method is used to set title.
+     *
+     * @param title defines of input string with the title.
      */
-    public void setName(final String name) {
-        this.name = name;
+    public void setTitle(final String title) {
+        this.title = title;
     }
 }
