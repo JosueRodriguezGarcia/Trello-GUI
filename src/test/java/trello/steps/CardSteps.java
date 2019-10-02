@@ -26,6 +26,7 @@ import trello.ui.pages.HomePage;
  * @version 0.0.1
  */
 public class CardSteps {
+
     private HomePage homePage;
     private BoardPage boardPage;
     private Context context;
@@ -60,5 +61,14 @@ public class CardSteps {
     public void iShouldSeeTheNewCardWithTheGivenTask() {
         boolean result = boardPage.searchCardInList(context.getList().getTitle(), context.getCard().getTitle());
         Assert.assertTrue(result);
+    }
+
+    /**
+     * Verifies if a card title is the correct.
+     */
+    @Then("I verify that the name is the correct")
+    public void iVerifyThatTheNameIsTheCorrect() {
+        String actualTitle = boardPage.getCardTitle(context.getList().getTitle(), context.getCard().getTitle());
+        Assert.assertEquals(context.getCard().getTitle(),actualTitle);
     }
 }

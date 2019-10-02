@@ -93,12 +93,12 @@ public class BoardPage extends BasePage {
         String boardMenuXpath = String.format(BOARD_TITLE_XPATH + BOARD_MENU_SUFFIX, listTitle);
         WebElement listMenuBtn = driver.findElement(By.xpath(boardMenuXpath));
         listMenuBtn.click();
-        //wait.until(ExpectedConditions.presenceOfElementLocated(By.id("whatever")));
         archiveListButton.click();
     }
 
     /**
      * Adds a new card to a list.
+     *
      * @param listTitle defines the lists where add a card.
      * @param cardTitle defines the card  to be add.
      */
@@ -119,6 +119,7 @@ public class BoardPage extends BasePage {
 
     /**
      * Searches a card in a list.
+     *
      * @param listTitle defines of list in that search.
      * @param cardTitle defines the card that search.
      * @return a boolean with value true if card exist in list.
@@ -136,6 +137,7 @@ public class BoardPage extends BasePage {
 
     /**
      * Gets a List with the cards of a list.
+     *
      * @param listTitle defines the list that search.
      * @return a List<WebElement>.
      */
@@ -149,6 +151,16 @@ public class BoardPage extends BasePage {
         return cardsInList;
     }
 
+    public String getCardTitle(final String listTitle, final String cardTitle){
+        String title = null;
+        List<WebElement> cards = cardsInList(listTitle);
+        for (WebElement card : cards) {
+            if (card.findElement(By.className("js-card-name")).getText().equals(cardTitle)) {
+                title = card.findElement(By.className("js-card-name")).getText();
+            }
+        }
+        return title;
+    }
     /**
      * Wait until Page object is found.
      */
