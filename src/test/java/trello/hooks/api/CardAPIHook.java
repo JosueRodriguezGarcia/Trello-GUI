@@ -12,13 +12,15 @@
 
 package trello.hooks.api;
 
-import core.utils.Log;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
-import trello.api.rest.RequestFactory;
-import trello.api.rest.RequestManager;
+import trello.api.rest.Authentication;
+import trello.api.rest.RestClientAPI;
 import trello.entities.Context;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * CardAPIHook class.
@@ -30,7 +32,9 @@ public class CardAPIHook {
 
     private Context context;
     private Response response;
-    private RequestManager requestManager;
+    private RestClientAPI request;
+    private final int orderAfter = 1;
+    private final int orderBefore = 3;
 
     /**
      * Constructor method initializes the attributes.
@@ -39,40 +43,33 @@ public class CardAPIHook {
      */
     public CardAPIHook(final Context context) {
         this.context = context;
+        request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
     }
 
     /**
-     * Makes a request for delete a Card by id.
+     * Makes a requestBoard for delete a Card by id.
      */
-    @After("@delete-card")
+    @After(order = orderAfter, value = "@delete-card")
     public void afterScenario() {
-        String id = context.getBoard().getId();
+        String id = context.getCard().getId();
         String endPoint = "/cards/".concat(id);
-        String method = "delete";
-        requestManager = RequestFactory.getRequest(method);
-        requestManager.setMethod(method);
-        requestManager.setEndPoint(endPoint);
-        response = requestManager.makeRequest();
-        Log.getInstance().getLogger().info(response);
+        response = request.delete(endPoint);
     }
 
     /**
-     * Makes a request for create a Card.
+     * Makes a requestBoard for create a Card.
      */
-    @Before("@create-card")
+    @Before(order = orderBefore, value = "@create-card")
     public void beforeScenario() {
         String endPoint = "/cards/";
         String method = "post";
         String name = "testCard";
         String idList = context.getList().getId();
-        String data = "{ \"name\":\"" + name + "\" ,"
-                + "\"idList\":\"" + idList + "\"}";
-        requestManager = RequestFactory.getRequest(method);
-        requestManager.setMethod(method);
-        requestManager.setEndPoint(endPoint);
-        requestManager.setData(data);
-        response = requestManager.makeRequest();
-        Log.getInstance().getLogger().info(response);
+        Map<String, String> data = new HashMap<>();
+        data.put("name", name);
+        data.put("idList", idList);
+        request.buildSpec(data);
+        response = request.post(endPoint);
         context.getCard().setId(response.jsonPath().get("id"));
     }
 }

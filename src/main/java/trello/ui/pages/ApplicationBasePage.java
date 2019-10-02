@@ -36,7 +36,7 @@ public abstract class ApplicationBasePage extends BasePage {
      *
      * @return the topMenu attribute of it's class.
      */
-    protected TopMenu getTopMenu() {
+    public TopMenu getTopMenu() {
         return topMenu;
     }
 }
