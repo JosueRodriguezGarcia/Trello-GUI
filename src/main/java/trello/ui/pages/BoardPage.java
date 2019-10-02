@@ -110,10 +110,9 @@ public class BoardPage extends BasePage {
                 } else {
                     list.findElement(By.className("js-add-another-card")).click();
                 }
-                titleCard.sendKeys(cardTitle);
+                WebDriverMethod.setTxtElement(titleCard, cardTitle);
                 addCard.click();
             }
-
         }
     }
 
@@ -151,7 +150,14 @@ public class BoardPage extends BasePage {
         return cardsInList;
     }
 
-    public String getCardTitle(final String listTitle, final String cardTitle){
+    /**
+     * Gets of the name of a card.
+     *
+     * @param listTitle defines of list in that search.
+     * @param cardTitle defines the card that search.
+     * @return a string with thr name of a card.
+     */
+    public String getCardTitle(final String listTitle, final String cardTitle) {
         String title = null;
         List<WebElement> cards = cardsInList(listTitle);
         for (WebElement card : cards) {
@@ -161,6 +167,7 @@ public class BoardPage extends BasePage {
         }
         return title;
     }
+
     /**
      * Wait until Page object is found.
      */

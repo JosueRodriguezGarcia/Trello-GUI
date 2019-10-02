@@ -47,7 +47,7 @@ public class CardSteps {
      * @param cardTitle defines the title od card.
      */
     @And("I add a card to (.*) list with (.*) as task")
-    public void iAddACardToTestListListWithAsTask(final String listTitle, final String cardTitle) {
+    public void addCardToList(final String listTitle, final String cardTitle) {
         boardPage = new BoardPage();
         context.getList().setTitle(listTitle);
         context.getCard().setTitle(cardTitle);
@@ -58,7 +58,7 @@ public class CardSteps {
      * Verifies if a card is add to a list.
      */
     @Then("I should see the new card with the given task")
-    public void iShouldSeeTheNewCardWithTheGivenTask() {
+    public void verifyNewCardisDisplayinList() {
         boolean result = boardPage.searchCardInList(context.getList().getTitle(), context.getCard().getTitle());
         Assert.assertTrue(result);
     }
@@ -67,8 +67,8 @@ public class CardSteps {
      * Verifies if a card title is the correct.
      */
     @Then("I verify that the name is the correct")
-    public void iVerifyThatTheNameIsTheCorrect() {
+    public void verifyTheNameCard() {
         String actualTitle = boardPage.getCardTitle(context.getList().getTitle(), context.getCard().getTitle());
-        Assert.assertEquals(context.getCard().getTitle(),actualTitle);
+        Assert.assertEquals(context.getCard().getTitle(), actualTitle);
     }
 }
