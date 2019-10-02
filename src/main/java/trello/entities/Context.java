@@ -20,37 +20,21 @@ package trello.entities;
  */
 public class Context {
 
-    private User user;
     private Board board;
-    private List list;
     private Card card;
+    private List list;
+    private Team team;
+    private User user;
 
     /**
      * Method constructor of Context class.
      */
     public Context() {
-        user = new User();
         board = new Board();
-        list = new List();
         card = new Card();
-    }
-
-    /**
-     * Gets User attribute of its class.
-     *
-     * @return the User attribute.
-     */
-    public User getUser() {
-        return user;
-    }
-
-    /**
-     * Sets context's user.
-     *
-     * @param user is the user to be shared in context.
-     */
-    public void setUser(final User user) {
-        this.user = user;
+        list = new List();
+        team = new Team();
+        user = new User();
     }
 
     /**
@@ -72,6 +56,24 @@ public class Context {
     }
 
     /**
+     * Gets card.
+     *
+     * @return the card that is on the context.
+     */
+    public Card getCard() {
+        return card;
+    }
+
+    /**
+     * Sets card.
+     *
+     * @param card is the card to be set.
+     */
+    public void setCard(final Card card) {
+        this.card = card;
+    }
+
+    /**
      * Gets list.
      *
      * @return the list.
@@ -90,20 +92,38 @@ public class Context {
     }
 
     /**
-     * Gets card.
+     * Gets team attribute of it's class.
      *
-     * @return the card that is on the context.
+     * @return a Team object.
      */
-    public Card getCard() {
-        return card;
+    public Team getTeam() {
+        return team;
     }
 
     /**
-     * Sets card.
+     * Sets team attribute of it's class.
      *
-     * @param card is the card to be set.
+     * @param team is the team to be set.
      */
-    public void setCard(final Card card) {
-        this.card = card;
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    /**
+     * Gets User attribute of its class.
+     *
+     * @return the User attribute.
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Sets context's user.
+     *
+     * @param user is the user to be shared in context.
+     */
+    public void setUser(final User user) {
+        this.user = user;
     }
 }
