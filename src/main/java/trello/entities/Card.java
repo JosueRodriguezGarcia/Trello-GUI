@@ -18,6 +18,7 @@ package trello.entities;
  * @version 0.0.1
  */
 public class Card {
+
     private String id;
     private String name;
 

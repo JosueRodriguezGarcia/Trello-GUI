@@ -16,6 +16,11 @@ import core.selenium.util.WebDriverMethod;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import trello.entities.Card;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * BoardPage class.
@@ -34,11 +39,21 @@ public class BoardPage extends BasePage {
     @FindBy(className = "primary")
     private WebElement addNewListButton;
 
-    @FindBy(className = "js-close-list")
+    @FindBy(className = ARCHIVE_LIST_CLASS)
     private WebElement archiveListButton;
 
-    private static final String BOARD_TITLE_XPATH = "//h2[contains(text(), \"%s\")]";
-    private static final String BOARD_MENU_SUFFIX = "/following-sibling::div";
+    @FindBy(className = "js-move-cards")
+    private WebElement moveAllCardsButton;
+
+    private static final String ARCHIVE_LIST_CLASS = "js-close-list";
+    private static final String LIST_TITLE_XPATH = "//h2[contains(text(), '%s')]";
+    private static final String LIST_MENU_SUFFIX = "/following-sibling::div";
+    private static final String LIST_MENU_XPATH = LIST_TITLE_XPATH + LIST_MENU_SUFFIX;
+    private static final String TARGET_LIST_TITLE_XPATH = "//a[contains(text(), '%s')]";
+    private static final String LIST_NUMBER_CARDS_SUFFIX = "/following-sibling::p";
+    private static final String LIST_NUMBER_CARDS = LIST_TITLE_XPATH + LIST_NUMBER_CARDS_SUFFIX;
+    private static final String NEXT_CARD_SUFFIX = "/../following-sibling::div/a";
+    private static final String NEXT_CARD_XPATH = LIST_TITLE_XPATH + NEXT_CARD_SUFFIX;
 
     /**
      * Creates a new list.
@@ -58,8 +73,8 @@ public class BoardPage extends BasePage {
      * @return true is the list is on the board.
      */
     public boolean isThereThisListByTitle(final String listTitle) {
-        String boardTitleXpath = String.format(BOARD_TITLE_XPATH, listTitle);
-        WebElement listHeader = driver.findElement(By.xpath(boardTitleXpath));
+        String listTitleXpath = String.format(LIST_TITLE_XPATH, listTitle);
+        WebElement listHeader = driver.findElement(By.xpath(listTitleXpath));
         return listHeader.getAttribute("textContent").equals(listTitle);
     }
 
@@ -68,11 +83,15 @@ public class BoardPage extends BasePage {
      * @param listTitle is the title of the list that is requested to archive.
      */
     public void archiveListByTitle(final String listTitle) {
-        String boardMenuXpath = String.format(BOARD_TITLE_XPATH + BOARD_MENU_SUFFIX, listTitle);
-        WebElement listMenuBtn = driver.findElement(By.xpath(boardMenuXpath));
-        listMenuBtn.click();
-        //wait.until(ExpectedConditions.presenceOfElementLocated(By.id("whatever")));
+        dropdownListMenu(listTitle);
         archiveListButton.click();
+    }
+
+    private void dropdownListMenu(final String listTitle) {
+        String listMenuXpath = String.format(LIST_MENU_XPATH, listTitle);
+        WebElement listMenuBtn = driver.findElement(By.xpath(listMenuXpath));
+        listMenuBtn.click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className(ARCHIVE_LIST_CLASS)));
     }
 
     /**
@@ -81,5 +100,32 @@ public class BoardPage extends BasePage {
     @Override
     protected void waitUntilPageObjectIsLoaded() {
 
+    }
+
+    public void moveAllCards(final String listFrom, final String listTarget) {
+        getCardsFromList(listFrom);
+        dropdownListMenu(listFrom);
+        moveAllCardsButton.click();
+        String targetListButtonXpath = String.format(TARGET_LIST_TITLE_XPATH, listTarget);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(targetListButtonXpath)));
+        WebElement targetListButton = driver.findElement(By.xpath(targetListButtonXpath));
+        targetListButton.click();
+    }
+
+    public ArrayList<Card> getCardsFromList(final String listFrom) {
+        WebElement numberCardsElement = driver.findElement(By.xpath(String.format(LIST_NUMBER_CARDS, listFrom)));
+        String textInNumberCards = numberCardsElement.getAttribute("textContent");
+        String numberString = textInNumberCards.replaceAll("\\D+","");
+        int numberCards = Integer.parseInt(numberString);
+        System.out.println("segun la list hay estas cards: " + numberCards);
+
+        List<WebElement> elementsInList = driver.findElements(By.xpath(String.format(NEXT_CARD_XPATH, listFrom)));
+        System.out.println("The number of cards is: " + elementsInList.size());
+
+        for (int index = 0; index < elementsInList.size(); index++) {
+            WebElement card = driver.findElement(By.xpath(String.format(NEXT_CARD_XPATH, listFrom)));
+            System.out.println(card.getAttribute("textContent"));
+        }
+        return null;
     }
 }

@@ -72,4 +72,15 @@ public class ListSteps {
         boardPage = new BoardPage();
         Assert.assertTrue(boardPage.isThereThisListByTitle(context.getList().getTitle()));
     }
+
+    @And("I move all cards in (.*) to (.*)")
+    public void moveAllCardsInList(final String listFrom, final String listTarget) {
+        boardPage = new BoardPage();
+        boardPage.moveAllCards(listFrom, listTarget);
+    }
+
+    @Then("all cards that where on source list should appear on target list")
+    public void allCardsThatWhereOnSourceListShouldAppearOnTargetList() {
+
+    }
 }

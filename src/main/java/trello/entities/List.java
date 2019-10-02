@@ -12,6 +12,10 @@
 
 package trello.entities;
 
+import cucumber.api.java.bs.A;
+
+import java.util.ArrayList;
+
 /**
  * Context class.
  *
@@ -22,6 +26,11 @@ public class List {
 
     private String id;
     private String title;
+    private ArrayList<Card> cards;
+
+    public List() {
+        cards = new ArrayList<>();
+    }
 
     /**
      * Sets the list title.
@@ -57,5 +66,9 @@ public class List {
      */
     public void setId(final String id) {
         this.id = id;
+    }
+
+    public void setCards(final ArrayList<Card> cards) {
+        this.cards = cards;
     }
 }

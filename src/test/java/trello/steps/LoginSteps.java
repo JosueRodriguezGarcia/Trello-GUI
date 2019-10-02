@@ -14,6 +14,7 @@ package trello.steps;
 
 import core.selenium.util.JsonConverter;
 import core.selenium.util.ReadJsonFile;
+import core.utils.Log;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.testng.Assert;
@@ -33,6 +34,7 @@ import trello.ui.pages.LoginPage;
 public class LoginSteps {
 
     private Context context;
+    private LoginPage loginPage;
     private User user;
 
     /**
@@ -54,7 +56,7 @@ public class LoginSteps {
     public void loginAsUser(final String userType) {
         user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType(userType));
         PageTransporter.navigateToURL(NamePages.getLoginPageUrl());
-        LoginPage loginPage = new LoginPage();
+        loginPage = new LoginPage();
         loginPage.login(user);
     }
 
