@@ -14,6 +14,7 @@ package trello.hooks.api;
 
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
+import trello.api.rest.Authentication;
 import trello.api.rest.RestClientAPI;
 import trello.entities.Context;
 
@@ -40,7 +41,7 @@ public class ListAPIHook {
      */
     public ListAPIHook(final Context context) {
         this.context = context;
-
+        request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
     }
 
     /**

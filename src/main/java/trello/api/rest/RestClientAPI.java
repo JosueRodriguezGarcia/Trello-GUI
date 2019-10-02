@@ -22,16 +22,18 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 
 /**
- * Authentication class.
+ * RestClientAPI class.
  *
  * @author Josue Rodriguez Garcia.
  * @version 0.0.1.
  */
 public class RestClientAPI {
+
     private RequestSpecification requestSpecification;
 
     /**
      * Constructor method.
+     *
      * @param requestSpecification defines a requestSpecification for input.
      */
     public RestClientAPI(final RequestSpecification requestSpecification) {
@@ -40,6 +42,7 @@ public class RestClientAPI {
 
     /**
      * Gets a response of type get.
+     *
      * @param endpoint defines the type the http method.
      * @return a response.
      */
@@ -49,6 +52,7 @@ public class RestClientAPI {
 
     /**
      * Gets a response of type put.
+     *
      * @param endpoint defines the type the http method.
      * @return a response.
      */
@@ -58,6 +62,7 @@ public class RestClientAPI {
 
     /**
      * Gets a response of type post.
+     *
      * @param endpoint defines the type the http method.
      * @return a response.
      */
@@ -67,6 +72,7 @@ public class RestClientAPI {
 
     /**
      * Gets a response of type delete.
+     *
      * @param endpoint defines the type the http method.
      * @return a response.
      */
@@ -76,6 +82,7 @@ public class RestClientAPI {
 
     /**
      * Gets a requestSpecification for RestClientAPI.
+     *
      * @return a requestSpecification.
      */
     public RequestSpecification getRequest() {
@@ -84,6 +91,7 @@ public class RestClientAPI {
 
     /**
      * Sets the attribute requestSpecification en RestClientAPI.
+     *
      * @param requestSpecification defines a requestSpecification in attribute to be set.
      */
     public void setRequest(final RequestSpecification requestSpecification) {
@@ -92,8 +100,9 @@ public class RestClientAPI {
 
     /**
      * Builds the request defines the method http and endpoint.
+     *
      * @param httpMethod defines the type the http method.
-     * @param endpoint defines the endpoint.
+     * @param endpoint   defines the endpoint.
      * @return a response.
      */
     private Response apiResponse(final String httpMethod, final String endpoint) {
@@ -105,6 +114,7 @@ public class RestClientAPI {
 
     /**
      * Builds the request with a body.
+     *
      * @param body defines parameters od input in a map.
      */
     public void buildSpec(final Map<String, String> body) {

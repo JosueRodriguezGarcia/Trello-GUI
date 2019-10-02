@@ -43,7 +43,7 @@ public class CardAPIHook {
      */
     public CardAPIHook(final Context context) {
         this.context = context;
-        request = new RestClientAPI(Authentication.getRequestSpecification());
+        request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
     }
 
     /**

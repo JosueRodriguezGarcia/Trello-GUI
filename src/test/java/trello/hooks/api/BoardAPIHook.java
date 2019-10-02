@@ -35,7 +35,6 @@ public class BoardAPIHook {
     private RestClientAPI request;
     private final int orderAfter = 3;
     private final int orderBefore = 1;
-//    private RequestSpecification requestSpecification;
 
     /**
      * This method constructor initializes the variables.
@@ -44,7 +43,7 @@ public class BoardAPIHook {
      */
     public BoardAPIHook(final Context context) {
         this.context = context;
-        request = new RestClientAPI(Authentication.getRequestSpecification());
+        request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
     }
 
     /**

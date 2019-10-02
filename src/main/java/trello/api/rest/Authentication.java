@@ -37,10 +37,11 @@ public final class Authentication {
 
     /**
      * Gets the RequestSpecification for the authentication type oauth.
+     *
      * @return a RequestSpecification.
      */
-    public static RequestSpecification getRequestSpecification() {
-        User user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType("admin"));
+    public static RequestSpecification getRequestSpecification(final String userType) {
+        User user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType(userType));
         String consumerKey = user.getConsumerKey();
         String consumerSecret = user.getConsumerSecret();
         String accessToken = user.getAccessToken();
