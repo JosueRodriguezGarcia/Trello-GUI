@@ -56,7 +56,7 @@ public class ListAPIHook {
         requestManager.setData(data);
         Response response = requestManager.makeRequest();
         Log.getInstance().getLogger().info(response);
-        context.getList().setId(response.jsonPath().get("id"));
+        context.getListSource().setId(response.jsonPath().get("id"));
     }
 }
 

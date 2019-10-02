@@ -41,6 +41,15 @@ public class ListHooks {
     @After("@ArchiveList")
     public void archiveList() {
         boardPage = new BoardPage();
-        boardPage.archiveListByTitle(context.getList().getTitle());
+        boardPage.archiveListByTitle(context.getListSource().getTitle());
+    }
+
+    /**
+     * Returns all cards to the source list.
+     */
+    @After("@MoveAllCards")
+    public void returnCardsToFromList() {
+        boardPage = new BoardPage();
+        boardPage.moveAllCards(context.getListTarget().getTitle(), context.getListSource().getTitle());
     }
 }

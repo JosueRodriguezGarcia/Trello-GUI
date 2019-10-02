@@ -60,7 +60,7 @@ public class ListSteps {
     @And("I create a new list with {string} as title")
     public void createNewList(final String listTitle) {
         boardPage = new BoardPage();
-        context.getList().setTitle(listTitle);
+        context.getListSource().setTitle(listTitle);
         boardPage.createNewList(listTitle);
     }
 
@@ -70,17 +70,25 @@ public class ListSteps {
     @Then("I should see the new created list with the given title")
     public void verifyList() {
         boardPage = new BoardPage();
-        Assert.assertTrue(boardPage.isThereThisListByTitle(context.getList().getTitle()));
+        Assert.assertTrue(boardPage.isThereThisListByTitle(context.getListSource().getTitle()));
     }
 
     @And("I move all cards in (.*) to (.*)")
     public void moveAllCardsInList(final String listFrom, final String listTarget) {
+        context.getListSource().setTitle(listFrom);
+        context.getListTarget().setTitle(listTarget);
         boardPage = new BoardPage();
         boardPage.moveAllCards(listFrom, listTarget);
     }
 
-    @Then("all cards that where on source list should appear on target list")
+    @Then("all cards that were on source list should appear on target list")
     public void allCardsThatWhereOnSourceListShouldAppearOnTargetList() {
 
+    }
+
+    @And("I sort cards in (.*) list by card name")
+    public void iSortCardsInTasksByCardName(final String listTitle) {
+        boardPage = new BoardPage();
+        boardPage.sortCardsInListByName(listTitle);
     }
 }

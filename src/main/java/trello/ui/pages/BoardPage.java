@@ -45,7 +45,14 @@ public class BoardPage extends BasePage {
     @FindBy(className = "js-move-cards")
     private WebElement moveAllCardsButton;
 
+    @FindBy(className = "js-sort-cards")
+    private WebElement sortCardsButton;
+
+    @FindBy(className = SORT_BY_NAME_CLASS)
+    private WebElement sortByCardNameButton;
+
     private static final String ARCHIVE_LIST_CLASS = "js-close-list";
+    private static final String SORT_BY_NAME_CLASS = "js-sort-by-card-name";
     private static final String LIST_TITLE_XPATH = "//h2[contains(text(), '%s')]";
     private static final String LIST_MENU_SUFFIX = "/following-sibling::div";
     private static final String LIST_MENU_XPATH = LIST_TITLE_XPATH + LIST_MENU_SUFFIX;
@@ -114,14 +121,8 @@ public class BoardPage extends BasePage {
 
     public ArrayList<Card> getCardsInList(final String listFrom) {
         ArrayList<Card> cardsInList = new ArrayList<>();
-        WebElement numberCardsElement = driver.findElement(By.xpath(String.format(LIST_NUMBER_CARDS, listFrom)));
-        String textInNumberCards = numberCardsElement.getAttribute("textContent");
-        String numberString = textInNumberCards.replaceAll("\\D+","");
-        int numberCards = Integer.parseInt(numberString);
-        System.out.println("segun la list hay estas cards: " + numberCards);
 
         List<WebElement> elementsInList = driver.findElements(By.xpath(String.format(NEXT_CARD_XPATH, listFrom)));
-        System.out.println("The number of cards is: " + elementsInList.size());
 
         for (int index = 0; index < elementsInList.size(); index++) {
             Card cardInIndex = new Card();
@@ -129,5 +130,13 @@ public class BoardPage extends BasePage {
             cardsInList.add(cardInIndex);
         }
         return null;
+    }
+
+    public void sortCardsInListByName(final String listTitle) {
+        //getCardsInList
+        dropdownListMenu(listTitle);
+        sortCardsButton.click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className(SORT_BY_NAME_CLASS)));
+        sortByCardNameButton.click();
     }
 }

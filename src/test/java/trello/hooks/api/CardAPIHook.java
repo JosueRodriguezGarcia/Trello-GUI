@@ -64,7 +64,7 @@ public class CardAPIHook {
         String endPoint = "/cards/";
         String method = "post";
         String name = "testCard";
-        String idList = context.getList().getId();
+        String idList = context.getListSource().getId();
         String data = "{ \"name\":\"" + name + "\" ,"
                 + "\"idList\":\"" + idList + "\"}";
         requestManager = RequestFactory.getRequest(method);

@@ -22,7 +22,8 @@ public class Context {
 
     private User user;
     private Board board;
-    private List list;
+    private List listSource;
+    private List listTarget;
     private Card card;
 
     /**
@@ -31,7 +32,8 @@ public class Context {
     public Context() {
         user = new User();
         board = new Board();
-        list = new List();
+        listSource = new List();
+        listTarget = new List();
         card = new Card();
     }
 
@@ -72,21 +74,21 @@ public class Context {
     }
 
     /**
-     * Gets list.
+     * Gets the source list to be used in the context.
      *
-     * @return the list.
+     * @return is the source list.
      */
-    public List getList() {
-        return list;
+    public List getListSource() {
+        return listSource;
     }
 
     /**
-     * Sets list.
+     * Sets the source list to be used in the context.
      *
-     * @param list is the list to be set.
+     * @param listSource is the source list to be set.
      */
-    public void setList(final List list) {
-        this.list = list;
+    public void setListSource(final List listSource) {
+        this.listSource = listSource;
     }
 
     /**
@@ -105,5 +107,23 @@ public class Context {
      */
     public void setCard(final Card card) {
         this.card = card;
+    }
+
+    /**
+     * Gets the target list used in the context.
+     *
+     * @return the target list.
+     */
+    public List getListTarget() {
+        return listTarget;
+    }
+
+    /**
+     * Sets the target list that will be on the context.
+     *
+     * @param listTarget is the target list that will be shared.
+     */
+    public void setListTarget(List listTarget) {
+        this.listTarget = listTarget;
     }
 }
