@@ -40,7 +40,7 @@ public class CheckListModal extends BasePage {
     }
 
     /**
-     * Add a checklist to card.
+     * Adds a checklist to card.
      *
      * @param checkListTitle defines the title od the new checklist.
      */
@@ -50,7 +50,7 @@ public class CheckListModal extends BasePage {
     }
 
     /**
-     * Wait that add button to be clickable.
+     * Waits that add button to be clickable.
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {

@@ -66,7 +66,7 @@ public class BoardPage extends BasePage {
     private List<WebElement> cards;
 
     @FindBy(className = "js-open-add-list")
-    private WebElement addAnotherLits;
+    private WebElement addAnotherList;
 
     /**
      * Creates a new list.
@@ -189,10 +189,10 @@ public class BoardPage extends BasePage {
     }
 
     /**
-     * Wait until Page object is found.
+     * Waits until Page object is found.
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.elementToBeClickable(addAnotherLits));
+        wait.until(ExpectedConditions.elementToBeClickable(addAnotherList));
     }
 }

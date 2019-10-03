@@ -27,6 +27,7 @@ import java.util.List;
  * @version 0.0.1
  */
 public class CardModal extends BasePage {
+
     @FindBy(className = "js-card-detail-title-input")
     private WebElement cardTitle;
 
@@ -39,6 +40,7 @@ public class CardModal extends BasePage {
     @FindBy(className = "checklist-title")
     private List<WebElement> checkLists;
 
+    private static final String CARD_TITLE = "hide-on-edit";
     /**
      * Does click the "add checklist button".
      */
@@ -62,13 +64,12 @@ public class CardModal extends BasePage {
     public boolean searchCheckList(final String checkListTitle) {
         boolean result = false;
         for (WebElement checkList : checkLists) {
-            if (checkList.findElement(By.cssSelector("h3.hide-on-edit")).getText().equals(checkListTitle)) {
+            if (checkList.findElement(By.className(CARD_TITLE)).getText().equals(checkListTitle)) {
                 result = true;
             }
         }
         return result;
     }
-
 
     /**
      * Wait that card title is visibility.

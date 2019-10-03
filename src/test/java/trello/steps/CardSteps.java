@@ -77,7 +77,7 @@ public class CardSteps {
     }
 
     /**
-     * Select a card of board.
+     * Selects a card of board.
      *
      * @param cardTitle defines the card title that want selected.
      */
@@ -89,7 +89,7 @@ public class CardSteps {
     }
 
     /**
-     * Add a checklist to card.
+     * Adds a checklist to card.
      *
      * @param checkListTitle defines the checklist title to be created.
      */
