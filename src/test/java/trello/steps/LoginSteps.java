@@ -14,7 +14,6 @@ package trello.steps;
 
 import core.selenium.util.JsonConverter;
 import core.selenium.util.ReadJsonFile;
-import core.utils.Log;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.testng.Assert;

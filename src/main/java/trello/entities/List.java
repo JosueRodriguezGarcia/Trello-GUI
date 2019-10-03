@@ -12,8 +12,6 @@
 
 package trello.entities;
 
-import cucumber.api.java.bs.A;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -29,6 +27,9 @@ public class List {
     private String title;
     private ArrayList<Card> cards;
 
+    /**
+     * Public constructor of the class' instances.
+     */
     public List() {
         cards = new ArrayList<>();
     }
@@ -69,14 +70,30 @@ public class List {
         this.id = id;
     }
 
+    /**
+     * Sets the given cards as cards of the list.
+     *
+     * @param cards is the ArrayList that contains the cards to be set.
+     */
     public void setCards(final ArrayList<Card> cards) {
         this.cards = cards;
     }
 
+    /**
+     * Gets the cards in the list.
+     *
+     * @return an ArrayList with all cards in the list.
+     */
     public ArrayList<Card> getCards() {
         return cards;
     }
 
+    /**
+     * Compares the list with a given ArrayList of cards.
+     *
+     * @param listCards is the list of cards to compare with.
+     * @return true if the ArrayList is equal to this list's cards.
+     */
     public boolean areListsEquals(final ArrayList<Card> listCards) {
         boolean answer = true;
         for (int index = 0; index < cards.size(); index++) {
@@ -88,6 +105,11 @@ public class List {
         return answer;
     }
 
+    /**
+     * Gets only cards titles.
+     *
+     * @return an ArrayList with all cards' titles.
+     */
     public ArrayList<String> getCardsTitles() {
         ArrayList<String> cardsTitles = new ArrayList<>();
         for (int index = 0; index < cards.size(); index++) {
@@ -96,12 +118,18 @@ public class List {
         return cardsTitles;
     }
 
-    public boolean verifySortByName(final ArrayList<Card> listToCompare) {
+    /**
+     * Verifies if the cards in given ArrayList are sorted according on the present list.
+     *
+     * @param listToCompare is the list which is wanted to ve verified.
+     * @return true if the given ArrayList of cards is sorted.
+     */
+    public boolean isSortedByName(final ArrayList<Card> listToCompare) {
         ArrayList<String> cardsTitles = getCardsTitles();
         cardsTitles.sort(Comparator.comparing(String::toString));
         boolean answer = true;
         for (int index = 0; index < cards.size(); index++) {
-            if(!cardsTitles.get(index).equals(listToCompare.get(index).getTitle())) {
+            if (!cardsTitles.get(index).equals(listToCompare.get(index).getTitle())) {
                 answer = false;
                 break;
             }

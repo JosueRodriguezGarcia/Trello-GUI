@@ -4,7 +4,6 @@ import core.selenium.WebDriverConfig;
 import core.selenium.WebDriverManager;
 import core.selenium.util.JsonConverter;
 import core.selenium.util.ReadJsonFile;
-import core.selenium.util.WebDriverMethod;
 import cucumber.api.java.en.Given;
 import org.openqa.selenium.WebDriver;
 import trello.entities.Context;
@@ -41,6 +40,13 @@ public class CommonSteps {
         this.user = context.getUser();
     }
 
+    /**
+     * Verifies if the user is logged in as given user type.
+     * If the user it is not logged in or if it is another user that is logged the method proceeds with the
+     * login of the given user.
+     *
+     * @param userType of the user which is wanted to get logged in.
+     */
     @Given("I am logged in as (.*) user")
     public void verifyLoggedInByUserType(final String userType) {
         PageTransporter.navigateToURL(NamePages.getHomePageUrl(user.getUsername()));
@@ -54,13 +60,13 @@ public class CommonSteps {
                 implicitlyWait(time, TimeUnit.SECONDS);
         try {
             String userInitials = homePage.getFullNameInitials();
-            if(!user.getFullNameInitials().equals(userInitials)) {
+            if (!user.getFullNameInitials().equals(userInitials)) {
                 homePage.getTopMenu().logoutPage();
                 PageTransporter.navigateToURL(NamePages.getLoginPageUrl());
                 loginPage = new LoginPage();
                 loginPage.login(user);
             }
-        } catch (NoSuchElementException nse){
+        } catch (NoSuchElementException nse) {
             PageTransporter.navigateToURL(NamePages.getLoginPageUrl());
             loginPage = new LoginPage();
             loginPage.login(user);

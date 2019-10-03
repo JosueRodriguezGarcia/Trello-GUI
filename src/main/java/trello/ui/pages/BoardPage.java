@@ -22,9 +22,6 @@ import trello.entities.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * BoardPage class.
  *
@@ -60,10 +57,6 @@ public class BoardPage extends BasePage {
     private static final String LIST_MENU_SUFFIX = "/following-sibling::div";
     private static final String LIST_MENU_XPATH = LIST_TITLE_XPATH + LIST_MENU_SUFFIX;
     private static final String TARGET_LIST_TITLE_XPATH = "//a[contains(text(), '%s')]";
-    private static final String LIST_NUMBER_CARDS_SUFFIX = "/following-sibling::p";
-    private static final String LIST_NUMBER_CARDS = LIST_TITLE_XPATH + LIST_NUMBER_CARDS_SUFFIX;
-    private static final String NEXT_CARD_SUFFIX = "/../following-sibling::div/a";
-    private static final String NEXT_CARD_XPATH = LIST_TITLE_XPATH + NEXT_CARD_SUFFIX;
 
     @FindBy(id = "board")
     private WebElement board;
@@ -116,6 +109,11 @@ public class BoardPage extends BasePage {
         archiveListButton.click();
     }
 
+    /**
+     * Drops down the list's menu.
+     *
+     * @param listTitle is the title of the list which menu is wanted to be dropped down.
+     */
     private void dropdownListMenu(final String listTitle) {
         String listMenuXpath = String.format(LIST_MENU_XPATH, listTitle);
         WebElement listMenuBtn = driver.findElement(By.xpath(listMenuXpath));
@@ -203,6 +201,12 @@ public class BoardPage extends BasePage {
 
     }
 
+    /**
+     * Moves all cards in given list to given target list.
+     *
+     * @param listFrom   is the list which the cards will be moved from.
+     * @param listTarget is the target list where the cards will be moved to.
+     */
     public void moveAllCards(final String listFrom, final String listTarget) {
         dropdownListMenu(listFrom);
         moveAllCardsButton.click();
@@ -212,6 +216,12 @@ public class BoardPage extends BasePage {
         targetListButton.click();
     }
 
+    /**
+     * Gets all cards in list.
+     *
+     * @param listTitle is the title of the list which cards as wanted to retrieve.
+     * @return an ArrayList of al cards in the list.
+     */
     public ArrayList<Card> getCardsInList(final String listTitle) {
         ArrayList<Card> cardsInList = new ArrayList<>();
         List<WebElement> cards = cardsInList(listTitle);
@@ -223,8 +233,12 @@ public class BoardPage extends BasePage {
         return cardsInList;
     }
 
+    /**
+     * Sorts cards in list by card name.
+     *
+     * @param listTitle is the title of the list which is wanted to be sorted.
+     */
     public void sortCardsInListByName(final String listTitle) {
-        //getCardsInList
         dropdownListMenu(listTitle);
         sortCardsButton.click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.className(SORT_BY_NAME_CLASS)));

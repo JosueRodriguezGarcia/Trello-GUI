@@ -125,7 +125,7 @@ public class Context {
      *
      * @param listTarget is the target list that will be shared.
      */
-    public void setListTarget(List listTarget) {
+    public void setListTarget(final List listTarget) {
         this.listTarget = listTarget;
     }
 
@@ -143,7 +143,7 @@ public class Context {
      *
      * @param list is the list to be set in context.
      */
-    public void setList(List list) {
+    public void setList(final List list) {
         this.list = list;
     }
 }
