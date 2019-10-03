@@ -24,6 +24,7 @@ public class Context {
     private Board board;
     private List listSource;
     private List listTarget;
+    private List list;
     private Card card;
 
     /**
@@ -125,5 +126,23 @@ public class Context {
      */
     public void setListTarget(List listTarget) {
         this.listTarget = listTarget;
+    }
+
+    /**
+     * Gets context list.
+     *
+     * @return the list in context.
+     */
+    public List getList() {
+        return list;
+    }
+
+    /**
+     * Sets the list in context.
+     *
+     * @param list is the list to be set in context.
+     */
+    public void setList(List list) {
+        this.list = list;
     }
 }

@@ -22,6 +22,9 @@ import trello.entities.Card;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * BoardPage class.
  *
@@ -62,6 +65,24 @@ public class BoardPage extends BasePage {
     private static final String NEXT_CARD_SUFFIX = "/../following-sibling::div/a";
     private static final String NEXT_CARD_XPATH = LIST_TITLE_XPATH + NEXT_CARD_SUFFIX;
 
+    @FindBy(id = "board")
+    private WebElement board;
+
+    @FindBy(css = "div.list")
+    private List<WebElement> lists;
+
+    @FindBy(className = "js-card-title")
+    private WebElement titleCard;
+
+    @FindBy(className = "js-add-card")
+    private WebElement addCard;
+
+    @FindBy(className = "js-add-another-card")
+    private WebElement addAnotherCard;
+
+    @FindBy(className = "js-add-a-card")
+    private WebElement addACard;
+
     /**
      * Creates a new list.
      *
@@ -87,6 +108,7 @@ public class BoardPage extends BasePage {
 
     /**
      * Archives list by list title.
+     *
      * @param listTitle is the title of the list that is requested to archive.
      */
     public void archiveListByTitle(final String listTitle) {
@@ -102,6 +124,78 @@ public class BoardPage extends BasePage {
     }
 
     /**
+     * Adds a new card to a list.
+     *
+     * @param listTitle defines the lists where add a card.
+     * @param cardTitle defines the card  to be add.
+     */
+    public void addCardInList(final String listTitle, final String cardTitle) {
+        for (WebElement list : lists) {
+            if (list.findElement(By.className("js-list-name-input")).getText().equals(listTitle)) {
+                if (list.findElement(By.className("js-add-a-card")).isDisplayed()) {
+                    list.findElement(By.className("js-add-a-card")).click();
+                } else {
+                    list.findElement(By.className("js-add-another-card")).click();
+                }
+                WebDriverMethod.setTxtElement(titleCard, cardTitle);
+                addCard.click();
+            }
+        }
+    }
+
+    /**
+     * Searches a card in a list.
+     *
+     * @param listTitle defines of list in that search.
+     * @param cardTitle defines the card that search.
+     * @return a boolean with value true if card exist in list.
+     */
+    public boolean searchCardInList(final String listTitle, final String cardTitle) {
+        boolean result = false;
+        List<WebElement> cards = cardsInList(listTitle);
+        for (WebElement card : cards) {
+            if (card.findElement(By.className("js-card-name")).getText().equals(cardTitle)) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Gets a List with the cards of a list.
+     *
+     * @param listTitle defines the list that search.
+     * @return a List<WebElement>.
+     */
+    public List<WebElement> cardsInList(final String listTitle) {
+        List<WebElement> cardsInList = new ArrayList<WebElement>();
+        for (WebElement list : lists) {
+            if (list.findElement(By.className("js-list-name-input")).getText().equals(listTitle)) {
+                cardsInList = list.findElements(By.className("js-card-details"));
+            }
+        }
+        return cardsInList;
+    }
+
+    /**
+     * Gets of the name of a card.
+     *
+     * @param listTitle defines of list in that search.
+     * @param cardTitle defines the card that search.
+     * @return a string with thr name of a card.
+     */
+    public String getCardTitle(final String listTitle, final String cardTitle) {
+        String title = null;
+        List<WebElement> cards = cardsInList(listTitle);
+        for (WebElement card : cards) {
+            if (card.findElement(By.className("js-card-name")).getText().equals(cardTitle)) {
+                title = card.findElement(By.className("js-card-name")).getText();
+            }
+        }
+        return title;
+    }
+
+    /**
      * Wait until Page object is found.
      */
     @Override
@@ -110,7 +204,6 @@ public class BoardPage extends BasePage {
     }
 
     public void moveAllCards(final String listFrom, final String listTarget) {
-        getCardsInList(listFrom);
         dropdownListMenu(listFrom);
         moveAllCardsButton.click();
         String targetListButtonXpath = String.format(TARGET_LIST_TITLE_XPATH, listTarget);
@@ -119,17 +212,16 @@ public class BoardPage extends BasePage {
         targetListButton.click();
     }
 
-    public ArrayList<Card> getCardsInList(final String listFrom) {
+    public ArrayList<Card> getCardsInList(final String listTitle) {
         ArrayList<Card> cardsInList = new ArrayList<>();
-
-        List<WebElement> elementsInList = driver.findElements(By.xpath(String.format(NEXT_CARD_XPATH, listFrom)));
-
-        for (int index = 0; index < elementsInList.size(); index++) {
+        List<WebElement> cards = cardsInList(listTitle);
+        for (WebElement card : cards) {
             Card cardInIndex = new Card();
-            //in progress... joshua is working on it.
+            cardInIndex.setTitle(card.findElement(By.className("js-card-name")).getText());
+            System.out.println(card.findElement(By.className("js-card-name")).getText());
             cardsInList.add(cardInIndex);
         }
-        return null;
+        return cardsInList;
     }
 
     public void sortCardsInListByName(final String listTitle) {

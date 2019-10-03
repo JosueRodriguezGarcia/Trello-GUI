@@ -74,21 +74,31 @@ public class ListSteps {
     }
 
     @And("I move all cards in (.*) to (.*)")
-    public void moveAllCardsInList(final String listFrom, final String listTarget) {
-        context.getListSource().setTitle(listFrom);
-        context.getListTarget().setTitle(listTarget);
+    public void moveAllCardsInList(final String listSource, final String listTarget) {
         boardPage = new BoardPage();
-        boardPage.moveAllCards(listFrom, listTarget);
+        context.getListSource().setTitle(listSource);
+        context.getListSource().setCards(boardPage.getCardsInList(listSource));
+        context.getListTarget().setTitle(listTarget);
+        boardPage.moveAllCards(listSource, listTarget);
     }
 
     @Then("all cards that were on source list should appear on target list")
-    public void allCardsThatWhereOnSourceListShouldAppearOnTargetList() {
-
+    public void verifyCardsOnTargetList() {
+        boardPage = new BoardPage();
+        Assert.assertTrue(context.getListSource()
+                        .areListsEquals(boardPage.getCardsInList(context.getListTarget().getTitle()))
+                , "Cards were not correctly moved");
     }
 
     @And("I sort cards in (.*) list by card name")
-    public void iSortCardsInTasksByCardName(final String listTitle) {
+    public void sortCardsInListByCardName(final String listTitle) {
         boardPage = new BoardPage();
         boardPage.sortCardsInListByName(listTitle);
+    }
+
+    @And("source list should be empty")
+    public void verifySourceList() {
+        boardPage = new BoardPage();
+        Assert.assertEquals(boardPage.getCardsInList(context.getListSource().getTitle()).size(), 0);
     }
 }

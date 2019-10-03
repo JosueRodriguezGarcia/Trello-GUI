@@ -12,57 +12,116 @@
 
 package trello.api.rest;
 
-import core.selenium.util.JsonConverter;
-import core.selenium.util.ReadJsonFile;
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
+import com.google.gson.Gson;
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import trello.entities.User;
-import trello.keys.NamePages;
+
+import java.util.Map;
+
+import static io.restassured.RestAssured.given;
+import static io.restassured.http.ContentType.JSON;
 
 /**
  * RestClientAPI class.
  *
- * @author Josue Rodriguez.
- * @version 0.0.1
+ * @author Josue Rodriguez Garcia.
+ * @version 0.0.1.
  */
-public final class RestClientAPI {
+public class RestClientAPI {
 
-    private static RestClientAPI oauth;
-    private RequestSpecification request;
+    private RequestSpecification requestSpecification;
 
     /**
-     * This is constructor that initializes variables.
+     * Constructor method.
+     *
+     * @param requestSpecification defines a requestSpecification for input.
      */
-    private RestClientAPI() {
-        User user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType("admin"));
-        String consumerKey = user.getConsumerKey();
-        String consumerSecret = user.getConsumerSecret();
-        String accessToken = user.getAccessToken();
-        String tokenSecret = user.getTokenSecret();
-        String baseUrl = NamePages.getBaseUrlAPI();
-        request = new RequestSpecBuilder().setAuth(RestAssured.oauth(consumerKey, consumerSecret,
-                accessToken, tokenSecret)).setBaseUri(baseUrl).build();
+    public RestClientAPI(final RequestSpecification requestSpecification) {
+        this.requestSpecification = requestSpecification;
     }
 
     /**
-     * Gives the class instance according Singleton pattern.
+     * Gets a response of type get.
      *
-     * @return an instance.
+     * @param endpoint defines the type the http method.
+     * @return a response.
      */
-    public static RestClientAPI getInstance() {
-        if (oauth == null) {
-            oauth = new RestClientAPI();
-        }
-        return oauth;
+    public Response get(final String endpoint) {
+        return apiResponse("GET", endpoint);
     }
 
     /**
-     * Gives the request specification resultant of oauth.
+     * Gets a response of type put.
      *
-     * @return an request specification.
+     * @param endpoint defines the type the http method.
+     * @return a response.
      */
-    public RequestSpecification getRequestSpecification() {
-        return request;
+    public Response put(final String endpoint) {
+        return apiResponse("PUT", endpoint);
+    }
+
+    /**
+     * Gets a response of type post.
+     *
+     * @param endpoint defines the type the http method.
+     * @return a response.
+     */
+    public Response post(final String endpoint) {
+        return apiResponse("POST", endpoint);
+    }
+
+    /**
+     * Gets a response of type delete.
+     *
+     * @param endpoint defines the type the http method.
+     * @return a response.
+     */
+    public Response delete(final String endpoint) {
+        return apiResponse("DELETE", endpoint);
+    }
+
+    /**
+     * Gets a requestSpecification for RestClientAPI.
+     *
+     * @return a requestSpecification.
+     */
+    public RequestSpecification getRequest() {
+        return requestSpecification;
+    }
+
+    /**
+     * Sets the attribute requestSpecification en RestClientAPI.
+     *
+     * @param requestSpecification defines a requestSpecification in attribute to be set.
+     */
+    public void setRequest(final RequestSpecification requestSpecification) {
+        this.requestSpecification = requestSpecification;
+    }
+
+    /**
+     * Builds the request defines the method http and endpoint.
+     *
+     * @param httpMethod defines the type the http method.
+     * @param endpoint   defines the endpoint.
+     * @return a response.
+     */
+    private Response apiResponse(final String httpMethod, final String endpoint) {
+        return given().
+                spec(requestSpecification).
+                when().
+                request(httpMethod, endpoint);
+    }
+
+    /**
+     * Builds the request with a body.
+     *
+     * @param body defines parameters od input in a map.
+     */
+    public void buildSpec(final Map<String, String> body) {
+        requestSpecification = given().
+                spec(requestSpecification).
+                contentType(JSON).
+                body(new Gson().toJson(body));
+
     }
 }

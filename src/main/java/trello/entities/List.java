@@ -71,4 +71,19 @@ public class List {
     public void setCards(final ArrayList<Card> cards) {
         this.cards = cards;
     }
+
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
+    public boolean areListsEquals(final ArrayList<Card> listCards) {
+        boolean answer = true;
+        for (int index = 0; index < cards.size(); index++) {
+            if(!cards.get(index).getTitle().equals(listCards.get(index).getTitle())) {
+                answer = false;
+                break;
+            }
+        }
+        return answer;
+    }
 }
