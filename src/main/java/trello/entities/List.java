@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
- * Context class.
+ * List class.
  *
  * @author Melissa Román
  * @version 0.0.1
