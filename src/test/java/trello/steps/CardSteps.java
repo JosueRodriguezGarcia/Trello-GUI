@@ -18,6 +18,8 @@ import org.testng.Assert;
 import trello.entities.Context;
 import trello.ui.pages.BoardPage;
 import trello.ui.pages.HomePage;
+import trello.ui.pages.modal.CardModal;
+import trello.ui.pages.modal.CheckListModal;
 
 /**
  * CardSteps class.
@@ -29,6 +31,8 @@ public class CardSteps {
 
     private HomePage homePage;
     private BoardPage boardPage;
+    private CardModal cardModal;
+    private CheckListModal checkListModal;
     private Context context;
 
     /**
@@ -70,5 +74,42 @@ public class CardSteps {
     public void verifyTheNameCard() {
         String actualTitle = boardPage.getCardTitle(context.getList().getTitle(), context.getCard().getTitle());
         Assert.assertEquals(context.getCard().getTitle(), actualTitle);
+    }
+
+    /**
+     * Selects a card of board.
+     *
+     * @param cardTitle defines the card title that want selected.
+     */
+    @And("I select (.*) card")
+    public void selectCard(final String cardTitle) {
+        boardPage = new BoardPage();
+        context.getCard().setTitle(cardTitle);
+        boardPage.selectedCard(cardTitle);
+    }
+
+    /**
+     * Adds a checklist to card.
+     *
+     * @param checkListTitle defines the checklist title to be created.
+     */
+    @And("I add a checklist with (.*) title")
+    public void addChecklist(final String checkListTitle) {
+        cardModal = new CardModal();
+        cardModal.clickCheckListButton();
+        checkListModal = new CheckListModal();
+        checkListModal.addCheckList(checkListTitle);
+        cardModal.clickCloseWindowsButton();
+    }
+
+    /**
+     * Verifies that the checklist in a card is displayed.
+     */
+    @Then("the checklist section is displayed on the card details")
+    public void theChecklistSectionIsDisplayedOnTheCardDetails() {
+        boardPage.selectedCard(context.getCard().getTitle());
+        cardModal = new CardModal();
+        boolean result = cardModal.searchCheckList("TestCheckList");
+        Assert.assertTrue(result);
     }
 }
