@@ -42,6 +42,9 @@ public class CardModal extends BasePage {
 
     private static final String CARD_TITLE = "hide-on-edit";
 
+    @FindBy(className = "js-add-due-date")
+    private WebElement dueDateButton;
+
     /**
      * Does click the "add checklist button".
      */
@@ -49,6 +52,12 @@ public class CardModal extends BasePage {
         checkListButton.click();
     }
 
+    /**
+     * Does click the "Due Date" button.
+     */
+    public void clickDueDateButton() {
+        dueDateButton.click();
+    }
     /**
      * Does click the "close button".
      */
