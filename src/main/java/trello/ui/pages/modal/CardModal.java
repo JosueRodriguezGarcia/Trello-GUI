@@ -41,6 +41,7 @@ public class CardModal extends BasePage {
     private List<WebElement> checkLists;
 
     private static final String CARD_TITLE = "hide-on-edit";
+
     /**
      * Does click the "add checklist button".
      */
