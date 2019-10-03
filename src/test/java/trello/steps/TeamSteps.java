@@ -17,7 +17,10 @@ import cucumber.api.java.en.When;
 import trello.entities.Context;
 import trello.entities.Team;
 import trello.ui.pages.HomePage;
+import trello.ui.pages.team.MemberModalPage;
 import trello.ui.pages.team.TeamModalPage;
+
+import java.util.List;
 
 /**
  * TeamSteps class.
@@ -49,19 +52,14 @@ public class TeamSteps {
         teamModalPage.createTeam(name);
     }
 
-    @When("I add the following members:")
-    public void i_add_the_following_members(io.cucumber.datatable.DataTable dataTable) {
-        // Write code here that turns the phrase above into concrete actions
-        // For automatic transformation, change DataTable to one of
-        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-        // Double, Byte, Short, Long, BigInteger or BigDecimal.
-        //
-        // For other transformations you can register a DataTableType.
+    @When("I add the following members with user name:")
+    public void addMembers(List<String> members) {
+        MemberModalPage memberModalPage = new MemberModalPage();
+        memberModalPage.addMember(members);
     }
 
-    @Then("I should see the imformation of team")
-    public void i_should_see_the_imformation_of_team() {
+    @Then("I should see the information of team")
+    public void showInformationTeam() {
         // Write code here that turns the phrase above into concrete actions
     }
 

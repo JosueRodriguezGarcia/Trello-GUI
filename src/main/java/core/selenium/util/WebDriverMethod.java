@@ -90,7 +90,7 @@ public final class WebDriverMethod {
      * @param webElement use to search the webElement.
      */
     public static void waitElementBeClickable(final WebDriver webDriver, final WebElement webElement) {
-        final long time = 1;
+        final long time = 2;
         WebDriverWait webDriverWait = new WebDriverWait(webDriver, time);
         try {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(webElement));
