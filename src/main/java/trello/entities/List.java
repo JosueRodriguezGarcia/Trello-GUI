@@ -25,7 +25,7 @@ public class List {
 
     private String id;
     private String title;
-    private ArrayList<Card> cards;
+    private java.util.List<Card> cards;
 
     /**
      * Public constructor of the class' instances.
@@ -75,7 +75,7 @@ public class List {
      *
      * @param cards is the ArrayList that contains the cards to be set.
      */
-    public void setCards(final ArrayList<Card> cards) {
+    public void setCards(final java.util.List<Card> cards) {
         this.cards = cards;
     }
 
@@ -84,7 +84,7 @@ public class List {
      *
      * @return an ArrayList with all cards in the list.
      */
-    public ArrayList<Card> getCards() {
+    public java.util.List<Card> getCards() {
         return cards;
     }
 
@@ -94,7 +94,7 @@ public class List {
      * @param listCards is the list of cards to compare with.
      * @return true if the ArrayList is equal to this list's cards.
      */
-    public boolean areListsEquals(final ArrayList<Card> listCards) {
+    public boolean areListsEquals(final java.util.List<Card> listCards) {
         boolean answer = true;
         for (int index = 0; index < cards.size(); index++) {
             if (!cards.get(index).getTitle().equals(listCards.get(index).getTitle())) {
@@ -110,7 +110,7 @@ public class List {
      *
      * @return an ArrayList with all cards' titles.
      */
-    public ArrayList<String> getCardsTitles() {
+    public java.util.List<String> getCardsTitles() {
         ArrayList<String> cardsTitles = new ArrayList<>();
         for (int index = 0; index < cards.size(); index++) {
             cardsTitles.add(cards.get(index).getTitle());
@@ -124,8 +124,8 @@ public class List {
      * @param listToCompare is the list which is wanted to ve verified.
      * @return true if the given ArrayList of cards is sorted.
      */
-    public boolean isSortedByName(final ArrayList<Card> listToCompare) {
-        ArrayList<String> cardsTitles = getCardsTitles();
+    public boolean isSortedByName(final java.util.List<Card> listToCompare) {
+        java.util.List<String> cardsTitles = getCardsTitles();
         cardsTitles.sort(Comparator.comparing(String::toString));
         boolean answer = true;
         for (int index = 0; index < cards.size(); index++) {

@@ -14,6 +14,7 @@ package trello.ui.pages;
 
 import core.selenium.util.WebDriverMethod;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -106,7 +107,13 @@ public class BoardPage extends BasePage {
      */
     public void archiveListByTitle(final String listTitle) {
         dropdownListMenu(listTitle);
-        archiveListButton.click();
+        try {
+            archiveListButton.click();
+        }
+        catch(StaleElementReferenceException sere)
+        {
+            archiveListButton.click();
+        }
     }
 
     /**
@@ -222,8 +229,8 @@ public class BoardPage extends BasePage {
      * @param listTitle is the title of the list which cards as wanted to retrieve.
      * @return an ArrayList of al cards in the list.
      */
-    public ArrayList<Card> getCardsInList(final String listTitle) {
-        ArrayList<Card> cardsInList = new ArrayList<>();
+    public List<Card> getCardsInList(final String listTitle) {
+        List<Card> cardsInList = new ArrayList<>();
         List<WebElement> cards = cardsInList(listTitle);
         for (WebElement card : cards) {
             Card cardInIndex = new Card();
