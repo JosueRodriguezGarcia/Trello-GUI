@@ -15,6 +15,7 @@ package trello.entities;
 import cucumber.api.java.bs.A;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Context class.
@@ -79,7 +80,28 @@ public class List {
     public boolean areListsEquals(final ArrayList<Card> listCards) {
         boolean answer = true;
         for (int index = 0; index < cards.size(); index++) {
-            if(!cards.get(index).getTitle().equals(listCards.get(index).getTitle())) {
+            if (!cards.get(index).getTitle().equals(listCards.get(index).getTitle())) {
+                answer = false;
+                break;
+            }
+        }
+        return answer;
+    }
+
+    public ArrayList<String> getCardsTitles() {
+        ArrayList<String> cardsTitles = new ArrayList<>();
+        for (int index = 0; index < cards.size(); index++) {
+            cardsTitles.add(cards.get(index).getTitle());
+        }
+        return cardsTitles;
+    }
+
+    public boolean verifySortByName(final ArrayList<Card> listToCompare) {
+        ArrayList<String> cardsTitles = getCardsTitles();
+        cardsTitles.sort(Comparator.comparing(String::toString));
+        boolean answer = true;
+        for (int index = 0; index < cards.size(); index++) {
+            if(!cardsTitles.get(index).equals(listToCompare.get(index).getTitle())) {
                 answer = false;
                 break;
             }

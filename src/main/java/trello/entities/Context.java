@@ -33,6 +33,7 @@ public class Context {
     public Context() {
         user = new User();
         board = new Board();
+        list = new List();
         listSource = new List();
         listTarget = new List();
         card = new Card();

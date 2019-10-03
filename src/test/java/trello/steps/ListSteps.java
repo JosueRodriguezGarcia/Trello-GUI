@@ -17,6 +17,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.testng.Assert;
 import trello.entities.Context;
+import trello.entities.List;
 import trello.ui.pages.BoardPage;
 import trello.ui.pages.HomePage;
 
@@ -86,19 +87,29 @@ public class ListSteps {
     public void verifyCardsOnTargetList() {
         boardPage = new BoardPage();
         Assert.assertTrue(context.getListSource()
-                        .areListsEquals(boardPage.getCardsInList(context.getListTarget().getTitle()))
-                , "Cards were not correctly moved");
+                        .areListsEquals(boardPage.getCardsInList(context.getListTarget().getTitle())),
+                "Cards were not correctly moved");
     }
 
     @And("I sort cards in (.*) list by card name")
     public void sortCardsInListByCardName(final String listTitle) {
         boardPage = new BoardPage();
+        context.getList().setTitle(listTitle);
+        context.getList().setCards(boardPage.getCardsInList(listTitle));
         boardPage.sortCardsInListByName(listTitle);
     }
 
-    @And("source list should be empty")
+    @And("the source list should be empty")
     public void verifySourceList() {
         boardPage = new BoardPage();
-        Assert.assertEquals(boardPage.getCardsInList(context.getListSource().getTitle()).size(), 0);
+        Assert.assertEquals(boardPage.getCardsInList(context.getListSource().getTitle()).size(), 0,
+                "Cards were not correctly moved");
+    }
+
+    @Then("all cards should be displayed correctly sorted")
+    public void verifyCardsSortedByName() {
+        boardPage = new BoardPage();
+        Assert.assertTrue(context.getList().verifySortByName(boardPage.getCardsInList(context.getList().getTitle()))
+                , "Cards were not correctly sorted");
     }
 }

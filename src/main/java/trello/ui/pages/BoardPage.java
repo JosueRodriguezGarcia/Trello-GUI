@@ -218,7 +218,6 @@ public class BoardPage extends BasePage {
         for (WebElement card : cards) {
             Card cardInIndex = new Card();
             cardInIndex.setTitle(card.findElement(By.className("js-card-name")).getText());
-            System.out.println(card.findElement(By.className("js-card-name")).getText());
             cardsInList.add(cardInIndex);
         }
         return cardsInList;
