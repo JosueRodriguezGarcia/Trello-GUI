@@ -17,6 +17,7 @@ import core.selenium.util.PropertiesReader;
 import java.util.Properties;
 
 import static trello.keys.Constants.PATH_GRADLE_PROPERTIES_FILE;
+import static trello.keys.Constants.BROWSER_NAME;
 
 /**
  * This class reads the gradle.properties file.
