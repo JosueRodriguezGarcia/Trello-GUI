@@ -73,7 +73,7 @@ public class CardModal extends BasePage {
     }
 
     /**
-     * Wait that card title is visibility.
+     * Waits that card title is visibility.
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
