@@ -25,5 +25,6 @@ Feature: List actions
   Scenario: Copy a card to other list
     Given I am logged in as admin user
     When I select TestBoard board
-    And I copy CardTitle card to Tasks2 list
+    And I copy Card1 card to Tasks2 list
     Then the card appears correctly on target list
+    And the card does not appear on source list anymore

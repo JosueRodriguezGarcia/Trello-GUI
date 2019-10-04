@@ -17,6 +17,7 @@ import core.selenium.util.WebDriverMethod;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -41,6 +42,9 @@ public class BoardPage extends BasePage {
     private static final String LIST_MENU_SUFFIX = "/following-sibling::div";
     private static final String LIST_MENU_XPATH = LIST_TITLE_XPATH + LIST_MENU_SUFFIX;
     private static final String TARGET_LIST_TITLE_XPATH = "//a[contains(text(), '%s')]";
+    private static final String CARD_XPATH = "//span[contains(text(), '%s')]";
+    private static final String ARCHIVE_CARD_QUICK_MENU_CLASS = "quick-card-editor-buttons-item js-archive";
+    private static final String MOVE_CARD_QUICK_MENU_CLASS = "quick-card-editor-buttons-item js-move-card";
 
     @FindBy(className = "placeholder")
     private WebElement newListButton;
@@ -216,7 +220,7 @@ public class BoardPage extends BasePage {
      *
      * @param cardTitle defines the card title that search.
      */
-    public void selectedCard(final String cardTitle) {
+    public void selectCard(final String cardTitle) {
         for (int i = 0; i < cards.size(); i++) {
             if (cards.get(i).getText().equals(cardTitle)) {
                 cards.get(i).click();
@@ -311,5 +315,25 @@ public class BoardPage extends BasePage {
         sortCardsButton.click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.className(SORT_BY_OLDEST_FIRST_CLASS)));
         sortByOldestFirstButton.click();
+    }
+
+    public void moveCard(String cardTitle, String targetList) {
+        showQuickCardMenu(cardTitle);
+        WebElement moveCardButton = driver.findElement(By.className(MOVE_CARD_QUICK_MENU_CLASS));
+        moveCardButton.click();
+        //hace click hasta el boton de mover
+    }
+
+    public void showQuickCardMenu(final String cardTitle) {
+        WebElement card = driver.findElement(By.xpath(String.format(CARD_XPATH, cardTitle)));
+        Actions actions = new Actions(driver);
+        actions.contextClick(card).perform();
+        wait.until(ExpectedConditions.elementToBeClickable(By.className(ARCHIVE_CARD_QUICK_MENU_CLASS)));
+    }
+
+    public String getListWhereCardIs(String card) {
+
+        ////span[contains(text(), 'Card1')]/../../../../div[class~='header']
+        return null;
     }
 }

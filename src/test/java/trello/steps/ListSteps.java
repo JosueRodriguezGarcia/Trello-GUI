@@ -12,6 +12,7 @@
 
 package trello.steps;
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.testng.Assert;
@@ -70,7 +71,7 @@ public class ListSteps {
      * Verifies if the context's list is on the board.
      */
     @Then("I should see the new created list with the given title")
-    public void verifyList() {
+    public void verifyListCreation() {
         boardPage = new BoardPage();
         Assert.assertTrue(boardPage.isThereThisListByTitle(context.getLists().get("list").getTitle()));
     }
@@ -139,5 +140,21 @@ public class ListSteps {
         Assert.assertTrue(context.getLists().get("list").isSortedByName(boardPage.getCardsInList(context.getLists()
                         .get("list").getTitle())),
                 "Cards were not correctly sorted.");
+    }
+
+    @And("I copy (.*) card to (.*) list")
+    public void copyCardToList(final String card, final String listTitle) {
+        boardPage = new BoardPage();
+        context.getCard().setTitle(card);
+        List targetList = new List();
+        targetList.setTitle(listTitle);
+        targetList.setCards(boardPage.getCardsInList(listTitle));
+        context.getLists().put("targetList", targetList);
+        List sourceList = new List();
+        String sourceListTitle = boardPage.getListWhereCardIs(card);
+        sourceList.setTitle(sourceListTitle);
+        //sourceList.setCards(boardPage.getCardsInList(sourceListTitle));
+        context.getLists().put("sourceList", sourceList);
+        boardPage.moveCard(card, listTitle);
     }
 }
