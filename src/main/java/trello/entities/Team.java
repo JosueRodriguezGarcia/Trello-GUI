@@ -13,7 +13,6 @@
 package trello.entities;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,7 +25,7 @@ public class Team {
 
     private String id;
     private String name;
-    private ArrayList<String> userNameOfMembers;
+    private List<String> userNameOfMembers;
 
     /**
      * Constructor of object of it's class.
@@ -76,7 +75,7 @@ public class Team {
      *
      * @return a object List of this class.
      */
-    public ArrayList<String> getUserNameOfMembers() {
+    public List<String> getUserNameOfMembers() {
         userNameOfMembers.sort(String::compareTo);
         return userNameOfMembers;
     }
