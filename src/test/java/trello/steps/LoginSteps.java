@@ -33,7 +33,6 @@ import trello.ui.pages.LoginPage;
 public class LoginSteps {
 
     private Context context;
-    private LoginPage loginPage;
 
     /**
      * Constructor method to share states between objects.
@@ -54,7 +53,7 @@ public class LoginSteps {
         User user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType(userType));
         context.setUser(user);
         PageTransporter.navigateToURL(NamePages.getLoginPageUrl());
-        loginPage = new LoginPage();
+        LoginPage loginPage = new LoginPage();
         loginPage.login(user);
     }
 
