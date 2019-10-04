@@ -100,8 +100,8 @@ public class TeamSteps {
     /**
      * Goes to the HomePage.
      */
-    @When("I go to the Home page")
-    public void goToHomePage() {
+    @When("I go to the Home page using top menu")
+    public void goToHomePageUsingTopMenu() {
         teamPage.getTopMenu().openHomePage();
     }
 
