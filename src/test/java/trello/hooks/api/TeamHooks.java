@@ -12,55 +12,41 @@
 
 package trello.hooks.api;
 
-import cucumber.api.java.Before;
+import cucumber.api.java.After;
 import io.restassured.response.Response;
 import trello.api.rest.Authentication;
 import trello.api.rest.RestClientAPI;
 import trello.entities.Context;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * ListAPIHook class.
+ * TeamHooks class.
  *
- * @author Josue Rodriguez.
+ * @author Raul Choque
  * @version 0.0.1
  */
-public class ListAPIHook {
+public class TeamHooks {
 
     private Context context;
     private Response response;
     private RestClientAPI request;
-    private final int orderBefore = 2;
 
     /**
      * This method constructor initializes the variables.
      *
      * @param context initializes context attribute.
      */
-    public ListAPIHook(final Context context) {
+    public TeamHooks(final Context context) {
         this.context = context;
         request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
     }
 
     /**
-     * Makes a requestBoard for create a List.
+     * Makes the delete of team after it was created.
      */
-    @Before(order = orderBefore, value = "@create-list")
-    public void beforeScenario() {
-        String endPoint = "/lists/";
-        String name = "TestList";
-        String idBoard = context.getBoard().getId();
-        Map<String, String> data = new HashMap<>();
-        data.put("name", name);
-        data.put("idBoard", idBoard);
-        request.buildSpec(data);
-        response = request.post(endPoint);
-        context.getLists().get("list").setId(response.getBody().jsonPath().get("id"));
+    @After("@delete-team")
+    public void afterScenario() {
+        String idTeam = context.getTeam().getId();
+        String endPoint = "/organizations/".concat(idTeam);
+        response = request.delete(endPoint);
     }
 }
-
-
-
-

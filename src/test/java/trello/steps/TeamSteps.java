@@ -12,7 +12,6 @@
 
 package trello.steps;
 
-import core.selenium.util.WebDriverMethod;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.testng.Assert;
