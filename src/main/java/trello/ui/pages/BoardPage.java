@@ -334,6 +334,7 @@ public class BoardPage extends BasePage {
     public String getListWhereCardIs(String card) {
 
         ////span[contains(text(), 'Card1')]/../../../../div[class~='header']
+        //tal vez ir hasta el padre, guardar en web element y de ahí ir por css.
         return null;
     }
 }
