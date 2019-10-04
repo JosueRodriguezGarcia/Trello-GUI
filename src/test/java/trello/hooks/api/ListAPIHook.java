@@ -58,7 +58,7 @@ public class ListAPIHook {
         data.put("idBoard", idBoard);
         request.buildSpec(data);
         response = request.post(endPoint);
-        context.getList().setId(response.getBody().jsonPath().get("id"));
+        context.getLists().get("list").setId(response.getBody().jsonPath().get("id"));
     }
 }
 

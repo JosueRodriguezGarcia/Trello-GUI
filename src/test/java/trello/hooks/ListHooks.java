@@ -41,6 +41,25 @@ public class ListHooks {
     @After("@ArchiveList")
     public void archiveList() {
         boardPage = new BoardPage();
-        boardPage.archiveListByTitle(context.getList().getTitle());
+        boardPage.archiveListByTitle(context.getLists().get("list").getTitle());
+    }
+
+    /**
+     * Returns all cards to the source list.
+     */
+    @After("@MoveAllCards")
+    public void returnCardsToFromList() {
+        boardPage = new BoardPage();
+        boardPage.moveAllCards(context.getLists().get("targetList").getTitle(), context.getLists().get("sourceList")
+                .getTitle());
+    }
+
+    /**
+     * Sorts all cards by oldest first.
+     */
+    @After("@SortCardsByName")
+    public void sortCardsByOldestFirst() {
+        boardPage = new BoardPage();
+        boardPage.sortCardsInListByOldestFirst(context.getLists().get("list").getTitle());
     }
 }
