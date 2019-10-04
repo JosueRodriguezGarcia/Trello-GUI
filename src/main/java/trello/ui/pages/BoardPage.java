@@ -19,6 +19,7 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import trello.entities.Card;
 
 import java.util.ArrayList;
@@ -32,6 +33,14 @@ import java.util.concurrent.TimeUnit;
  * @version 0.0.1
  */
 public class BoardPage extends BasePage {
+
+    private static final String ARCHIVE_LIST_CLASS = "js-close-list";
+    private static final String SORT_BY_NAME_CLASS = "js-sort-by-card-name";
+    private static final String SORT_BY_OLDEST_FIRST_CLASS = "js-sort-oldest-first";
+    private static final String LIST_TITLE_XPATH = "//h2[contains(text(), '%s')]";
+    private static final String LIST_MENU_SUFFIX = "/following-sibling::div";
+    private static final String LIST_MENU_XPATH = LIST_TITLE_XPATH + LIST_MENU_SUFFIX;
+    private static final String TARGET_LIST_TITLE_XPATH = "//a[contains(text(), '%s')]";
 
     @FindBy(className = "placeholder")
     private WebElement newListButton;
@@ -57,14 +66,6 @@ public class BoardPage extends BasePage {
     @FindBy(className = SORT_BY_OLDEST_FIRST_CLASS)
     private WebElement sortByOldestFirstButton;
 
-    private static final String ARCHIVE_LIST_CLASS = "js-close-list";
-    private static final String SORT_BY_NAME_CLASS = "js-sort-by-card-name";
-    private static final String SORT_BY_OLDEST_FIRST_CLASS = "js-sort-oldest-first";
-    private static final String LIST_TITLE_XPATH = "//h2[contains(text(), '%s')]";
-    private static final String LIST_MENU_SUFFIX = "/following-sibling::div";
-    private static final String LIST_MENU_XPATH = LIST_TITLE_XPATH + LIST_MENU_SUFFIX;
-    private static final String TARGET_LIST_TITLE_XPATH = "//a[contains(text(), '%s')]";
-
     @FindBy(id = "board")
     private WebElement board;
 
@@ -82,6 +83,12 @@ public class BoardPage extends BasePage {
 
     @FindBy(className = "js-add-a-card")
     private WebElement addACard;
+
+    @FindBy(className = "js-card-details")
+    private List<WebElement> cards;
+
+    @FindBy(className = "js-open-add-list")
+    private WebElement addAnotherList;
 
     /**
      * Creates a new list.
@@ -205,11 +212,24 @@ public class BoardPage extends BasePage {
     }
 
     /**
-     * Wait until Page object is found.
+     * Does click a card to be selected.
+     *
+     * @param cardTitle defines the card title that search.
+     */
+    public void selectedCard(final String cardTitle) {
+        for (int i = 0; i < cards.size(); i++) {
+            if (cards.get(i).getText().equals(cardTitle)) {
+                cards.get(i).click();
+            }
+        }
+    }
+
+    /**
+     * Waits until Page object is found.
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
-
+        wait.until(ExpectedConditions.elementToBeClickable(addAnotherList));
     }
 
     /**

@@ -4,7 +4,7 @@ Feature: List actions
   Scenario: New list creation
     Given I log in as admin user
     When I select TestBoard board
-    And I create a new list with "TestList" as title
+    And I create a new list with "ListTest" as title
     Then I should see the new created list with the given title
 
   @MoveAllCards
@@ -27,4 +27,3 @@ Feature: List actions
     When I select TestBoard board
     And I copy CardTitle card to Tasks2 list
     Then the card appears correctly on target list
-
