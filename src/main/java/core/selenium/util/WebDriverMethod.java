@@ -117,6 +117,20 @@ public final class WebDriverMethod {
     }
 
     /**
+     * Gets the text in given web element.
+     *
+     * @param webDriver   is the explicitWait of Driver.
+     * @param locatorType is the type of the given locator.
+     * @param locator     is the locator of the web element.
+     * @return the text in web element.
+     */
+    public static String getTextInWebElement(final WebDriver webDriver, final String locatorType,
+                                             final String locator) {
+        fillMapAccordingLocator(locator);
+        return webDriver.findElement(byLocator.get(locatorType)).getAttribute("textContent");
+    }
+
+    /**
      * Fills the by according to the locator.
      *
      * @param locator is the locator to be used.
@@ -130,9 +144,9 @@ public final class WebDriverMethod {
     /**
      * Creates a WebElement that is find in the DOM.
      *
-     * @param driver is to get the DOM.
+     * @param driver      is to get the DOM.
      * @param locatorType is to type of locator to search a element.
-     * @param locator is to find the element into the DOM.
+     * @param locator     is to find the element into the DOM.
      * @return a object of Web IElement.
      */
     public static WebElement createWebElement(final WebDriver driver, final String locatorType, final String locator) {

@@ -29,7 +29,7 @@ public class HomePage extends ApplicationBasePage {
     private WebElement fullNameInitialsButton;
 
     private static final String INITIAL_CLASS_NAME = "_24AWINHReYjNBf";
-    private static final String CSS_TO_BOARD = "div[title=\"%s\"]";
+    private static final String CSS_TO_BOARD = "div[title='%s']";
 
     /**
      * Wait until Page object was find for.

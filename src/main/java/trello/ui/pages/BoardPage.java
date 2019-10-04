@@ -12,14 +12,19 @@
 
 package trello.ui.pages;
 
+import core.selenium.WebDriverConfig;
 import core.selenium.util.WebDriverMethod;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import trello.entities.Card;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * BoardPage class.
@@ -28,6 +33,14 @@ import java.util.List;
  * @version 0.0.1
  */
 public class BoardPage extends BasePage {
+
+    private static final String ARCHIVE_LIST_CLASS = "js-close-list";
+    private static final String SORT_BY_NAME_CLASS = "js-sort-by-card-name";
+    private static final String SORT_BY_OLDEST_FIRST_CLASS = "js-sort-oldest-first";
+    private static final String LIST_TITLE_XPATH = "//h2[contains(text(), '%s')]";
+    private static final String LIST_MENU_SUFFIX = "/following-sibling::div";
+    private static final String LIST_MENU_XPATH = LIST_TITLE_XPATH + LIST_MENU_SUFFIX;
+    private static final String TARGET_LIST_TITLE_XPATH = "//a[contains(text(), '%s')]";
 
     @FindBy(className = "placeholder")
     private WebElement newListButton;
@@ -38,11 +51,20 @@ public class BoardPage extends BasePage {
     @FindBy(className = "primary")
     private WebElement addNewListButton;
 
-    @FindBy(className = "js-close-list")
+    @FindBy(className = ARCHIVE_LIST_CLASS)
     private WebElement archiveListButton;
 
-    private static final String BOARD_TITLE_XPATH = "//h2[contains(text(), \"%s\")]";
-    private static final String BOARD_MENU_SUFFIX = "/following-sibling::div";
+    @FindBy(className = "js-move-cards")
+    private WebElement moveAllCardsButton;
+
+    @FindBy(className = "js-sort-cards")
+    private WebElement sortCardsButton;
+
+    @FindBy(className = SORT_BY_NAME_CLASS)
+    private WebElement sortByCardNameButton;
+
+    @FindBy(className = SORT_BY_OLDEST_FIRST_CLASS)
+    private WebElement sortByOldestFirstButton;
 
     @FindBy(id = "board")
     private WebElement board;
@@ -86,8 +108,8 @@ public class BoardPage extends BasePage {
      * @return true is the list is on the board.
      */
     public boolean isThereThisListByTitle(final String listTitle) {
-        String boardTitleXpath = String.format(BOARD_TITLE_XPATH, listTitle);
-        WebElement listHeader = driver.findElement(By.xpath(boardTitleXpath));
+        String listTitleXpath = String.format(LIST_TITLE_XPATH, listTitle);
+        WebElement listHeader = driver.findElement(By.xpath(listTitleXpath));
         return listHeader.getAttribute("textContent").equals(listTitle);
     }
 
@@ -97,10 +119,24 @@ public class BoardPage extends BasePage {
      * @param listTitle is the title of the list that is requested to archive.
      */
     public void archiveListByTitle(final String listTitle) {
-        String boardMenuXpath = String.format(BOARD_TITLE_XPATH + BOARD_MENU_SUFFIX, listTitle);
-        WebElement listMenuBtn = driver.findElement(By.xpath(boardMenuXpath));
+        dropdownListMenu(listTitle);
+        try {
+            archiveListButton.click();
+        } catch (StaleElementReferenceException sere) {
+            archiveListButton.click();
+        }
+    }
+
+    /**
+     * Drops down the list's menu.
+     *
+     * @param listTitle is the title of the list which menu is wanted to be dropped down.
+     */
+    private void dropdownListMenu(final String listTitle) {
+        String listMenuXpath = String.format(LIST_MENU_XPATH, listTitle);
+        WebElement listMenuBtn = driver.findElement(By.xpath(listMenuXpath));
         listMenuBtn.click();
-        archiveListButton.click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className(ARCHIVE_LIST_CLASS)));
     }
 
     /**
@@ -194,5 +230,86 @@ public class BoardPage extends BasePage {
     @Override
     protected void waitUntilPageObjectIsLoaded() {
         wait.until(ExpectedConditions.elementToBeClickable(addAnotherList));
+    }
+
+    /**
+     * Moves all cards in given list to given target list.
+     *
+     * @param listFrom   is the list which the cards will be moved from.
+     * @param listTarget is the target list where the cards will be moved to.
+     */
+    public void moveAllCards(final String listFrom, final String listTarget) {
+        dropdownListMenu(listFrom);
+        moveAllCardsButton.click();
+        String targetListButtonXpath = String.format(TARGET_LIST_TITLE_XPATH, listTarget);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(targetListButtonXpath)));
+        WebElement targetListButton = driver.findElement(By.xpath(targetListButtonXpath));
+        targetListButton.click();
+    }
+
+    /**
+     * Gets all cards in list.
+     *
+     * @param listTitle is the title of the list which cards are required to retrieve.
+     * @return a List of al cards in the list.
+     */
+    public List<Card> getCardsInList(final String listTitle) {
+        List<Card> cardsInList = new ArrayList<>();
+        List<WebElement> cards = cardsInList(listTitle);
+        for (WebElement card : cards) {
+            Card cardInIndex = new Card();
+            try {
+                cardInIndex.setTitle(card.findElement(By.className("js-card-name")).getText());
+            } catch (StaleElementReferenceException sere) {
+                cardInIndex.setTitle(card.findElement(By.className("js-card-name")).getText());
+            }
+            cardsInList.add(cardInIndex);
+        }
+        return cardsInList;
+    }
+
+    /**
+     * Gets the quantity of cards that are in the list.
+     *
+     * @param listTitle is the title of the list which quantity of cards are required.
+     * @return the quantity on cards in the list.
+     */
+    public int getQttyCardsInList(final String listTitle) {
+        final long time = 1;
+        int cardsQty;
+        driver.
+                manage().
+                timeouts().
+                implicitlyWait(time, TimeUnit.SECONDS);
+        cardsQty = cardsInList(listTitle).size();
+        driver.
+                manage().
+                timeouts().
+                implicitlyWait(WebDriverConfig.getInstance().getImplicitWaitTime(), TimeUnit.SECONDS);
+        return cardsQty;
+    }
+
+    /**
+     * Sorts cards in list by card name.
+     *
+     * @param listTitle is the title of the list which is wanted to be sorted.
+     */
+    public void sortCardsInListByName(final String listTitle) {
+        dropdownListMenu(listTitle);
+        sortCardsButton.click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className(SORT_BY_NAME_CLASS)));
+        sortByCardNameButton.click();
+    }
+
+    /**
+     * Sorts cards in list by oldest first.
+     *
+     * @param listTitle is the title of the list which is wanted to be sorted.
+     */
+    public void sortCardsInListByOldestFirst(final String listTitle) {
+        dropdownListMenu(listTitle);
+        sortCardsButton.click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className(SORT_BY_OLDEST_FIRST_CLASS)));
+        sortByOldestFirstButton.click();
     }
 }
