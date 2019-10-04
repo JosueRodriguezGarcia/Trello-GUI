@@ -39,7 +39,7 @@ public class TeamSteps {
      *
      * @param currentContext has all share entities.
      */
-    public TeamSteps (final Context currentContext) {
+    public TeamSteps(final Context currentContext) {
         this.context = currentContext;
     }
 

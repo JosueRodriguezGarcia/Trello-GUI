@@ -12,11 +12,11 @@
 
 package trello.steps;
 
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.testng.Assert;
 import trello.entities.Context;
+import trello.entities.List;
 import trello.ui.pages.BoardPage;
 import trello.ui.pages.HomePage;
 
@@ -57,10 +57,12 @@ public class ListSteps {
      *
      * @param listTitle is the title to be given to the list.
      */
-    @And("I create a new list with {string} as title")
+    @When("I create a new list with {string} as title")
     public void createNewList(final String listTitle) {
         boardPage = new BoardPage();
-        context.getList().setTitle(listTitle);
+        List list = new List();
+        list.setTitle(listTitle);
+        context.getLists().put("list", list);
         boardPage.createNewList(listTitle);
     }
 
@@ -70,6 +72,72 @@ public class ListSteps {
     @Then("I should see the new created list with the given title")
     public void verifyList() {
         boardPage = new BoardPage();
-        Assert.assertTrue(boardPage.isThereThisListByTitle(context.getList().getTitle()));
+        Assert.assertTrue(boardPage.isThereThisListByTitle(context.getLists().get("list").getTitle()));
+    }
+
+    /**
+     * Moves all cards in given list to given target list.
+     *
+     * @param listSource is the list which cards are wanted to move from.
+     * @param listTarget is the list which the cards are wanted to move to. This list must be empty.
+     */
+    @When("I move all cards in (.*) to (.*)")
+    public void moveAllCardsInList(final String listSource, final String listTarget) {
+        boardPage = new BoardPage();
+        List sourceList = new List();
+        sourceList.setTitle(listSource);
+        sourceList.setCards(boardPage.getCardsInList(listSource));
+        context.getLists().put("sourceList", sourceList);
+        List targetList = new List();
+        targetList.setTitle(listTarget);
+        context.getLists().put("targetList", targetList);
+        boardPage.moveAllCards(listSource, listTarget);
+    }
+
+    /**
+     * Verifies if the cards that were on source list are now in the target list.
+     */
+    @Then("all cards that were on source list should appear on target list")
+    public void verifyCardsOnTargetList() {
+        boardPage = new BoardPage();
+        Assert.assertTrue(context.getLists().get("sourceList")
+                        .areListsEquals(boardPage.getCardsInList(context.getLists().get("targetList").getTitle())),
+                "Cards were not correctly moved.");
+    }
+
+    /**
+     * Sorts cards in list by card name.
+     *
+     * @param listTitle is title of the list which cards are wanted to be sorted by name.
+     */
+    @When("I sort cards in (.*) list by card name")
+    public void sortCardsInListByCardName(final String listTitle) {
+        boardPage = new BoardPage();
+        List list = new List();
+        list.setTitle(listTitle);
+        list.setCards(boardPage.getCardsInList(listTitle));
+        context.getLists().put("list", list);
+        boardPage.sortCardsInListByName(listTitle);
+    }
+
+    /**
+     * Verifies is source list is empty after moving all cards from it.
+     */
+    @Then("the source list should be empty")
+    public void verifySourceList() {
+        boardPage = new BoardPage();
+        Assert.assertEquals(boardPage.getQttyCardsInList(context.getLists().get("sourceList").getTitle()), 0,
+                "Cards were not correctly moved. Cards are still in source list.");
+    }
+
+    /**
+     * Verifies if cards in list are sorted by name correctly.
+     */
+    @Then("all cards should be displayed correctly sorted")
+    public void verifyCardsSortedByName() {
+        boardPage = new BoardPage();
+        Assert.assertTrue(context.getLists().get("list").isSortedByName(boardPage.getCardsInList(context.getLists()
+                        .get("list").getTitle())),
+                "Cards were not correctly sorted.");
     }
 }

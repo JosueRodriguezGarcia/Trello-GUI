@@ -12,6 +12,9 @@
 
 package trello.entities;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Context class.
  *
@@ -22,7 +25,7 @@ public class Context {
 
     private Board board;
     private Card card;
-    private List list;
+    private Map<String, List> lists;
     private Team team;
     private User user;
 
@@ -32,7 +35,7 @@ public class Context {
     public Context() {
         board = new Board();
         card = new Card();
-        list = new List();
+        lists = new HashMap<>();
         team = new Team();
         user = new User();
     }
@@ -74,21 +77,12 @@ public class Context {
     }
 
     /**
-     * Gets list.
+     * Gets the map that contains the lists.
      *
-     * @return the list.
+     * @return lists map.
      */
-    public List getList() {
-        return list;
-    }
-
-    /**
-     * Sets list.
-     *
-     * @param list is the list to be set.
-     */
-    public void setList(final List list) {
-        this.list = list;
+    public Map<String, List> getLists() {
+        return lists;
     }
 
     /**
