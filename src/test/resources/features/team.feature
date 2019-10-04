@@ -10,3 +10,5 @@ Feature: Team creation
     Then I should see the information of team
     When I go to the section of member in TeamPage
     Then I should see all username of members
+    When I go to the Home page
+    Then I should see the name of team

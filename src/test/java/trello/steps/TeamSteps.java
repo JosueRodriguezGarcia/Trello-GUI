@@ -96,4 +96,21 @@ public class TeamSteps {
         Assert.assertEquals(context.getTeam().getUserNameOfMembers(), teamPage.getUserNameOfMembers(),
                 "This member not are all that you add!!");
     }
+
+    /**
+     * Goes to the HomePage.
+     */
+    @When("I go to the Home page")
+    public void goToHomePage() {
+        teamPage.getTopMenu().openHomePage();
+    }
+
+    /**
+     * Verify if has the name of team.
+     */
+    @Then("I should see the name of team")
+    public void seeNameOfTeam() {
+        HomePage homePage = new HomePage();
+        Assert.assertTrue(homePage.existNameOfTeam(context.getTeam().getName()));
+    }
 }
