@@ -24,11 +24,8 @@ public class DueDataModal extends BasePage {
     @FindBy(className = "pika-select-month")
     private WebElement monthButton;
 
-//    @FindBy(className = "pika-select-month")
-//    private List<WebElement> monthDropdown;
-
     @FindBy(className = "pika-select-year")
-    private List<WebElement> yearDropdown;
+    private WebElement yearButton;
 
     @FindBy(className = "pika-day")
     private List<WebElement> dayButton;
@@ -48,7 +45,6 @@ public class DueDataModal extends BasePage {
         }
     }
 
-
     /**
      * Gets the Modal Title.
      */
@@ -63,42 +59,59 @@ public class DueDataModal extends BasePage {
         closeButton.click();
     }
     /**
-     * clicks in the remove button.
+     * Does click in the remove button.
      */
     public void clickRemoveButton(){
         removeButton.click();
     }
+
     /**
-     * clicks in the save button.
+     * Does click in the save button.
      */
     public void clickSaveButton(){
         saveButton.click();
     }
 
+    /**
+     * Does click in the month button.
+     */
     public void clickMonthButton() {
         monthButton.click();
-        List<WebElement> months = monthButton.findElements(By.className("pika-select-month"));
-        months.get(3).click();
-        System.out.println(months.get(3).getText());
     }
 
+    /**
+     * Does click in year button.
+     */
+    public void clickYearButton() {
+        yearButton.click();
+    }
+    /**
+     * Sets the month in calendar.
+     *
+     * @param month defines a input string with the month to be set.
+     */
     public void setMonth(final String month) {
-//        monthDropdown.get(0).click();
-//        for (int i =0; i<monthDropdown.size(); i++){
-//            System.out.println(monthDropdown.get(i).getText());
-//            if(monthDropdown.get(i).getText().equals(month)){
-//                System.out.println("hola");
-//            }
-//        }
+        monthButton.findElement(By.xpath("//option[.='"+month+"']")).click();
     }
 
-    public void showMonth() {
-//        System.out.println(monthDropdown.get(2).getText());
-//        for(int i= 0; i<monthDropdown.size(); i++){
-//            System.out.println(monthDropdown.get(i).getText());
-//        }
+    /**
+     * Sets the year in calendar.
+     *
+     * @param year defines a input string with the year to be set.
+     */
+    public void setYear(final String year) {
+        yearButton.findElement(By.xpath("//option[.='"+year+"']")).click();
     }
 
+    public void setDay(final String day) {
+        for(int i =0; i<dayButton.size();i++){
+            if(dayButton.get(i).getText().equals(day)){
+                dayButton.get(i).click();
+                break;
+            }
+        }
+
+    }
     @Override
     protected void waitUntilPageObjectIsLoaded() {
 

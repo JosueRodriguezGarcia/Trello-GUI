@@ -39,11 +39,11 @@ public class DueDataModalTest {
         cardModal.clickDueDateButton();
 
         dueDataModal =  new DueDataModal();
-        System.out.println(dueDataModal.Title());
-//        dueDataModal.showMonth();
-//        dueDataModal.clickCloseButton();
         dueDataModal.clickMonthButton();
-//        dueDataModal.setMonth("January");
+        dueDataModal.setMonth("January");
+        dueDataModal.clickYearButton();
+        dueDataModal.setYear("2021");
+        dueDataModal.setDay("17");
 
     }
 
