@@ -59,7 +59,8 @@ public class CardSteps {
      */
     @Then("I should see the new card with the given task")
     public void verifyNewCardisDisplayinList() {
-        boolean result = boardPage.searchCardInList(context.getLists().get("list").getTitle(), context.getCard().getTitle());
+        boolean result = boardPage.searchCardInList(context.getLists().get("list").getTitle(), context.getCard()
+                .getTitle());
         Assert.assertTrue(result);
     }
 
@@ -68,7 +69,8 @@ public class CardSteps {
      */
     @Then("I verify that the name is the correct")
     public void verifyTheNameCard() {
-        String actualTitle = boardPage.getCardTitle(context.getLists().get("list").getTitle(), context.getCard().getTitle());
+        String actualTitle = boardPage.getCardTitle(context.getLists().get("list").getTitle(), context.getCard()
+                .getTitle());
         Assert.assertEquals(context.getCard().getTitle(), actualTitle);
     }
 }

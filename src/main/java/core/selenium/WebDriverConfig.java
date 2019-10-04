@@ -62,7 +62,7 @@ public final class WebDriverConfig {
      * @return a browser.
      */
     public String getBrowser() {
-        return properties.getProperty("browserName").toUpperCase();
+        return System.getProperty(BROWSER_NAME).toUpperCase();
     }
 
     /**

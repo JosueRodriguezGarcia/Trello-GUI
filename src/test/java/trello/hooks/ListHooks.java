@@ -53,4 +53,13 @@ public class ListHooks {
         boardPage.moveAllCards(context.getLists().get("targetList").getTitle(), context.getLists().get("sourceList")
                 .getTitle());
     }
+
+    /**
+     * Sorts all cards by oldest first.
+     */
+    @After("@SortCardsByName")
+    public void sortCardsByOldestFirst() {
+        boardPage = new BoardPage();
+        boardPage.sortCardsInListByOldestFirst(context.getLists().get("list").getTitle());
+    }
 }

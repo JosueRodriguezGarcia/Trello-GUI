@@ -15,6 +15,7 @@ Feature: List actions
     Then all cards that were on source list should appear on target list
     And the source list should be empty
 
+  @SortCardsByName
   Scenario: Sort cards in list by card name
     Given I am logged in as admin user
     When I select TestBoard board

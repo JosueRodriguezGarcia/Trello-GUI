@@ -126,7 +126,7 @@ public class ListSteps {
     @Then("the source list should be empty")
     public void verifySourceList() {
         boardPage = new BoardPage();
-        Assert.assertEquals(boardPage.getCardsInList(context.getLists().get("sourceList").getTitle()).size(), 0,
+        Assert.assertEquals(boardPage.getQttyCardsInList(context.getLists().get("sourceList").getTitle()), 0,
                 "Cards were not correctly moved. Cards are still in source list.");
     }
 

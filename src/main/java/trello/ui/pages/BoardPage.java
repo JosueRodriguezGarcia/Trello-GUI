@@ -12,6 +12,7 @@
 
 package trello.ui.pages;
 
+import core.selenium.WebDriverConfig;
 import core.selenium.util.WebDriverMethod;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -22,6 +23,7 @@ import trello.entities.Card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * BoardPage class.
@@ -52,8 +54,12 @@ public class BoardPage extends BasePage {
     @FindBy(className = SORT_BY_NAME_CLASS)
     private WebElement sortByCardNameButton;
 
+    @FindBy(className = SORT_BY_OLDEST_FIRST_CLASS)
+    private WebElement sortByOldestFirstButton;
+
     private static final String ARCHIVE_LIST_CLASS = "js-close-list";
     private static final String SORT_BY_NAME_CLASS = "js-sort-by-card-name";
+    private static final String SORT_BY_OLDEST_FIRST_CLASS = "js-sort-oldest-first";
     private static final String LIST_TITLE_XPATH = "//h2[contains(text(), '%s')]";
     private static final String LIST_MENU_SUFFIX = "/following-sibling::div";
     private static final String LIST_MENU_XPATH = LIST_TITLE_XPATH + LIST_MENU_SUFFIX;
@@ -232,7 +238,11 @@ public class BoardPage extends BasePage {
         List<WebElement> cards = cardsInList(listTitle);
         for (WebElement card : cards) {
             Card cardInIndex = new Card();
-            cardInIndex.setTitle(card.findElement(By.className("js-card-name")).getText());
+            try {
+                cardInIndex.setTitle(card.findElement(By.className("js-card-name")).getText());
+            } catch (StaleElementReferenceException sere) {
+                cardInIndex.setTitle(card.findElement(By.className("js-card-name")).getText());
+            }
             cardsInList.add(cardInIndex);
         }
         return cardsInList;
@@ -245,7 +255,18 @@ public class BoardPage extends BasePage {
      * @return the quantity on cards in the list.
      */
     public int getQttyCardsInList(final String listTitle) {
-        return cardsInList(listTitle).size();
+        final long time = 1;
+        int cardsQty;
+        driver.
+                manage().
+                timeouts().
+                implicitlyWait(time, TimeUnit.SECONDS);
+        cardsQty = cardsInList(listTitle).size();
+        driver.
+                manage().
+                timeouts().
+                implicitlyWait(WebDriverConfig.getInstance().getImplicitWaitTime(), TimeUnit.SECONDS);
+        return cardsQty;
     }
 
     /**
@@ -258,5 +279,17 @@ public class BoardPage extends BasePage {
         sortCardsButton.click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.className(SORT_BY_NAME_CLASS)));
         sortByCardNameButton.click();
+    }
+
+    /**
+     * Sorts cards in list by oldest first.
+     *
+     * @param listTitle is the title of the list which is wanted to be sorted.
+     */
+    public void sortCardsInListByOldestFirst(final String listTitle) {
+        dropdownListMenu(listTitle);
+        sortCardsButton.click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className(SORT_BY_OLDEST_FIRST_CLASS)));
+        sortByOldestFirstButton.click();
     }
 }
