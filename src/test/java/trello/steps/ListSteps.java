@@ -16,6 +16,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.testng.Assert;
 import trello.entities.Context;
+import trello.entities.List;
 import trello.ui.pages.BoardPage;
 import trello.ui.pages.HomePage;
 
@@ -59,7 +60,9 @@ public class ListSteps {
     @When("I create a new list with {string} as title")
     public void createNewList(final String listTitle) {
         boardPage = new BoardPage();
-        context.getListSource().setTitle(listTitle);
+        List list = new List();
+        list.setTitle(listTitle);
+        context.getLists().put("list", list);
         boardPage.createNewList(listTitle);
     }
 
@@ -69,7 +72,7 @@ public class ListSteps {
     @Then("I should see the new created list with the given title")
     public void verifyList() {
         boardPage = new BoardPage();
-        Assert.assertTrue(boardPage.isThereThisListByTitle(context.getListSource().getTitle()));
+        Assert.assertTrue(boardPage.isThereThisListByTitle(context.getLists().get("list").getTitle()));
     }
 
     /**
@@ -81,9 +84,13 @@ public class ListSteps {
     @When("I move all cards in (.*) to (.*)")
     public void moveAllCardsInList(final String listSource, final String listTarget) {
         boardPage = new BoardPage();
-        context.getListSource().setTitle(listSource);
-        context.getListSource().setCards(boardPage.getCardsInList(listSource));
-        context.getListTarget().setTitle(listTarget);
+        List sourceList = new List();
+        sourceList.setTitle(listSource);
+        sourceList.setCards(boardPage.getCardsInList(listSource));
+        context.getLists().put("sourceList", sourceList);
+        List targetList = new List();
+        targetList.setTitle(listTarget);
+        context.getLists().put("targetList", targetList);
         boardPage.moveAllCards(listSource, listTarget);
     }
 
@@ -93,8 +100,8 @@ public class ListSteps {
     @Then("all cards that were on source list should appear on target list")
     public void verifyCardsOnTargetList() {
         boardPage = new BoardPage();
-        Assert.assertTrue(context.getListSource()
-                        .areListsEquals(boardPage.getCardsInList(context.getListTarget().getTitle())),
+        Assert.assertTrue(context.getLists().get("sourceList")
+                        .areListsEquals(boardPage.getCardsInList(context.getLists().get("targetList").getTitle())),
                 "Cards were not correctly moved.");
     }
 
@@ -106,8 +113,10 @@ public class ListSteps {
     @When("I sort cards in (.*) list by card name")
     public void sortCardsInListByCardName(final String listTitle) {
         boardPage = new BoardPage();
-        context.getList().setTitle(listTitle);
-        context.getList().setCards(boardPage.getCardsInList(listTitle));
+        List list = new List();
+        list.setTitle(listTitle);
+        list.setCards(boardPage.getCardsInList(listTitle));
+        context.getLists().put("list", list);
         boardPage.sortCardsInListByName(listTitle);
     }
 
@@ -117,7 +126,7 @@ public class ListSteps {
     @Then("the source list should be empty")
     public void verifySourceList() {
         boardPage = new BoardPage();
-        Assert.assertEquals(boardPage.getCardsInList(context.getListSource().getTitle()).size(), 0,
+        Assert.assertEquals(boardPage.getCardsInList(context.getLists().get("sourceList").getTitle()).size(), 0,
                 "Cards were not correctly moved. Cards are still in source list.");
     }
 
@@ -127,7 +136,8 @@ public class ListSteps {
     @Then("all cards should be displayed correctly sorted")
     public void verifyCardsSortedByName() {
         boardPage = new BoardPage();
-        Assert.assertTrue(context.getList().isSortedByName(boardPage.getCardsInList(context.getList().getTitle())),
+        Assert.assertTrue(context.getLists().get("list").isSortedByName(boardPage.getCardsInList(context.getLists()
+                        .get("list").getTitle())),
                 "Cards were not correctly sorted.");
     }
 }

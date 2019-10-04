@@ -12,6 +12,9 @@
 
 package trello.entities;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Context class.
  *
@@ -22,9 +25,7 @@ public class Context {
 
     private User user;
     private Board board;
-    private List listSource;
-    private List listTarget;
-    private List list;
+    private Map<String, List> lists;
     private Card card;
 
     /**
@@ -33,9 +34,7 @@ public class Context {
     public Context() {
         user = new User();
         board = new Board();
-        list = new List();
-        listSource = new List();
-        listTarget = new List();
+        lists = new HashMap<>();
         card = new Card();
     }
 
@@ -76,24 +75,6 @@ public class Context {
     }
 
     /**
-     * Gets the source list to be used in the context.
-     *
-     * @return is the source list.
-     */
-    public List getListSource() {
-        return listSource;
-    }
-
-    /**
-     * Sets the source list to be used in the context.
-     *
-     * @param listSource is the source list to be set.
-     */
-    public void setListSource(final List listSource) {
-        this.listSource = listSource;
-    }
-
-    /**
      * Gets card.
      *
      * @return the card that is on the context.
@@ -112,38 +93,11 @@ public class Context {
     }
 
     /**
-     * Gets the target list used in the context.
+     * Gets the map that contains the lists.
      *
-     * @return the target list.
+     * @return lists map.
      */
-    public List getListTarget() {
-        return listTarget;
-    }
-
-    /**
-     * Sets the target list that will be on the context.
-     *
-     * @param listTarget is the target list that will be shared.
-     */
-    public void setListTarget(final List listTarget) {
-        this.listTarget = listTarget;
-    }
-
-    /**
-     * Gets context list.
-     *
-     * @return the list in context.
-     */
-    public List getList() {
-        return list;
-    }
-
-    /**
-     * Sets the list in context.
-     *
-     * @param list is the list to be set in context.
-     */
-    public void setList(final List list) {
-        this.list = list;
+    public Map<String, List> getLists() {
+        return lists;
     }
 }

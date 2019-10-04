@@ -109,9 +109,7 @@ public class BoardPage extends BasePage {
         dropdownListMenu(listTitle);
         try {
             archiveListButton.click();
-        }
-        catch(StaleElementReferenceException sere)
-        {
+        } catch (StaleElementReferenceException sere) {
             archiveListButton.click();
         }
     }
@@ -226,8 +224,8 @@ public class BoardPage extends BasePage {
     /**
      * Gets all cards in list.
      *
-     * @param listTitle is the title of the list which cards as wanted to retrieve.
-     * @return an ArrayList of al cards in the list.
+     * @param listTitle is the title of the list which cards are required to retrieve.
+     * @return a List of al cards in the list.
      */
     public List<Card> getCardsInList(final String listTitle) {
         List<Card> cardsInList = new ArrayList<>();
@@ -238,6 +236,16 @@ public class BoardPage extends BasePage {
             cardsInList.add(cardInIndex);
         }
         return cardsInList;
+    }
+
+    /**
+     * Gets the quantity of cards that are in the list.
+     *
+     * @param listTitle is the title of the list which quantity of cards are required.
+     * @return the quantity on cards in the list.
+     */
+    public int getQttyCardsInList(final String listTitle) {
+        return cardsInList(listTitle).size();
     }
 
     /**
