@@ -41,7 +41,6 @@ public class LoginSteps {
      */
     public LoginSteps(final Context currentContext) {
         this.context = currentContext;
-        //this.user = currentContext.getUser();
     }
 
     /**

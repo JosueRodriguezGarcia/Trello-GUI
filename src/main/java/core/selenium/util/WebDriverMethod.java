@@ -28,8 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-//import jdk.nashorn.internal.runtime.regexp.joni.Regex;
-
 /**
  * WebDriverMethod class.
  *
