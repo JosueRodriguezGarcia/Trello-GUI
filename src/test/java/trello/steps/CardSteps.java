@@ -62,7 +62,7 @@ public class CardSteps {
      * Verifies if a card is add to a list.
      */
     @Then("I should see the new card with the given task")
-    public void verifyNewCardisDisplayinList() {
+    public void verifyNewCardIsDisplayedInList() {
         boolean result = boardPage.searchCardInList(context.getLists().get("list").getTitle(), context.getCard()
                 .getTitle());
         Assert.assertTrue(result);
