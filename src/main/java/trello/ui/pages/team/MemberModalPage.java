@@ -13,14 +13,12 @@
 package trello.ui.pages.team;
 
 import core.selenium.util.WebDriverMethod;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import trello.entities.Team;
 import trello.ui.pages.BasePage;
-
-import java.util.List;
 
 /**
  * MemberModalPage class.
@@ -53,10 +51,10 @@ public class MemberModalPage extends BasePage {
     /**
      * Adds several members at team.
      *
-     * @param members is all members to add a team.
+     * @param team has all member to add a team.
      */
-    public void addMember(List<String> members) {
-        for (String member : members
+    public void addMember(final Team team) {
+        for (String member : team.getUserNameOfMembers()
              ) {
             memberField.sendKeys(member);
             checkMember();

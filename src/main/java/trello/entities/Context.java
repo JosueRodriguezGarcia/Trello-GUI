@@ -105,7 +105,7 @@ public class Context {
      *
      * @param team is the team to be set.
      */
-    public void setTeam(Team team) {
+    public void setTeam(final Team team) {
         this.team = team;
     }
 

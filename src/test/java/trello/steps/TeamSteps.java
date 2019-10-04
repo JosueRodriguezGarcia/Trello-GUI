@@ -14,11 +14,12 @@ package trello.steps;
 
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.testng.Assert;
 import trello.entities.Context;
-import trello.entities.Team;
 import trello.ui.pages.HomePage;
 import trello.ui.pages.team.MemberModalPage;
 import trello.ui.pages.team.TeamModalPage;
+import trello.ui.pages.team.TeamPage;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ import java.util.List;
 public class TeamSteps {
 
     private Context context;
-    private Team team;
+    private TeamPage teamPage;
 
     /**
      * Constructor method to share states between objects.
@@ -40,36 +41,59 @@ public class TeamSteps {
      */
     public TeamSteps (final Context currentContext) {
         this.context = currentContext;
-        this.team = context.getTeam();
     }
 
-    @When("I add a new team with this information {string} and {string}")
-    public void createTeam(String name, String description) {
-        team.setName(name);
+    /**
+     * Creates a team with a name.
+     *
+     * @param name is the parameter required to create a team.
+     */
+    @When("I add a new team with this information {string}")
+    public void createTeam(final String name) {
+        context.getTeam().setName(name);
         HomePage homePage = new HomePage();
         homePage.getTopMenu().createTeam();
         TeamModalPage teamModalPage = new TeamModalPage();
-        teamModalPage.createTeam(name);
+        teamModalPage.createTeam(context.getTeam());
     }
 
-    @When("I add the following members with user name:")
-    public void addMembers(List<String> members) {
+    /**
+     * Adds members to team.
+     *
+     * @param members is to add to team.
+     */
+    @When("I add the following members with username:")
+    public void addMembers(final List<String> members) {
         MemberModalPage memberModalPage = new MemberModalPage();
-        memberModalPage.addMember(members);
+        context.getTeam().setUsernameOfMember(members);
+        memberModalPage.addMember(context.getTeam());
+        context.getTeam().addMember(context.getUser().getUsername());
     }
 
+    /**
+     * Shows in the TeamPage the name of team that was created.
+     */
     @Then("I should see the information of team")
     public void showInformationTeam() {
-        // Write code here that turns the phrase above into concrete actions
+        teamPage = new TeamPage();
+        Assert.assertEquals(context.getTeam().getName(), teamPage.getNameTeam(),
+                "The name of team is't the team that you created!!");
     }
 
-    @When("I go to the section of member information")
-    public void i_go_to_the_section_of_member_information() {
-        // Write code here that turns the phrase above into concrete actions
+    /**
+     * Goes to te member section into TeamPage.
+     */
+    @When("I go to the section of member in TeamPage")
+    public void sectionMemberInTeamPage() {
+        teamPage.openMemberSection();
     }
 
-    @Then("I should see the full name of members")
-    public void i_should_see_the_full_name_of_members() {
-        // Write code here that turns the phrase above into concrete actions
+    /**
+     * Sees all member that added to team in member section.
+     */
+    @Then("I should see all username of members")
+    public void seeAccountOfMembers() {
+        Assert.assertEquals(context.getTeam().getUserNameOfMembers(), teamPage.getUserNameOfMembers(),
+                "This member not are all that you add!!");
     }
 }

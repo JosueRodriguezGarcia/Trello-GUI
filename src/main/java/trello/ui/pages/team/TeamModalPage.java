@@ -16,6 +16,7 @@ import core.selenium.util.WebDriverMethod;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import trello.entities.Team;
 import trello.ui.pages.BasePage;
 
 /**
@@ -44,12 +45,12 @@ public class TeamModalPage extends BasePage {
     }
 
     /**
-     * Creates a team with the name parameter.
+     * Creates a team with the get the name of team parameter.
      *
-     * @param name is required parameter for create a team object.
+     * @param team is required parameter for create a team object.
      */
-    public void createTeam(String name) {
-        WebDriverMethod.setTxtElement(nameField, name);
+    public void createTeam(final Team team) {
+        WebDriverMethod.setTxtElement(nameField, team.getName());
         continueButton.click();
     }
 }

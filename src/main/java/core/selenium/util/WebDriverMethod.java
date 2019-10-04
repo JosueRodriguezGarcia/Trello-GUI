@@ -23,8 +23,12 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+//import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 
 /**
  * WebDriverMethod class.
@@ -138,5 +142,20 @@ public final class WebDriverMethod {
     public static WebElement createWebElement(final WebDriver driver, final String locatorType, final String locator) {
         fillMapAccordingLocator(locator);
         return driver.findElement(byLocator.get(locatorType));
+    }
+
+    /**
+     * Gets text of WebElement from a list parameter.
+     *
+     * @param webElements is to get their text.
+     * @return as List all text from WebElement list.
+     */
+    public static List<String> getTextOfElements(final List<WebElement> webElements) {
+        List<String> result = new ArrayList<String>();
+        for (int i = 0; i < webElements.size(); i++) {
+            String textElement = (webElements.get(i).getText().replaceAll("@", ""));
+            result.add(textElement);
+        }
+        return result;
     }
 }

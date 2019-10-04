@@ -12,6 +12,10 @@
 
 package trello.entities;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Team class.
  *
@@ -22,6 +26,14 @@ public class Team {
 
     private String id;
     private String name;
+    private ArrayList<String> userNameOfMembers;
+
+    /**
+     * Constructor of object of it's class.
+     */
+    public Team() {
+        userNameOfMembers = new ArrayList<String>();
+    }
 
     /**
      * Gets the id attribute of this class.
@@ -37,7 +49,7 @@ public class Team {
      *
      * @param id is to set the id attribute.
      */
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -55,7 +67,37 @@ public class Team {
      *
      * @param name is to set the name attribute.
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
+    }
+
+    /**
+     * Gets the userNameOfMembers list attribute.
+     *
+     * @return a object List of this class.
+     */
+    public ArrayList<String> getUserNameOfMembers() {
+        userNameOfMembers.sort(String::compareTo);
+        return userNameOfMembers;
+    }
+
+    /**
+     * Sets the usernameOfMembers list attribute of this class.
+     *
+     * @param usernameMembers is to set new value in usernameOfMembers attribute.
+     */
+    public void setUsernameOfMember(final List<String> usernameMembers) {
+        for (String usernameMember : usernameMembers) {
+            userNameOfMembers.add(usernameMember);
+        }
+    }
+
+    /**
+     * Add member to the member list.
+     *
+     * @param usernameMember is member to add member list.
+     */
+    public void addMember(final String usernameMember) {
+        userNameOfMembers.add(usernameMember);
     }
 }
