@@ -21,6 +21,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import trello.entities.Card;
+import trello.ui.pages.modal.CardModal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -215,13 +216,15 @@ public class BoardPage extends BasePage {
      * Does click a card to be selected.
      *
      * @param cardTitle defines the card title that search.
+     * @return a instance of cardModal class.
      */
-    public void selectedCard(final String cardTitle) {
+    public CardModal selectedCard(final String cardTitle) {
         for (int i = 0; i < cards.size(); i++) {
             if (cards.get(i).getText().equals(cardTitle)) {
                 cards.get(i).click();
             }
         }
+        return new CardModal();
     }
 
     /**

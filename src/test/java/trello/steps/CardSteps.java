@@ -14,12 +14,17 @@ package trello.steps;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
+
 import org.testng.Assert;
+
 import trello.entities.Context;
 import trello.ui.pages.BoardPage;
 import trello.ui.pages.HomePage;
 import trello.ui.pages.modal.CardModal;
 import trello.ui.pages.modal.CheckListModal;
+import trello.ui.pages.modal.DueDataModal;
+
+import java.util.Date;
 
 /**
  * CardSteps class.
@@ -33,7 +38,9 @@ public class CardSteps {
     private BoardPage boardPage;
     private CardModal cardModal;
     private CheckListModal checkListModal;
+    private DueDataModal dueDataModal;
     private Context context;
+
 
     /**
      * Constructor method initializes the attributes.
@@ -87,7 +94,7 @@ public class CardSteps {
     public void selectCard(final String cardTitle) {
         boardPage = new BoardPage();
         context.getCard().setTitle(cardTitle);
-        boardPage.selectedCard(cardTitle);
+        cardModal = boardPage.selectedCard(cardTitle);
     }
 
     /**
@@ -97,7 +104,6 @@ public class CardSteps {
      */
     @And("I add a checklist with (.*) title")
     public void addChecklist(final String checkListTitle) {
-        cardModal = new CardModal();
         cardModal.clickCheckListButton();
         checkListModal = new CheckListModal();
         checkListModal.addCheckList(checkListTitle);
@@ -113,5 +119,18 @@ public class CardSteps {
         cardModal = new CardModal();
         boolean result = cardModal.searchCheckList("TestCheckList");
         Assert.assertTrue(result);
+    }
+
+    /**
+     * Assigns a due data.
+     *
+     * @param dueDate defines a input duaDate.
+     */
+    @And("I assign a due date (.*)")
+    public void iAssignADueDate(final String dueDate) {
+        dueDataModal = cardModal.clickDueDateButton();
+        Date date = new Date();
+        dueDataModal.fillHourField(date, dueDate);
+        cardModal = dueDataModal.clickSaveButton();
     }
 }

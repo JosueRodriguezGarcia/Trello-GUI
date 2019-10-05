@@ -13,3 +13,11 @@ Feature: Card actions
       And I select TestCard card
       And I add a checklist with TestCheckList title
      Then the checklist section is displayed on the card details
+
+  Scenario: Assign a date to a card
+    Given I log in as admin user
+     When I select TestBoard board
+      And I select TestCard card
+      And I assign a due date One hour from now
+     Then The due date section is displayed on the card details
+#    And the due date label is displayed on the card

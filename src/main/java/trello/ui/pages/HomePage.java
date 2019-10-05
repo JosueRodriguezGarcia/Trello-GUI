@@ -17,6 +17,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 /**
  * HomePage class.
  *
@@ -27,6 +29,9 @@ public class HomePage extends ApplicationBasePage {
 
     @FindBy(className = INITIAL_CLASS_NAME)
     private WebElement fullNameInitialsButton;
+
+    @FindBy(css = "[data-test-id='home-team-tab-name']")
+    private List<WebElement> teamNameLink;
 
     private static final String INITIAL_CLASS_NAME = "_24AWINHReYjNBf";
     private static final String CSS_TO_BOARD = "div[title='%s']";
@@ -58,5 +63,22 @@ public class HomePage extends ApplicationBasePage {
         String boardCss = String.format(CSS_TO_BOARD, boardTitle);
         WebElement boardButton = driver.findElement(By.cssSelector(boardCss));
         boardButton.click();
+    }
+
+    /**
+     * Verify if exist the name of team in HomePage.
+     *
+     * @param nameTeam is to search the name of team.
+     * @return true if the name of team exit.
+     */
+    public boolean existNameOfTeam(final String nameTeam) {
+        boolean exist = false;
+        for (WebElement element : teamNameLink) {
+            if (element.getText().compareTo(nameTeam) == 0) {
+                exist = true;
+                break;
+            }
+        }
+        return exist;
     }
 }

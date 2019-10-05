@@ -17,6 +17,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import trello.ui.pages.BasePage;
+import trello.ui.pages.BoardPage;
 
 import java.util.List;
 
@@ -47,22 +48,31 @@ public class CardModal extends BasePage {
 
     /**
      * Does click the "add checklist button".
+     *
+     * @return a instance of CheckListModal class.
      */
-    public void clickCheckListButton() {
+    public CheckListModal clickCheckListButton() {
         checkListButton.click();
+        return new CheckListModal();
     }
 
     /**
      * Does click the "Due Date" button.
+     *
+     * @return a instance of DueDataModal class.
      */
-    public void clickDueDateButton() {
+    public DueDataModal clickDueDateButton() {
         dueDateButton.click();
+        return new DueDataModal();
     }
     /**
      * Does click the "close button".
+     *
+     * @return a instance of BoardPage class.
      */
-    public void clickCloseWindowsButton() {
+    public BoardPage clickCloseWindowsButton() {
         closeWindowsButton.click();
+        return new BoardPage();
     }
 
     /**
@@ -86,6 +96,6 @@ public class CardModal extends BasePage {
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.visibilityOf(cardTitle));
+        wait.until(ExpectedConditions.elementToBeClickable(dueDateButton));
     }
 }
