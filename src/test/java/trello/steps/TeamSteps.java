@@ -41,6 +41,7 @@ public class TeamSteps {
      */
     public TeamSteps(final Context currentContext) {
         this.context = currentContext;
+        teamPage = new TeamPage();
     }
 
     /**
@@ -75,7 +76,7 @@ public class TeamSteps {
      */
     @Then("I should see the information of team")
     public void showInformationTeam() {
-        teamPage = new TeamPage();
+//        teamPage = new TeamPage();
         Assert.assertEquals(context.getTeam().getName(), teamPage.getNameTeam(),
                 "The name of team is't the team that you created!!");
     }

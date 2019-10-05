@@ -10,6 +10,7 @@ import trello.entities.Context;
 import trello.entities.User;
 import trello.keys.NamePages;
 import trello.ui.PageTransporter;
+import trello.ui.components.TopMenu;
 import trello.ui.pages.HomePage;
 import trello.ui.pages.LoginPage;
 
@@ -51,6 +52,7 @@ public class CommonSteps {
     public void verifyLoggedInByUserType(final String userType) {
         PageTransporter.navigateToURL(NamePages.getHomePageUrl(user.getUsername()));
         homePage = new HomePage();
+        TopMenu topMenuOfHome = homePage.getTopMenu();
         user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType(userType));
         final long time = 1;
         WebDriver webDriver = WebDriverManager.getInstance().getWebDriver();
@@ -59,9 +61,9 @@ public class CommonSteps {
                 timeouts().
                 implicitlyWait(time, TimeUnit.SECONDS);
         try {
-            String userInitials = homePage.getFullNameInitials();
+            String userInitials = topMenuOfHome.getFullNameInitials();
             if (!user.getFullNameInitials().equals(userInitials)) {
-                homePage.getTopMenu().logoutPage();
+                topMenuOfHome.logoutPage();
                 PageTransporter.navigateToURL(NamePages.getLoginPageUrl());
                 loginPage = new LoginPage();
                 loginPage.login(user);

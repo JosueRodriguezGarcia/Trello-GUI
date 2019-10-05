@@ -42,6 +42,9 @@ public class BoardPage extends BasePage {
     private static final String LIST_MENU_XPATH = LIST_TITLE_XPATH + LIST_MENU_SUFFIX;
     private static final String TARGET_LIST_TITLE_XPATH = "//a[contains(text(), '%s')]";
 
+    @FindBy(className = "js-board-editing-target")
+    private WebElement nameBoardButton;
+
     @FindBy(className = "placeholder")
     private WebElement newListButton;
 
@@ -89,6 +92,23 @@ public class BoardPage extends BasePage {
 
     @FindBy(className = "js-open-add-list")
     private WebElement addAnotherList;
+
+    /**
+     * Waits until Page object is found.
+     */
+    @Override
+    protected void waitUntilPageObjectIsLoaded() {
+        wait.until(ExpectedConditions.elementToBeClickable(addAnotherList));
+    }
+
+    /**
+     * Gets the name of Board into BoardPage.
+     *
+     * @return as string the name of Board.
+     */
+    public String getNameBoardButton() {
+        return nameBoardButton.getText();
+    }
 
     /**
      * Creates a new list.
@@ -222,14 +242,6 @@ public class BoardPage extends BasePage {
                 cards.get(i).click();
             }
         }
-    }
-
-    /**
-     * Waits until Page object is found.
-     */
-    @Override
-    protected void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.elementToBeClickable(addAnotherList));
     }
 
     /**

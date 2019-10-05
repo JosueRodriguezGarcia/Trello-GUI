@@ -102,6 +102,17 @@ public final class WebDriverMethod {
     }
 
     /**
+     * Does click in the button element when it is clickable.
+     *
+     * @param webDriver  use to set up WebDriverWait.
+     * @param webElement use to search the webElement.
+     */
+    public static void clickButton(final WebDriver webDriver, final WebElement webElement) {
+        waitElementBeClickable(webDriver, webElement);
+        webElement.click();
+    }
+
+    /**
      * Waits for the text to be shown in the web element searched by class name.
      *
      * @param webDriverWait is the web driver wait of the used driver.
@@ -164,8 +175,8 @@ public final class WebDriverMethod {
      */
     public static List<String> getTextOfElements(final List<WebElement> webElements) {
         List<String> result = new ArrayList<String>();
-        for (int i = 0; i < webElements.size(); i++) {
-            String textElement = (webElements.get(i).getText().replaceAll("@", ""));
+        for (WebElement webElement : webElements) {
+            String textElement = (webElement.getText().replaceAll("@", ""));
             result.add(textElement);
         }
         return result;
