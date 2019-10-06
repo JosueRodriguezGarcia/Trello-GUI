@@ -168,21 +168,6 @@ public final class WebDriverMethod {
     }
 
     /**
-     * Gets text of WebElement from a list parameter.
-     *
-     * @param webElements is to get their text.
-     * @return as List all text from WebElement list.
-     */
-    public static List<String> getTextOfElements(final List<WebElement> webElements) {
-        List<String> result = new ArrayList<String>();
-        for (WebElement webElement : webElements) {
-            String textElement = (webElement.getText().replaceAll("@", ""));
-            result.add(textElement);
-        }
-        return result;
-    }
-
-    /**
      * Gets the id of team from his url of team page.
      *
      * @param url is to get thi id of team.
