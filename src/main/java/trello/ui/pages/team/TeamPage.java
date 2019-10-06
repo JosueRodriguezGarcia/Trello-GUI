@@ -69,4 +69,13 @@ public class TeamPage extends ApplicationBasePage {
     public List<String> getUserNameOfMembers() {
         return WebDriverMethod.getTextOfElements(members);
     }
+
+    /**
+     * Gets the id of url of team page.
+     *
+     * @return as string of id team.
+     */
+    public String getId() {
+        return WebDriverMethod.getIdTeam(driver.getCurrentUrl());
+    }
 }

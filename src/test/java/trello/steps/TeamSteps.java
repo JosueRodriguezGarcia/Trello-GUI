@@ -76,6 +76,7 @@ public class TeamSteps {
     @Then("I should see the information of team")
     public void showInformationTeam() {
         teamPage = new TeamPage();
+        context.getTeam().setId(teamPage.getId());
         Assert.assertEquals(context.getTeam().getName(), teamPage.getNameTeam(),
                 "The name of team is't the team that you created!!");
     }
