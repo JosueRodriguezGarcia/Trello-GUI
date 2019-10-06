@@ -181,4 +181,14 @@ public final class WebDriverMethod {
         }
         return result;
     }
+
+    /**
+     * Gets the id of team from his url of team page.
+     *
+     * @param url is to get thi id of team.
+     * @return as string the id of team.
+     */
+    public static String getIdTeam(final String url) {
+        return url.substring(url.lastIndexOf('/') + 1);
+    }
 }

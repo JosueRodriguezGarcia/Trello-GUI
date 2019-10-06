@@ -1,5 +1,6 @@
 Feature: Team creation
 
+  @delete-team
   Scenario: Create a team
     Given I log in as admin user
     When I add a new team with this information "nameTeam"
