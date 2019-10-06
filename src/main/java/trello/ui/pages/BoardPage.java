@@ -324,4 +324,14 @@ public class BoardPage extends BasePage {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.className(SORT_BY_OLDEST_FIRST_CLASS)));
         sortByOldestFirstButton.click();
     }
+
+    /**
+     * Gets the id Board from BoardPage.
+     *
+     * @return as string the id of Board.
+     */
+    public String getId() {
+        String uri = driver.getCurrentUrl();
+        return uri.substring(uri.lastIndexOf("b/") + 2, uri.lastIndexOf('/'));
+    }
 }

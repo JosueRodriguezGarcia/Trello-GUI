@@ -5,6 +5,7 @@ import core.selenium.WebDriverManager;
 import core.selenium.util.JsonConverter;
 import core.selenium.util.ReadJsonFile;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
 import trello.entities.Context;
 import trello.entities.User;
@@ -39,6 +40,7 @@ public class CommonSteps {
     public CommonSteps(final Context currentContext) {
         this.context = currentContext;
         this.user = context.getUser();
+//        homePage = new HomePage();
     }
 
     /**
@@ -78,5 +80,14 @@ public class CommonSteps {
                     timeouts().
                     implicitlyWait(WebDriverConfig.getInstance().getImplicitWaitTime(), TimeUnit.SECONDS);
         }
+    }
+
+    /**
+     * Goes to the HomePage using TopMenu.
+     */
+    @When("I go to the Home page using top menu")
+    public void goToHomePageUsingTopMenu() {
+        TopMenu topMenu = new TopMenu();
+        topMenu.openHomePage();
     }
 }

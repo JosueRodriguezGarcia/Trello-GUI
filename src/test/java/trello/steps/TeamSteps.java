@@ -41,7 +41,6 @@ public class TeamSteps {
      */
     public TeamSteps(final Context currentContext) {
         this.context = currentContext;
-        teamPage = new TeamPage();
     }
 
     /**
@@ -76,7 +75,7 @@ public class TeamSteps {
      */
     @Then("I should see the information of team")
     public void showInformationTeam() {
-//        teamPage = new TeamPage();
+        teamPage = new TeamPage();
         Assert.assertEquals(context.getTeam().getName(), teamPage.getNameTeam(),
                 "The name of team is't the team that you created!!");
     }
@@ -96,14 +95,6 @@ public class TeamSteps {
     public void seeAccountOfMembers() {
         Assert.assertEquals(context.getTeam().getUserNameOfMembers(), teamPage.getUserNameOfMembers(),
                 "This member not are all that you add!!");
-    }
-
-    /**
-     * Goes to the HomePage.
-     */
-    @When("I go to the Home page using top menu")
-    public void goToHomePageUsingTopMenu() {
-        teamPage.getTopMenu().openHomePage();
     }
 
     /**

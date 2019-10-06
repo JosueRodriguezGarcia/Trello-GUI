@@ -56,8 +56,10 @@ public class BoardSteps {
     @Then("I should see the name of Board in BoardPage")
     public void seeNameOfBoard() {
         BoardPage boardPage = new BoardPage();
+        context.getBoard().setId(boardPage.getId());
         Assert.assertEquals(boardPage.getNameBoardButton(), context.getBoard().getName(),
                 "The name of this board is not correct");
+        System.out.println("###################" + "I should see the name of Board in BoardPage");
     }
 
     @Then("I should see the Board in the {string} and {string} sections")
