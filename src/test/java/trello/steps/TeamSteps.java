@@ -48,7 +48,7 @@ public class TeamSteps {
      *
      * @param name is the parameter required to create a team.
      */
-    @When("I add a new team with this information {string}")
+    @When("I add a new team with this information (.*)")
     public void createTeam(final String name) {
         context.getTeam().setName(name);
         HomePage homePage = new HomePage();

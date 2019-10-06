@@ -21,6 +21,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import trello.entities.Card;
+import trello.ui.pages.board.ListForm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,8 @@ import java.util.concurrent.TimeUnit;
  * @version 0.0.1
  */
 public class BoardPage extends BasePage {
+
+    private ListForm listForm;
 
     private static final String ARCHIVE_LIST_CLASS = "js-close-list";
     private static final String SORT_BY_NAME_CLASS = "js-sort-by-card-name";
@@ -92,6 +95,13 @@ public class BoardPage extends BasePage {
 
     @FindBy(className = "js-open-add-list")
     private WebElement addAnotherList;
+
+    /**
+     * Constructor method for init parameter of this class.
+     */
+    public BoardPage() {
+        listForm = new ListForm();
+    }
 
     /**
      * Waits until Page object is found.
@@ -333,5 +343,14 @@ public class BoardPage extends BasePage {
     public String getId() {
         String uri = driver.getCurrentUrl();
         return uri.substring(uri.lastIndexOf("b/") + 2, uri.lastIndexOf('/'));
+    }
+
+    /**
+     * Gets the list form attribute of this class.
+     *
+     * @return the listForm attribute.
+     */
+    public ListForm getListForm() {
+        return listForm;
     }
 }

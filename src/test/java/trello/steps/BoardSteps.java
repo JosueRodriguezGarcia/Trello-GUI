@@ -15,7 +15,6 @@ package trello.steps;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.testng.Assert;
-import trello.entities.Board;
 import trello.entities.Context;
 import trello.ui.pages.BoardPage;
 import trello.ui.pages.HomePage;
@@ -53,17 +52,26 @@ public class BoardSteps {
         boardModal.createNewBoard(context.getBoard());
     }
 
+    /**
+     * Sees the name of Board in BoardPage
+     */
     @Then("I should see the name of Board in BoardPage")
     public void seeNameOfBoard() {
         BoardPage boardPage = new BoardPage();
+        boardPage.getListForm().closeListForm();
         context.getBoard().setId(boardPage.getId());
         Assert.assertEquals(boardPage.getNameBoardButton(), context.getBoard().getName(),
                 "The name of this board is not correct");
-        System.out.println("###################" + "I should see the name of Board in BoardPage");
     }
 
-    @Then("I should see the Board in the {string} and {string} sections")
-    public void i_should_see_the_Board_in_the_and_sections(String string, String string2) {
-
+    /**
+     *
+     */
+    @Then("I should see the Board in the (.*) section")
+    public void seeNameOfBoardInSections(String nameSection) {
+        HomePage homePage = new HomePage();
+        Assert.assertTrue(homePage.getContentHomePage().
+                existBoardInSection(context.getBoard().getName(), nameSection),
+                        "This board not exist in this section");
     }
 }
