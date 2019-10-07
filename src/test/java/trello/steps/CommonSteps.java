@@ -5,11 +5,13 @@ import core.selenium.WebDriverManager;
 import core.selenium.util.JsonConverter;
 import core.selenium.util.ReadJsonFile;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
 import trello.entities.Context;
 import trello.entities.User;
 import trello.keys.NamePages;
 import trello.ui.PageTransporter;
+import trello.ui.components.TopMenu;
 import trello.ui.pages.HomePage;
 import trello.ui.pages.LoginPage;
 
@@ -51,6 +53,7 @@ public class CommonSteps {
     public void verifyLoggedInByUserType(final String userType) {
         PageTransporter.navigateToURL(NamePages.getHomePageUrl(user.getUsername()));
         homePage = new HomePage();
+        TopMenu topMenuOfHome = homePage.getTopMenu();
         user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType(userType));
         final long time = 1;
         WebDriver webDriver = WebDriverManager.getInstance().getWebDriver();
@@ -59,9 +62,9 @@ public class CommonSteps {
                 timeouts().
                 implicitlyWait(time, TimeUnit.SECONDS);
         try {
-            String userInitials = homePage.getFullNameInitials();
+            String userInitials = topMenuOfHome.getFullNameInitials();
             if (!user.getFullNameInitials().equals(userInitials)) {
-                homePage.getTopMenu().logoutPage();
+                topMenuOfHome.logoutPage();
                 PageTransporter.navigateToURL(NamePages.getLoginPageUrl());
                 loginPage = new LoginPage();
                 loginPage.login(user);
@@ -76,5 +79,14 @@ public class CommonSteps {
                     timeouts().
                     implicitlyWait(WebDriverConfig.getInstance().getImplicitWaitTime(), TimeUnit.SECONDS);
         }
+    }
+
+    /**
+     * Goes to the HomePage using TopMenu.
+     */
+    @When("I go to the Home page using top menu")
+    public void goToHomePageUsingTopMenu() {
+        TopMenu topMenu = new TopMenu();
+        topMenu.openHomePage();
     }
 }

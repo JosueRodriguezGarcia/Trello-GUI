@@ -48,7 +48,7 @@ public class TeamSteps {
      *
      * @param name is the parameter required to create a team.
      */
-    @When("I add a new team with this information {string}")
+    @When("I add a new team with this information (.*)")
     public void createTeam(final String name) {
         context.getTeam().setName(name);
         HomePage homePage = new HomePage();
@@ -99,15 +99,7 @@ public class TeamSteps {
     }
 
     /**
-     * Goes to the HomePage.
-     */
-    @When("I go to the Home page using top menu")
-    public void goToHomePageUsingTopMenu() {
-        teamPage.getTopMenu().openHomePage();
-    }
-
-    /**
-     * Verify if has the name of team.
+     * Verifies if has the name of team.
      */
     @Then("I should see the name of team")
     public void seeNameOfTeam() {

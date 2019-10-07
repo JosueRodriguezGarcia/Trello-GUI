@@ -36,22 +36,23 @@ public class HomePage extends ApplicationBasePage {
     private static final String INITIAL_CLASS_NAME = "_24AWINHReYjNBf";
     private static final String CSS_TO_BOARD = "div[title='%s']";
 
+    private HomeContentFrame homeContent = new HomeContentFrame();
+
     /**
-     * Wait until Page object was find for.
+     * Gets the Content of HomePage.
+     *
+     * @return the homeContent attribute of it's class.
+     */
+    public HomeContentFrame getContentHomePage() {
+        return homeContent;
+    }
+
+    /**
+     * Waits until Page object was find for.
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
         WebDriverMethod.waitForATextInWebElement(wait, "className", INITIAL_CLASS_NAME);
-    }
-
-    /**
-     * Gets the initial full name of HomePage class.
-     *
-     * @return as string the initial of full name.
-     */
-    public String getFullNameInitials() {
-        WebDriverMethod.waitElementBeClickable(driver, fullNameInitialsButton);
-        return fullNameInitialsButton.getText();
     }
 
     /**
