@@ -36,6 +36,8 @@ import java.util.concurrent.TimeUnit;
 public class BoardPage extends BasePage {
 
     private static final String ARCHIVE_LIST_CLASS = "js-close-list";
+    private static final String TARGET_LIST_CLASS = "js-select-list";
+    private static final String CREATE_CARD_CLASS = "js-submit";
     private static final String SORT_BY_NAME_CLASS = "js-sort-by-card-name";
     private static final String SORT_BY_OLDEST_FIRST_CLASS = "js-sort-oldest-first";
     private static final String LIST_TITLE_XPATH = "//h2[contains(text(), '%s')]";
@@ -43,8 +45,9 @@ public class BoardPage extends BasePage {
     private static final String LIST_MENU_XPATH = LIST_TITLE_XPATH + LIST_MENU_SUFFIX;
     private static final String TARGET_LIST_TITLE_XPATH = "//a[contains(text(), '%s')]";
     private static final String CARD_XPATH = "//span[contains(text(), '%s')]";
-    private static final String ARCHIVE_CARD_QUICK_MENU_CLASS = "quick-card-editor-buttons-item js-archive";
-    private static final String MOVE_CARD_QUICK_MENU_CLASS = "quick-card-editor-buttons-item js-move-card";
+    private static final String ARCHIVE_CARD_QUICK_MENU_CSS = ".js-archive > .quick-card-editor-buttons-item-text";
+    private static final String COPY_CARD_QUICK_MENU_CSS = ".js-copy-card > .quick-card-editor-buttons-item-text";
+    private static final String CARD_PARENT_XPATH = "//span[contains(text(), '%s')]/../../../..";
 
     @FindBy(className = "placeholder")
     private WebElement newListButton;
@@ -93,6 +96,8 @@ public class BoardPage extends BasePage {
 
     @FindBy(className = "js-open-add-list")
     private WebElement addAnotherList;
+
+    private By listHeader = By.cssSelector("textarea[class*='header-name']");
 
     /**
      * Creates a new list.
@@ -319,22 +324,25 @@ public class BoardPage extends BasePage {
 
     public void moveCard(String cardTitle, String targetList) {
         showQuickCardMenu(cardTitle);
-        WebElement moveCardButton = driver.findElement(By.className(MOVE_CARD_QUICK_MENU_CLASS));
-        moveCardButton.click();
-        //hace click hasta el boton de mover
+        WebElement copyCardButton = driver.findElement(By.cssSelector(COPY_CARD_QUICK_MENU_CSS));
+        copyCardButton.click();
+        WebElement targetListDropDown = driver.findElement(By.className(TARGET_LIST_CLASS));
+        String optionXpath = String.format("//option[. = '%s']", targetList);
+        targetListDropDown.findElement(By.xpath(optionXpath)).click();
+        WebElement createCardButton = driver.findElement(By.className(CREATE_CARD_CLASS));
+        createCardButton.click();
     }
 
     public void showQuickCardMenu(final String cardTitle) {
         WebElement card = driver.findElement(By.xpath(String.format(CARD_XPATH, cardTitle)));
         Actions actions = new Actions(driver);
         actions.contextClick(card).perform();
-        wait.until(ExpectedConditions.elementToBeClickable(By.className(ARCHIVE_CARD_QUICK_MENU_CLASS)));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ARCHIVE_CARD_QUICK_MENU_CSS)));
     }
 
-    public String getListWhereCardIs(String card) {
-
-        ////span[contains(text(), 'Card1')]/../../../../div[class~='header']
-        //tal vez ir hasta el padre, guardar en web element y de ahí ir por css.
-        return null;
+    public String getListWhereCardIs(String cardTitle) {
+        WebElement cardParent = driver.findElement(By.xpath(String.format(CARD_PARENT_XPATH, cardTitle)));
+        WebElement cardListHeader = cardParent.findElement(listHeader);
+        return cardListHeader.getText();
     }
 }

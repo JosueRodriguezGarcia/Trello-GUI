@@ -16,6 +16,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import trello.entities.Context;
 import trello.entities.List;
 import trello.ui.pages.BoardPage;
@@ -156,5 +157,16 @@ public class ListSteps {
         //sourceList.setCards(boardPage.getCardsInList(sourceListTitle));
         context.getLists().put("sourceList", sourceList);
         boardPage.moveCard(card, listTitle);
+    }
+
+    @Then("the card appears correctly on target list")
+    public void verifyCardAppearsOnSourceAndTargetList() {
+        boardPage = new BoardPage();
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(boardPage.searchCardInList(context.getLists().get("targetList").getTitle(),
+                context.getCard().getTitle()));
+        softAssert.assertTrue(boardPage.searchCardInList(context.getLists().get("sourceList").getTitle(),
+                context.getCard().getTitle()));
+        softAssert.assertAll();
     }
 }
