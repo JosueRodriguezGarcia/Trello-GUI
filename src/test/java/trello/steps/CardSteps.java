@@ -87,7 +87,7 @@ public class CardSteps {
     public void selectCard(final String cardTitle) {
         boardPage = new BoardPage();
         context.getCard().setTitle(cardTitle);
-        boardPage.selectedCard(cardTitle);
+        boardPage.selectCard(cardTitle);
     }
 
     /**
@@ -109,7 +109,7 @@ public class CardSteps {
      */
     @Then("the checklist section is displayed on the card details")
     public void theChecklistSectionIsDisplayedOnTheCardDetails() {
-        boardPage.selectedCard(context.getCard().getTitle());
+        boardPage.selectCard(context.getCard().getTitle());
         cardModal = new CardModal();
         boolean result = cardModal.searchCheckList("TestCheckList");
         Assert.assertTrue(result);

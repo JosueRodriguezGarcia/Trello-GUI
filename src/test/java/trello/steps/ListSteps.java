@@ -15,6 +15,7 @@ package trello.steps;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import trello.entities.Context;
 import trello.entities.List;
 import trello.ui.pages.BoardPage;
@@ -70,7 +71,7 @@ public class ListSteps {
      * Verifies if the context's list is on the board.
      */
     @Then("I should see the new created list with the given title")
-    public void verifyList() {
+    public void verifyListCreation() {
         boardPage = new BoardPage();
         Assert.assertTrue(boardPage.isThereThisListByTitle(context.getLists().get("list").getTitle()));
     }
@@ -139,5 +140,40 @@ public class ListSteps {
         Assert.assertTrue(context.getLists().get("list").isSortedByName(boardPage.getCardsInList(context.getLists()
                         .get("list").getTitle())),
                 "Cards were not correctly sorted.");
+    }
+
+    /**
+     * Copies a card to other list.
+     *
+     * @param card      is the title of the card which is wanted to copy.
+     * @param listTitle is the title of the list which is wanted to copy the card to.
+     */
+    @Then("I copy (.*) card to (.*) list")
+    public void copyCardToList(final String card, final String listTitle) {
+        boardPage = new BoardPage();
+        context.getCard().setTitle(card);
+        List targetList = new List();
+        targetList.setTitle(listTitle);
+        targetList.setCards(boardPage.getCardsInList(listTitle));
+        context.getLists().put("targetList", targetList);
+        List sourceList = new List();
+        String sourceListTitle = boardPage.getListWhereCardIs(card);
+        sourceList.setTitle(sourceListTitle);
+        context.getLists().put("sourceList", sourceList);
+        boardPage.copyCardToList(card, listTitle);
+    }
+
+    /**
+     * Verifies if the copied card appears on source and target list.
+     */
+    @Then("the card appears correctly on target list")
+    public void verifyCardAppearsOnSourceAndTargetList() {
+        boardPage = new BoardPage();
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(boardPage.searchCardInList(context.getLists().get("targetList").getTitle(),
+                context.getCard().getTitle()));
+        softAssert.assertTrue(boardPage.searchCardInList(context.getLists().get("sourceList").getTitle(),
+                context.getCard().getTitle()));
+        softAssert.assertAll();
     }
 }

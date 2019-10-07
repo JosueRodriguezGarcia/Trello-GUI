@@ -17,11 +17,11 @@ import core.selenium.util.WebDriverMethod;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import trello.entities.Card;
-import trello.ui.pages.board.ListForm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,15 +35,19 @@ import java.util.concurrent.TimeUnit;
  */
 public class BoardPage extends BasePage {
 
-    private ListForm listForm;
-
     private static final String ARCHIVE_LIST_CLASS = "js-close-list";
+    private static final String TARGET_LIST_CLASS = "js-select-list";
+    private static final String CREATE_CARD_CLASS = "js-submit";
     private static final String SORT_BY_NAME_CLASS = "js-sort-by-card-name";
     private static final String SORT_BY_OLDEST_FIRST_CLASS = "js-sort-oldest-first";
     private static final String LIST_TITLE_XPATH = "//h2[contains(text(), '%s')]";
     private static final String LIST_MENU_SUFFIX = "/following-sibling::div";
     private static final String LIST_MENU_XPATH = LIST_TITLE_XPATH + LIST_MENU_SUFFIX;
     private static final String TARGET_LIST_TITLE_XPATH = "//a[contains(text(), '%s')]";
+    private static final String CARD_XPATH = "//span[contains(text(), '%s')]";
+    private static final String ARCHIVE_CARD_QUICK_MENU_CSS = ".js-archive > .quick-card-editor-buttons-item-text";
+    private static final String COPY_CARD_QUICK_MENU_CSS = ".js-copy-card > .quick-card-editor-buttons-item-text";
+    private static final String CARD_PARENT_XPATH = "//span[contains(text(), '%s')]/../../../..";
 
     @FindBy(className = "js-board-editing-target")
     private WebElement nameBoardButton;
@@ -96,12 +100,7 @@ public class BoardPage extends BasePage {
     @FindBy(className = "js-open-add-list")
     private WebElement addAnotherList;
 
-    /**
-     * Constructor method for init parameter of this class.
-     */
-    public BoardPage() {
-        listForm = new ListForm();
-    }
+    private By listHeader = By.cssSelector("textarea[class*='header-name']");
 
     /**
      * Waits until Page object is found.
@@ -246,7 +245,7 @@ public class BoardPage extends BasePage {
      *
      * @param cardTitle defines the card title that search.
      */
-    public void selectedCard(final String cardTitle) {
+    public void selectCard(final String cardTitle) {
         for (int i = 0; i < cards.size(); i++) {
             if (cards.get(i).getText().equals(cardTitle)) {
                 cards.get(i).click();
@@ -336,6 +335,47 @@ public class BoardPage extends BasePage {
     }
 
     /**
+     * Copies a card to another list.
+     *
+     * @param cardTitle  is the title of the card to be copied.
+     * @param targetList is the list where is required the card to be copied to.
+     */
+    public void copyCardToList(final String cardTitle, final String targetList) {
+        showQuickCardMenu(cardTitle);
+        WebElement copyCardButton = driver.findElement(By.cssSelector(COPY_CARD_QUICK_MENU_CSS));
+        copyCardButton.click();
+        WebElement targetListDropDown = driver.findElement(By.className(TARGET_LIST_CLASS));
+        String optionXpath = String.format("//option[. = '%s']", targetList);
+        targetListDropDown.findElement(By.xpath(optionXpath)).click();
+        WebElement createCardButton = driver.findElement(By.className(CREATE_CARD_CLASS));
+        createCardButton.click();
+    }
+
+    /**
+     * Shows the quick card menu.
+     *
+     * @param cardTitle is the title of the card which the quick menu is required.
+     */
+    public void showQuickCardMenu(final String cardTitle) {
+        WebElement card = driver.findElement(By.xpath(String.format(CARD_XPATH, cardTitle)));
+        Actions actions = new Actions(driver);
+        actions.contextClick(card).perform();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ARCHIVE_CARD_QUICK_MENU_CSS)));
+    }
+
+    /**
+     * Gets the list where the card is.
+     *
+     * @param cardTitle is the title of the card whick the list where it belongs is required.
+     * @return the list where is the card.
+     */
+    public String getListWhereCardIs(final String cardTitle) {
+        WebElement cardParent = driver.findElement(By.xpath(String.format(CARD_PARENT_XPATH, cardTitle)));
+        WebElement cardListHeader = cardParent.findElement(listHeader);
+        return cardListHeader.getText();
+    }
+
+    /**
      * Gets the id Board from BoardPage.
      *
      * @return as string the id of Board.
@@ -343,14 +383,5 @@ public class BoardPage extends BasePage {
     public String getId() {
         String uri = driver.getCurrentUrl();
         return uri.substring(uri.lastIndexOf("b/") + 2, uri.lastIndexOf('/'));
-    }
-
-    /**
-     * Gets the list form attribute of this class.
-     *
-     * @return the listForm attribute.
-     */
-    public ListForm getListForm() {
-        return listForm;
     }
 }

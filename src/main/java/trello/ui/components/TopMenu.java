@@ -13,6 +13,7 @@
 package trello.ui.components;
 
 import core.selenium.util.WebDriverMethod;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import trello.ui.pages.BasePage;
@@ -139,5 +140,14 @@ public class TopMenu extends BasePage {
     public String getFullNameInitials() {
         WebDriverMethod.waitElementBeClickable(driver, userActionButton);
         return userActionButton.getText();
+    }
+
+    /**
+     * Gets the Driver of this Page object.
+     *
+     * @return a WebDriver object.
+     */
+    public WebDriver getDriver() {
+        return driver;
     }
 }

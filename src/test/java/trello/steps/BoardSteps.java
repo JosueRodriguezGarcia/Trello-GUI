@@ -59,7 +59,6 @@ public class BoardSteps {
     @Then("I should see the name of Board in BoardPage")
     public void seeNameOfBoard() {
         BoardPage boardPage = new BoardPage();
-        boardPage.getListForm().closeListForm();
         context.getBoard().setId(boardPage.getId());
         Assert.assertEquals(boardPage.getNameBoardButton(), context.getBoard().getName(),
                 "The name of this board is not correct");
