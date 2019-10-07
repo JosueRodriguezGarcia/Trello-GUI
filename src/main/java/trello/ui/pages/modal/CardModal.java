@@ -56,9 +56,6 @@ public class CardModal extends BasePage {
     @FindBy(className = "js-card-detail-members-list")
     private WebElement cardMembersList;
 
-//    @FindBy(className = "js-member-on-card-menu")
-//    private List<WebElement> cardMemberItem;
-
     private List<WebElement> cardMemberItem;
 
     /**

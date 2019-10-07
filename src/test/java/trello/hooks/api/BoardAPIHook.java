@@ -61,12 +61,10 @@ public class BoardAPIHook {
      */
     @Before(order = orderBefore, value = "@create-board")
     public void beforeScenario() {
-        String endPoint = "/boards/";
-        String name = "TestBoard2";
         Map<String, String> data = new HashMap<>();
-        data.put("name", name);
+        data.put("name", "TestBoard");
         request.buildSpec(data);
-        response = request.post(endPoint);
+        response = request.post("/boards/");
         context.getBoard().setId(response.getBody().jsonPath().get("id"));
     }
 }

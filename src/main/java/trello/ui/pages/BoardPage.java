@@ -22,7 +22,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import trello.entities.Card;
 import trello.ui.pages.modal.CardModal;
-import trello.ui.pages.board.ListForm;
+import trello.ui.pages.modal.InviteToBoardModal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +34,9 @@ import java.util.concurrent.TimeUnit;
  * @author Raul Choque, Melissa Román
  * @version 0.0.1
  */
-public class BoardPage extends BasePage {
+public class BoardPage extends ApplicationBasePage {
 
-    private ListForm listForm;
+//    private ListForm listForm;
 
     private static final String ARCHIVE_LIST_CLASS = "js-close-list";
     private static final String SORT_BY_NAME_CLASS = "js-sort-by-card-name";
@@ -97,12 +97,8 @@ public class BoardPage extends BasePage {
     @FindBy(className = "js-open-add-list")
     private WebElement addAnotherList;
 
-    /**
-     * Constructor method for init parameter of this class.
-     */
-    public BoardPage() {
-//        listForm = new ListForm();
-    }
+    @FindBy(className = "js-open-manage-board-members")
+    private WebElement inviteButton;
 
     /**
      * Waits until Page object is found.
@@ -349,11 +345,12 @@ public class BoardPage extends BasePage {
     }
 
     /**
-     * Gets the list form attribute of this class.
+     * Does click in invite button.
      *
-     * @return the listForm attribute.
+     * @return a InviteToBoardModal.
      */
-    public ListForm getListForm() {
-        return listForm;
+    public InviteToBoardModal clickInviteButton() {
+        inviteButton.click();
+        return new InviteToBoardModal();
     }
 }

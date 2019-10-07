@@ -12,12 +12,29 @@
 
 package trello.hooks;
 
+import cucumber.api.java.After;
+import trello.entities.Context;
+import trello.ui.pages.BoardPage;
+import trello.ui.pages.LoggedOutPage;
+
 /**
  * Hooks class.
  *
- * @author Raul Choque
+ * @author Raul Choque, Josue Rodriguez Garcia.
  * @version 0.0.1
  */
 public class Hooks {
 
+    private Context context;
+    private BoardPage boardPage;
+    private LoggedOutPage loggedOutPage;
+
+    /**
+     * LogOut.
+     */
+    @After
+    public void logOut() {
+        boardPage = new BoardPage();
+        loggedOutPage = boardPage.getTopMenu().logoutPage();
+    }
 }

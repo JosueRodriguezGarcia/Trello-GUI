@@ -50,6 +50,7 @@ public class ListSteps {
     public void selectABoard(final String boardTitle) {
         homePage = new HomePage();
         homePage.clickOnABoard(boardTitle);
+        context.getBoard().setName(boardTitle);
     }
 
     /**

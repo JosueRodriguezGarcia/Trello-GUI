@@ -61,15 +61,12 @@ public class CardAPIHook {
      */
     @Before(order = orderBefore, value = "@create-card")
     public void beforeScenario() {
-        String endPoint = "/cards/";
-        String method = "post";
-        String name = "testCard";
-        String idList = context.getLists().get("list").getId();
+        String idList = context.getList().getId();
         Map<String, String> data = new HashMap<>();
-        data.put("name", name);
+        data.put("name", "TestCard");
         data.put("idList", idList);
         request.buildSpec(data);
-        response = request.post(endPoint);
+        response = request.post("/cards/");
         context.getCard().setId(response.jsonPath().get("id"));
     }
 }

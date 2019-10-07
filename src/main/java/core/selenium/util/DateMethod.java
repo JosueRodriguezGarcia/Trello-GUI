@@ -26,6 +26,7 @@ import java.util.Map;
  * @version 0.0.1
  */
 public final class DateMethod {
+
     private static Map<String, Integer> hours = new HashMap<>();
 
     static {

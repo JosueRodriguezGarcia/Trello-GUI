@@ -49,15 +49,13 @@ public class ListAPIHook {
      */
     @Before(order = orderBefore, value = "@create-list")
     public void beforeScenario() {
-        String endPoint = "/lists/";
-        String name = "TestList";
         String idBoard = context.getBoard().getId();
         Map<String, String> data = new HashMap<>();
-        data.put("name", name);
+        data.put("name", "TestList");
         data.put("idBoard", idBoard);
         request.buildSpec(data);
-        response = request.post(endPoint);
-        context.getLists().get("list").setId(response.getBody().jsonPath().get("id"));
+        response = request.post("/lists/");
+        context.getList().setId(response.getBody().jsonPath().get("id"));
     }
 }
 

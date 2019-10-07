@@ -23,6 +23,7 @@ import trello.ui.pages.HomePage;
 import trello.ui.pages.modal.CardModal;
 import trello.ui.pages.modal.CheckListModal;
 import trello.ui.pages.modal.DueDataModal;
+import trello.ui.pages.modal.InviteToBoardModal;
 import trello.ui.pages.modal.MemberModal;
 
 import java.util.Date;
@@ -44,6 +45,9 @@ public class CardSteps {
     private DueDataModal dueDataModal;
     private Context context;
     private MemberModal memberModal;
+    private InviteToBoardModal inviteToBoardModal;
+
+
 
 
     /**
@@ -64,7 +68,7 @@ public class CardSteps {
     @And("I add a card to (.*) list with (.*) as task")
     public void addCardToList(final String listTitle, final String cardTitle) {
         boardPage = new BoardPage();
-        context.getLists().get("list").setTitle(listTitle);
+        context.getList().setTitle(listTitle);
         context.getCard().setTitle(cardTitle);
         boardPage.addCardInList(listTitle, cardTitle);
     }
@@ -74,7 +78,7 @@ public class CardSteps {
      */
     @Then("I should see the new card with the given task")
     public void verifyNewCardIsDisplayedInList() {
-        boolean result = boardPage.searchCardInList(context.getLists().get("list").getTitle(), context.getCard()
+        boolean result = boardPage.searchCardInList(context.getList().getTitle(), context.getCard()
                 .getTitle());
         Assert.assertTrue(result);
     }
@@ -84,7 +88,7 @@ public class CardSteps {
      */
     @Then("I verify that the name is the correct")
     public void verifyTheNameCard() {
-        String actualTitle = boardPage.getCardTitle(context.getLists().get("list").getTitle(), context.getCard()
+        String actualTitle = boardPage.getCardTitle(context.getList().getTitle(), context.getCard()
                 .getTitle());
         Assert.assertEquals(context.getCard().getTitle(), actualTitle);
     }
@@ -123,6 +127,7 @@ public class CardSteps {
         cardModal = new CardModal();
         boolean result = cardModal.searchCheckList("TestCheckList");
         Assert.assertTrue(result);
+        cardModal.clickCloseWindowsButton();
     }
 
     /**
@@ -147,6 +152,8 @@ public class CardSteps {
         dueDataModal = cardModal.clickDateButton();
         Assert.assertEquals(dueDataModal.getDate(), context.getDueDate().getDate());
         Assert.assertEquals(dueDataModal.getTime(), context.getDueDate().getTime());
+        cardModal = dueDataModal.clickCloseButton();
+        cardModal.clickCloseWindowsButton();
     }
 
     /**
@@ -155,7 +162,7 @@ public class CardSteps {
      * @param members defines a input list with the member to be add.
      */
     @And("I add a member")
-    public void iAddAMember(final List<String> members) {
+    public void addAMember(final List<String> members) {
         memberModal = cardModal.clickMemberButton();
         memberModal.addMember(members);
         context.getCard().setMembers(members);
@@ -170,5 +177,18 @@ public class CardSteps {
         for (int index = 0; index < context.getCard().getMembers().size(); index++) {
             Assert.assertEquals(cardModal.getMember(index), context.getCard().getMembers().get(index).getInitials());
         }
+        cardModal.clickCloseWindowsButton();
+    }
+
+    /**
+     * Adds members to card.
+     *
+     * @param members defines a input list.
+     */
+    @And("I add members to board")
+    public void addMembersToBoard(final List<String> members) {
+        boardPage = new BoardPage();
+        inviteToBoardModal = boardPage.clickInviteButton();
+        inviteToBoardModal.fillEmailOrUserField(members);
     }
 }
