@@ -26,6 +26,12 @@ import java.util.List;
 public final class TeamPageUtil {
 
     /**
+     * Private constructor requested by checkstyle.
+     */
+    private TeamPageUtil() {
+    }
+
+    /**
      * Gets username of members of member's section from TeamPage.
      *
      * @param webElements is to get username their text.

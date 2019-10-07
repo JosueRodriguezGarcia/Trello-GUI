@@ -39,8 +39,4 @@ public abstract class ApplicationBasePage extends BasePage {
     public TopMenu getTopMenu() {
         return topMenu;
     }
-
-    protected void waitUntilPageObjectIsLoaded() {
-
-    }
 }

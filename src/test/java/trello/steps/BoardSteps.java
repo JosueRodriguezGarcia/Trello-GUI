@@ -32,9 +32,10 @@ public class BoardSteps {
 
     /**
      * Constructor method for share the context attribute apply DI.
-     * @param context
+     *
+     * @param context is to share entities.
      */
-    public BoardSteps(Context context) {
+    public BoardSteps(final Context context) {
         this.context = context;
     }
 
@@ -44,7 +45,7 @@ public class BoardSteps {
      * @param nameBoard is to name the Board.
      */
     @When("I create a new Board with name {string}")
-    public void createNewBoard(String nameBoard) {
+    public void createNewBoard(final String nameBoard) {
         context.getBoard().setName(nameBoard);
         HomePage homePage = new HomePage();
         homePage.getContentHomePage().openBoardModal();
@@ -53,7 +54,7 @@ public class BoardSteps {
     }
 
     /**
-     * Sees the name of Board in BoardPage
+     * Sees the name of Board in BoardPage.
      */
     @Then("I should see the name of Board in BoardPage")
     public void seeNameOfBoard() {
@@ -65,10 +66,12 @@ public class BoardSteps {
     }
 
     /**
+     * Sees name Board into parameter name section.
      *
+     * @param nameSection is to find the section.
      */
     @Then("I should see the Board in the (.*) section")
-    public void seeNameOfBoardInSections(String nameSection) {
+    public void seeNameOfBoardInSections(final String nameSection) {
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.getContentHomePage().
                 existBoardInSection(context.getBoard().getName(), nameSection),

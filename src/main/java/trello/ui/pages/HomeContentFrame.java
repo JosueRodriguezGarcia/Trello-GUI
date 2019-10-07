@@ -32,10 +32,10 @@ public class HomeContentFrame extends BasePage {
     @FindBy(css = "a._1hc34_9rc6xcjf.AqhrxyGOPcyvoq")
     private WebElement boardLink;
 
-    @FindBy(xpath = "//span[@class='icon-lg icon-clock']//ancestor::div[@class='boards-page-board-section-header']//following-sibling::ul//li//a")
+    @FindBy(xpath = "//span[@class='icon-lg icon-clock']/../..//following-sibling::ul//a")
     private List<WebElement> boardInRecentlyViewedLink;
 
-    @FindBy(xpath = "//span[@class='icon-lg icon-member']//ancestor::div[@class='boards-page-board-section-header']//following-sibling::ul//li//a")
+    @FindBy(xpath = "//span[@class='icon-lg icon-member']/../..//following-sibling::ul//a")
     private List<WebElement> boardInPersonalBoardLink;
 
     @FindBy(css = "div.board-tile.mod-add")

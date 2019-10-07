@@ -27,16 +27,16 @@ import java.util.List;
  */
 public class HomePage extends ApplicationBasePage {
 
-//    @FindBy(className = INITIAL_CLASS_NAME)
-//    private WebElement fullNameInitialsButton;
-    private HomeContentFrame homeContent = new HomeContentFrame();
+    @FindBy(className = INITIAL_CLASS_NAME)
+    private WebElement fullNameInitialsButton;
 
     @FindBy(css = "[data-test-id='home-team-tab-name']")
     private List<WebElement> teamNameLink;
 
-//    private static final String INITIAL_CLASS_NAME = "_24AWINHReYjNBf";
+    private static final String INITIAL_CLASS_NAME = "_24AWINHReYjNBf";
     private static final String CSS_TO_BOARD = "div[title='%s']";
 
+    private HomeContentFrame homeContent = new HomeContentFrame();
     /**
      * Gets the Content of HomePage.
      *
@@ -46,23 +46,13 @@ public class HomePage extends ApplicationBasePage {
         return homeContent;
     }
 
-//    /**
-//     * Wait until Page object was find for.
-//     */
-//    @Override
-//    protected void waitUntilPageObjectIsLoaded() {
-//        WebDriverMethod.waitForATextInWebElement(wait, "className", INITIAL_CLASS_NAME);
-//    }
-
-//    /**
-//     * Gets the initial full name of HomePage class.
-//     *
-//     * @return as string the initial of full name.
-//     */
-//    public String getFullNameInitials() {
-//        WebDriverMethod.waitElementBeClickable(driver, fullNameInitialsButton);
-//        return fullNameInitialsButton.getText();
-//    }
+    /**
+     * Wait until Page object was find for.
+     */
+    @Override
+    protected void waitUntilPageObjectIsLoaded() {
+        WebDriverMethod.waitForATextInWebElement(wait, "className", INITIAL_CLASS_NAME);
+    }
 
     /**
      * Goes to the board page.
