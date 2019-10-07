@@ -62,8 +62,6 @@ public class BoardSteps {
         BoardPage boardPage = new BoardPage();
         ListForm listForm = new ListForm();
         listForm.closeListForm();
-//        boardPage.getListForm().closeListForm();
-        context.getBoard().setId(boardPage.getId());
         Assert.assertEquals(boardPage.getNameBoardButton(), context.getBoard().getName(),
                 "The name of this board is not correct");
     }

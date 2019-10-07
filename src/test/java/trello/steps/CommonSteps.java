@@ -1,3 +1,15 @@
+/*
+ * Copyright (c) 2019 Jala Foundation.
+ * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of
+ * Jala Foundation, ("Confidential Information"). You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Jala Foundation.
+ */
+
 package trello.steps;
 
 import core.selenium.WebDriverConfig;
@@ -6,7 +18,9 @@ import core.selenium.util.JsonConverter;
 import core.selenium.util.ReadJsonFile;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 import trello.entities.Context;
 import trello.entities.User;
 import trello.keys.NamePages;
@@ -87,6 +101,8 @@ public class CommonSteps {
     @When("I go to the Home page using top menu")
     public void goToHomePageUsingTopMenu() {
         TopMenu topMenu = new TopMenu();
+        Actions action = new Actions(topMenu.getDriver());
+        action.sendKeys(Keys.ESCAPE).build().perform();
         topMenu.openHomePage();
     }
 }
