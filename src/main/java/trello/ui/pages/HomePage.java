@@ -37,6 +37,7 @@ public class HomePage extends ApplicationBasePage {
     private static final String CSS_TO_BOARD = "div[title='%s']";
 
     private HomeContentFrame homeContent = new HomeContentFrame();
+
     /**
      * Gets the Content of HomePage.
      *

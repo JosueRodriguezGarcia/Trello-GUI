@@ -74,7 +74,6 @@ public class Board {
      * @param name is the username to be set.
      */
     public void setName(final String name) {
-
         this.name = name;
     }
 }

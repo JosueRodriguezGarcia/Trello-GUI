@@ -33,7 +33,7 @@ public class ListForm extends BasePage {
     private WebElement closeFormLink;
 
     /**
-     * Wait until web element is visible in list form.
+     * Waits until web element is visible in list form.
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {

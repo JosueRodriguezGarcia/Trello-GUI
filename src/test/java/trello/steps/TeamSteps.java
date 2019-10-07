@@ -99,7 +99,7 @@ public class TeamSteps {
     }
 
     /**
-     * Verify if has the name of team.
+     * Verifies if has the name of team.
      */
     @Then("I should see the name of team")
     public void seeNameOfTeam() {

@@ -50,7 +50,7 @@ public class HomeContentFrame extends BasePage {
     }
 
     /**
-     * gets the Boards sections from HomeContentFrame class.
+     * Gets the Boards sections from HomeContentFrame class.
      *
      * @return a Map with name sections and web elements list.
      */
@@ -60,8 +60,9 @@ public class HomeContentFrame extends BasePage {
         boardSection.put("personal boards", boardInPersonalBoardLink);
         return boardSection;
     }
+
     /**
-     * Open the Board modal page make a click in the "Create new board" label.
+     * Opens the Board modal page make a click in the "Create new board" label.
      */
     public void openBoardModal() {
         WebDriverMethod.clickButton(driver, createBoardLabel);

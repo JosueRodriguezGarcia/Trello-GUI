@@ -40,7 +40,6 @@ public class CommonSteps {
     public CommonSteps(final Context currentContext) {
         this.context = currentContext;
         this.user = context.getUser();
-//        homePage = new HomePage();
     }
 
     /**
