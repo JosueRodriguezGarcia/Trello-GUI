@@ -54,6 +54,13 @@ public class TopMenu extends BasePage {
     @FindBy(css = "button[data-test-id='header-member-menu-logout'] span[class='_1uK2vQ_aMRS2NU']")
     private WebElement logoutButton;
 
+    /**
+     * Waits until that element is loaded its text.
+     */
+    @Override
+    protected void waitUntilPageObjectIsLoaded() {
+        WebDriverMethod.waitForATextInWebElement(wait, "className", USER_CLASS_NAME);
+    }
 
     /**
      * Opens the Home page from the TopMenu.
@@ -125,10 +132,12 @@ public class TopMenu extends BasePage {
     }
 
     /**
-     * Waits until that element is loaded its text.
+     * Gets the initial full name of HomePage class.
+     *
+     * @return as string the initial of full name.
      */
-    @Override
-    protected void waitUntilPageObjectIsLoaded() {
-        WebDriverMethod.waitForATextInWebElement(wait, "className", USER_CLASS_NAME);
+    public String getFullNameInitials() {
+        WebDriverMethod.waitElementBeClickable(driver, userActionButton);
+        return userActionButton.getText();
     }
 }

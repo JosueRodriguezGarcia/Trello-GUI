@@ -17,6 +17,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import trello.ui.pages.ApplicationBasePage;
+import trello.ui.utils.TeamPageUtil;
 
 import java.util.List;
 
@@ -67,6 +68,15 @@ public class TeamPage extends ApplicationBasePage {
      * @return as list the username of member section.
      */
     public List<String> getUserNameOfMembers() {
-        return WebDriverMethod.getTextOfElements(members);
+        return TeamPageUtil.getUsernameOfMembers(members);
+    }
+
+    /**
+     * Gets the id of url of team page.
+     *
+     * @return as string of id team.
+     */
+    public String getId() {
+        return WebDriverMethod.getIdTeam(driver.getCurrentUrl());
     }
 }

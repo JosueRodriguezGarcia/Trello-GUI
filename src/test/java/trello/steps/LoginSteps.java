@@ -21,6 +21,7 @@ import trello.entities.Context;
 import trello.entities.User;
 import trello.keys.NamePages;
 import trello.ui.PageTransporter;
+import trello.ui.components.TopMenu;
 import trello.ui.pages.HomePage;
 import trello.ui.pages.LoginPage;
 
@@ -63,7 +64,8 @@ public class LoginSteps {
     @Then("I should see the user's full name initials")
     public void verifyFullNameInitials() {
         HomePage homePage = new HomePage();
-        Assert.assertEquals(homePage.getFullNameInitials(), context.getUser().getFullNameInitials(),
+        TopMenu topMenuOfHome = homePage.getTopMenu();
+        Assert.assertEquals(topMenuOfHome.getFullNameInitials(), context.getUser().getFullNameInitials(),
                 "This is not the user's home page.");
     }
 }

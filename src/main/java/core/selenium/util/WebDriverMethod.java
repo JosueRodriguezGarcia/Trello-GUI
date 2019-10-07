@@ -23,9 +23,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -102,6 +100,17 @@ public final class WebDriverMethod {
     }
 
     /**
+     * Does click in the button element when it is clickable.
+     *
+     * @param webDriver  use to set up WebDriverWait.
+     * @param webElement use to search the webElement.
+     */
+    public static void clickButton(final WebDriver webDriver, final WebElement webElement) {
+        waitElementBeClickable(webDriver, webElement);
+        webElement.click();
+    }
+
+    /**
      * Waits for the text to be shown in the web element searched by class name.
      *
      * @param webDriverWait is the web driver wait of the used driver.
@@ -157,18 +166,13 @@ public final class WebDriverMethod {
     }
 
     /**
-     * Gets text of WebElement from a list parameter.
+     * Gets the id of team from his url of team page.
      *
-     * @param webElements is to get their text.
-     * @return as List all text from WebElement list.
+     * @param url is to get thi id of team.
+     * @return as string the id of team.
      */
-    public static List<String> getTextOfElements(final List<WebElement> webElements) {
-        List<String> result = new ArrayList<String>();
-        for (int i = 0; i < webElements.size(); i++) {
-            String textElement = (webElements.get(i).getText().replaceAll("@", ""));
-            result.add(textElement);
-        }
-        return result;
+    public static String getIdTeam(final String url) {
+        return url.substring(url.lastIndexOf('/') + 1);
     }
 
     /**

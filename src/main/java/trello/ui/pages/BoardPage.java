@@ -22,6 +22,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import trello.entities.Card;
 import trello.ui.pages.modal.CardModal;
+import trello.ui.pages.board.ListForm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class BoardPage extends BasePage {
 
+    private ListForm listForm;
+
     private static final String ARCHIVE_LIST_CLASS = "js-close-list";
     private static final String SORT_BY_NAME_CLASS = "js-sort-by-card-name";
     private static final String SORT_BY_OLDEST_FIRST_CLASS = "js-sort-oldest-first";
@@ -42,6 +45,9 @@ public class BoardPage extends BasePage {
     private static final String LIST_MENU_SUFFIX = "/following-sibling::div";
     private static final String LIST_MENU_XPATH = LIST_TITLE_XPATH + LIST_MENU_SUFFIX;
     private static final String TARGET_LIST_TITLE_XPATH = "//a[contains(text(), '%s')]";
+
+    @FindBy(className = "js-board-editing-target")
+    private WebElement nameBoardButton;
 
     @FindBy(className = "placeholder")
     private WebElement newListButton;
@@ -90,6 +96,30 @@ public class BoardPage extends BasePage {
 
     @FindBy(className = "js-open-add-list")
     private WebElement addAnotherList;
+
+    /**
+     * Constructor method for init parameter of this class.
+     */
+    public BoardPage() {
+//        listForm = new ListForm();
+    }
+
+    /**
+     * Waits until Page object is found.
+     */
+    @Override
+    protected void waitUntilPageObjectIsLoaded() {
+        wait.until(ExpectedConditions.elementToBeClickable(addAnotherList));
+    }
+
+    /**
+     * Gets the name of Board into BoardPage.
+     *
+     * @return as string the name of Board.
+     */
+    public String getNameBoardButton() {
+        return nameBoardButton.getText();
+    }
 
     /**
      * Creates a new list.
@@ -228,14 +258,6 @@ public class BoardPage extends BasePage {
     }
 
     /**
-     * Waits until Page object is found.
-     */
-    @Override
-    protected void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.elementToBeClickable(addAnotherList));
-    }
-
-    /**
      * Moves all cards in given list to given target list.
      *
      * @param listFrom   is the list which the cards will be moved from.
@@ -314,5 +336,24 @@ public class BoardPage extends BasePage {
         sortCardsButton.click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.className(SORT_BY_OLDEST_FIRST_CLASS)));
         sortByOldestFirstButton.click();
+    }
+
+    /**
+     * Gets the id Board from BoardPage.
+     *
+     * @return as string the id of Board.
+     */
+    public String getId() {
+        String uri = driver.getCurrentUrl();
+        return uri.substring(uri.lastIndexOf("b/") + 2, uri.lastIndexOf('/'));
+    }
+
+    /**
+     * Gets the list form attribute of this class.
+     *
+     * @return the listForm attribute.
+     */
+    public ListForm getListForm() {
+        return listForm;
     }
 }
