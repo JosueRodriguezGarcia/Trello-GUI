@@ -2,14 +2,14 @@
   "users": [
     {
       "admin": {
-        "username": "josuerodriguez07",
-        "password": "Control123!",
-        "fullName": "Josue Rodriguez",
-        "email": "jrg.ikaro@gmail.com",
-        "consumerKey": "b8172176637075376d6f3fa6da4c33c6",
-        "consumerSecret": "6be522fdaf553f92d7a8ef6f275295c8eda8b64ea9b9771e0bc0471c10efcc55",
-        "accessToken": "f77dcce84606a39e0ddbca303dfb92371b28fd3d10b3942597dfd43c18332e3f",
-        "tokenSecret": "f77dcce84606a39e0ddbca303dfb92371b28fd3d10b3942597dfd43c18332e3f"
+        "username": "put your username",
+        "password": "put your password",
+        "fullName": "put your full name",
+        "email": "put your email",
+        "consumerKey": "put your consumer key",
+        "consumerSecret": "put your consumer secret",
+        "accessToken": "put your access token",
+        "tokenSecret": "put your token secret"
       }
     },
     {

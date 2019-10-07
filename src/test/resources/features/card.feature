@@ -18,6 +18,19 @@ Feature: Card actions
     Given I log in as admin user
      When I select TestBoard board
       And I select TestCard card
-      And I assign a due date One hour from now
+      And I assign a due date
+        | Date     | Today             |
+        | Time     | One hour from now |
+        | Reminder | None              |
      Then The due date section is displayed on the card details
-#    And the due date label is displayed on the card
+
+  Scenario: Assign card to a member
+    Given I log in as admin user
+     When I select TestBoard board
+      And I select TestCard card
+      And I add a member
+        | George Smith  |
+        | James Cooper  |
+        | Joseph Taylor |
+     Then the member's initials are shown in the card
+#      And the member is checked on the board members list

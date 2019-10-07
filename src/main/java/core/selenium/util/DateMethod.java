@@ -26,11 +26,18 @@ import java.util.Map;
  * @version 0.0.1
  */
 public final class DateMethod {
-    private static Map<String, Integer> map = new HashMap<>();
+    private static Map<String, Integer> hours = new HashMap<>();
 
     static {
-        map.put("One hour from now", 1);
-        map.put("Two hour from now", 2);
+        hours.put("One hour from now", 1);
+        hours.put("Two hour from now", 2);
+    }
+
+    private static Map<String, Integer> dates = new HashMap<>();
+
+    static {
+        hours.put("Today", 0);
+        hours.put("Tomorrow", 1);
     }
 
     /**
@@ -44,22 +51,23 @@ public final class DateMethod {
      * Gets the hour with a hour add.
      *
      * @param date defines a input date.
-     * @param time defines a input time for add.
+     * @param addHour defines a input time for add.
      * @return a string with the hour.
      */
-    public static String getHour(final Date date, final String time) {
+    public static String getHour(final Date date, final String addHour) {
         DateFormat hourFormat = new SimpleDateFormat("HH:mm a");
-        return getNextHour(hourFormat.format(date), map.get(time));
+        return getNextHour(hourFormat.format(date), hours.get(addHour));
     }
 
     /**
      * Gets the date of the system.
      *
      * @param date defines a input date.
+     * @param addDay defines a input int with the day to be add.
      * @return a string with the date.
      */
-    public static String getDate(final Date date) {
-        DateFormat hourFormat = new SimpleDateFormat("MM/dd/yyyy");
+    public static String getDate(final Date date, final String addDay) {
+        DateFormat hourFormat = new SimpleDateFormat("MM/d/yyyy");
         return hourFormat.format(date);
     }
 
@@ -84,7 +92,7 @@ public final class DateMethod {
         int nextHour = isMayor(Integer.parseInt(hour) + addHour);
 
         if (nextHour >= 1 && nextHour <= eleven) {
-            result = addZero(nextHour) + ":" + hours[1];
+            result = nextHour + ":" + hours[1];
         } else {
             if (nextHour == twelve) {
                 if (ampm.equals("AM")) {

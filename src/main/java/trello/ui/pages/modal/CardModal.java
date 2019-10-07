@@ -21,6 +21,7 @@ import trello.ui.pages.BoardPage;
 
 import java.util.List;
 
+
 /**
  * CardModal class.
  *
@@ -46,6 +47,20 @@ public class CardModal extends BasePage {
     @FindBy(className = "js-add-due-date")
     private WebElement dueDateButton;
 
+    @FindBy(className = "js-details-edit-due-date")
+    private WebElement dateButton;
+
+    @FindBy(className = "js-change-card-members")
+    private WebElement memberButton;
+
+    @FindBy(className = "js-card-detail-members-list")
+    private WebElement cardMembersList;
+
+//    @FindBy(className = "js-member-on-card-menu")
+//    private List<WebElement> cardMemberItem;
+
+    private List<WebElement> cardMemberItem;
+
     /**
      * Does click the "add checklist button".
      *
@@ -65,6 +80,16 @@ public class CardModal extends BasePage {
         dueDateButton.click();
         return new DueDataModal();
     }
+
+    /**
+     * Does click in the member button.
+     *
+     * @return a instance of memberModal.
+     */
+    public MemberModal clickMemberButton() {
+       memberButton.click();
+       return new MemberModal();
+    }
     /**
      * Does click the "close button".
      *
@@ -73,6 +98,34 @@ public class CardModal extends BasePage {
     public BoardPage clickCloseWindowsButton() {
         closeWindowsButton.click();
         return new BoardPage();
+    }
+
+    /**
+     * Does click the date button.
+     *
+     * @return a instance of DueDataModal class.
+     */
+    public DueDataModal clickDateButton() {
+        dateButton.click();
+        return new DueDataModal();
+    }
+
+    /**
+     * Gets the list of member that exist.
+     */
+    private void getCardMembersList() {
+        cardMemberItem = cardMembersList.findElements(By.className("js-member-on-card-menu"));
+    }
+
+    /**
+     * Gets a member of a list.
+     *
+     * @param index defines the position of the list
+     * @return a string with the initials of a member in a card.
+     */
+    public String getMember(final int index) {
+        getCardMembersList();
+        return cardMemberItem.get(index).getText();
     }
 
     /**

@@ -12,6 +12,11 @@
 
 package trello.entities;
 
+import core.selenium.util.WebDriverMethod;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Card class.
  *
@@ -22,6 +27,7 @@ public class Card {
 
     private String id;
     private String title;
+    private List<Member> members;
 
     /**
      * This method is used to get id.
@@ -57,5 +63,28 @@ public class Card {
      */
     public void setTitle(final String title) {
         this.title = title;
+    }
+
+    /**
+     * Gets a list of members.
+     *
+     * @return a list.
+     */
+    public List<Member> getMembers() {
+        return members;
+    }
+
+    /**
+     * Sets a list the members.
+     *
+     * @param members defines a input list with the members to be set.
+     */
+    public void setMembers(final List<String> members) {
+        this.members = new ArrayList<>();
+        for (int i = 0; i < members.size(); i++) {
+            this.members.add(new Member());
+            this.members.get(i).setFullName(members.get(i));
+            this.members.get(i).setInitials(WebDriverMethod.getFullNameInitials(members.get(i)));
+        }
     }
 }

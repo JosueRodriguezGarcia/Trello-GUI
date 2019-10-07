@@ -22,7 +22,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import trello.ui.pages.BasePage;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * DueDataModal class.
@@ -139,15 +141,16 @@ public class DueDataModal extends BasePage {
      * Fills the date Field.
      *
      * @param date defines a input date for field to by set.
+     * @param addDay defines a input string with the numebr of day to be add.
      */
-    public void fillDateField(final Date date) {
-        WebDriverMethod.setTxtElement(dataField, DateMethod.getDate(date));
+    public void fillDateField(final Date date, final String addDay) {
+        WebDriverMethod.setTxtElement(dataField, DateMethod.getDate(date, addDay));
     }
 
     /**
      * Fills the hour Field.
      *
-     * @param date defines a input hour for field to by set.
+     * @param date    defines a input hour for field to by set.
      * @param addHour defines a number of hour to by set.
      */
     public void fillHourField(final Date date, final String addHour) {
@@ -193,7 +196,26 @@ public class DueDataModal extends BasePage {
      * @param reminder defines a input string with the reminder to by set.
      */
     public void setReminder(final String reminder) {
+        reminderButton.click();
         reminderButton.findElement(By.xpath("//option[.='" + reminder + "']")).click();
+    }
+
+    /**
+     * Gets the value of the field date.
+     *
+     * @return a string with the date.
+     */
+    public String getDate() {
+        return dataField.getAttribute("value");
+    }
+
+    /**
+     * Gets the value of the field time.
+     *
+     * @return a string with the time.
+     */
+    public String getTime() {
+        return timeField.getAttribute("value");
     }
 
     /**
@@ -202,5 +224,19 @@ public class DueDataModal extends BasePage {
     @Override
     protected void waitUntilPageObjectIsLoaded() {
         wait.until(ExpectedConditions.elementToBeClickable(saveButton));
+    }
+
+    /**
+     * Sets the attributes the a due date.
+     *
+     * @param date defines a input string with the date of the system.
+     * @param information defines a input map with the information to be set.
+     */
+    public void setInformation(final Date date, final Map<String, String> information) {
+        HashMap<String, Runnable> cmdList = new HashMap<>();
+        cmdList.put("Date", () -> fillDateField(date, information.get("Date")));
+        cmdList.put("Time", () -> fillHourField(date, information.get("Time")));
+        cmdList.put("Reminder", () -> setReminder(information.get("Reminder")));
+        information.keySet().forEach(key -> cmdList.get(key).run());
     }
 }

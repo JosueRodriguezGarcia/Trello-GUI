@@ -23,8 +23,11 @@ import trello.ui.pages.HomePage;
 import trello.ui.pages.modal.CardModal;
 import trello.ui.pages.modal.CheckListModal;
 import trello.ui.pages.modal.DueDataModal;
+import trello.ui.pages.modal.MemberModal;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * CardSteps class.
@@ -40,6 +43,7 @@ public class CardSteps {
     private CheckListModal checkListModal;
     private DueDataModal dueDataModal;
     private Context context;
+    private MemberModal memberModal;
 
 
     /**
@@ -124,13 +128,47 @@ public class CardSteps {
     /**
      * Assigns a due data.
      *
-     * @param dueDate defines a input duaDate.
+     * @param information defines a input data table.
      */
-    @And("I assign a due date (.*)")
-    public void iAssignADueDate(final String dueDate) {
+    @And("I assign a due date")
+    public void iAssignADueDate(final Map<String, String> information) {
         dueDataModal = cardModal.clickDueDateButton();
         Date date = new Date();
-        dueDataModal.fillHourField(date, dueDate);
+        dueDataModal.setInformation(date, information);
+        context.getDueDate().setInformation(date, information);
         cardModal = dueDataModal.clickSaveButton();
+    }
+
+    /**
+     * Verifies that the due date in a card is displayed in details.
+     */
+    @Then("The due date section is displayed on the card details")
+    public void theDueDateSectionIsDisplayedOnTheCardDetails() {
+        dueDataModal = cardModal.clickDateButton();
+        Assert.assertEquals(dueDataModal.getDate(), context.getDueDate().getDate());
+        Assert.assertEquals(dueDataModal.getTime(), context.getDueDate().getTime());
+    }
+
+    /**
+     * Adds members to card.
+     *
+     * @param members defines a input list with the member to be add.
+     */
+    @And("I add a member")
+    public void iAddAMember(final List<String> members) {
+        memberModal = cardModal.clickMemberButton();
+        memberModal.addMember(members);
+        context.getCard().setMembers(members);
+        cardModal = memberModal.clickCloseWindowButton();
+    }
+
+    /**
+     * Verifies that the member is shown in the card.
+     */
+    @Then("the member's initials are shown in the card")
+    public void theMemberSInitialsAreShownInTheCard() {
+        for (int index = 0; index < context.getCard().getMembers().size(); index++) {
+            Assert.assertEquals(cardModal.getMember(index), context.getCard().getMembers().get(index).getInitials());
+        }
     }
 }

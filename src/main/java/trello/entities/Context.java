@@ -28,6 +28,7 @@ public class Context {
     private Map<String, List> lists;
     private Team team;
     private User user;
+    private DueDate dueDate;
 
     /**
      * Method constructor of Context class.
@@ -38,6 +39,7 @@ public class Context {
         lists = new HashMap<>();
         team = new Team();
         user = new User();
+        dueDate = new DueDate();
     }
 
     /**
@@ -120,4 +122,14 @@ public class Context {
     public void setUser(final User user) {
         this.user = user;
     }
+
+    /**
+     * Gets due date attribute of its class.
+     *
+     * @return a due date attribute.
+     */
+    public DueDate getDueDate() {
+        return dueDate;
+    }
+
 }
