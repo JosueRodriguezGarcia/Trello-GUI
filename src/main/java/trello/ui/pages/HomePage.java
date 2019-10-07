@@ -48,7 +48,7 @@ public class HomePage extends ApplicationBasePage {
     }
 
     /**
-     * Wait until Page object was find for.
+     * Waits until Page object was find for.
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
