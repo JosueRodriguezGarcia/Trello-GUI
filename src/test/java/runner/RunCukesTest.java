@@ -15,6 +15,8 @@ import core.selenium.WebDriverManager;
 import cucumber.api.CucumberOptions;
 import cucumber.api.testng.AbstractTestNGCucumberTests;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import trello.api.EnvironmentSetup;
 import trello.report.ReportGenerator;
 
 /**
@@ -28,16 +30,21 @@ import trello.report.ReportGenerator;
                 "html:target/cucumber",
                 "json:target/cucumber.json"},
         glue = {"trello/steps", "trello/hooks"},
-        features = {"src/test/resources/features/card.feature"},
+        features = {"src/test/resources/features"},
         monochrome = true)
 public class RunCukesTest extends AbstractTestNGCucumberTests {
 
+    @BeforeTest
+    public void beforeExecution(){
+        EnvironmentSetup.getInstance().setEnvironmentSetup();
+    }
     /**
      * Generates de utils after the test execution. Also quits from the browser.
      */
     @AfterTest
     public void afterExecution() {
         ReportGenerator.generateReport();
+        EnvironmentSetup.getInstance().delete();
         WebDriverManager.getInstance().getWebDriver().quit();
     }
 }

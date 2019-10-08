@@ -124,4 +124,11 @@ public class RestClientAPI {
                 body(new Gson().toJson(body));
 
     }
+
+    public void buildSpec(final String body) {
+        requestSpecification = given().
+                spec(requestSpecification).
+                contentType(JSON).
+                body(body);
+    }
 }

@@ -1,6 +1,6 @@
 Feature: Card actions
 
-  @create-board @create-list @delete-board
+
   Scenario: Create a card correctly
     Given I log in as admin user
      When I select TestBoard board
@@ -8,7 +8,7 @@ Feature: Card actions
      Then I should see the new card with the given task
      Then I verify that the name is the correct
 
-  @create-board @create-list @create-card @delete-card @delete-board
+
   Scenario: Add a checklist to a card
     Given I log in as admin user
      When I select TestBoard board
@@ -16,7 +16,7 @@ Feature: Card actions
       And I add a checklist with TestCheckList title
      Then the checklist section is displayed on the card details
 
-  @create-board @create-list @create-card @delete-card @delete-board
+
   Scenario: Assign a date to a card
     Given I log in as admin user
      When I select TestBoard board
@@ -27,7 +27,7 @@ Feature: Card actions
         | Reminder | None              |
      Then The due date section is displayed on the card details
 
-  @create-board @create-list @create-card @delete-card @delete-board
+
   Scenario: Assign card to a member
     Given I log in as admin user
      When I select TestBoard board

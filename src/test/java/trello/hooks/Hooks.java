@@ -12,10 +12,6 @@
 
 package trello.hooks;
 
-import cucumber.api.java.After;
-import trello.entities.Context;
-import trello.ui.pages.BoardPage;
-import trello.ui.pages.LoggedOutPage;
 
 /**
  * Hooks class.
@@ -25,16 +21,4 @@ import trello.ui.pages.LoggedOutPage;
  */
 public class Hooks {
 
-    private Context context;
-    private BoardPage boardPage;
-    private LoggedOutPage loggedOutPage;
-
-    /**
-     * LogOut.
-     */
-    @After
-    public void logOut() {
-        boardPage = new BoardPage();
-        loggedOutPage = boardPage.getTopMenu().logoutPage();
-    }
 }
