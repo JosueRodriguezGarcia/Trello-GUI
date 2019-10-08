@@ -115,7 +115,7 @@ public class RestClientAPI {
     /**
      * Builds the request with a body.
      *
-     * @param body defines parameters od input in a map.
+     * @param body defines parameters input in a map.
      */
     public void buildSpec(final Map<String, String> body) {
         requestSpecification = given().
@@ -125,6 +125,11 @@ public class RestClientAPI {
 
     }
 
+    /**
+     * Builds the request with a body.
+     *
+     * @param body defines parameters input in a Json.
+     */
     public void buildSpec(final String body) {
         requestSpecification = given().
                 spec(requestSpecification).
