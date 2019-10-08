@@ -17,7 +17,7 @@ Feature: Card actions
   Scenario: Assign a date to a card
     Given I log in as admin user
      When I select TestBoard board
-      And I select TestCard card
+      And I select TestCard2 card
       And I assign a due date
         | Date     | Today             |
         | Time     | One hour from now |
@@ -26,12 +26,8 @@ Feature: Card actions
 
   Scenario: Assign card to a member
     Given I log in as admin user
-     When I select TestBoard board
-      And I add members to board
-        | george.smith.tr3110@gmail.com   |
-        | james.cooper.tr3110@outlook.com |
-        | joseph.taylor.tr3110@mail.com   |
-     When I select TestCard card
+      And I select TestBoard board
+     When I select TestCard3 card
       And I add a member
         | George Smith  |
         | James Cooper  |

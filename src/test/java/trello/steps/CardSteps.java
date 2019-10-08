@@ -114,8 +114,7 @@ public class CardSteps {
     public void addChecklist(final String checkListTitle) {
         cardModal.clickCheckListButton();
         checkListModal = new CheckListModal();
-        checkListModal.addCheckList(checkListTitle);
-        cardModal.clickCloseWindowsButton();
+        cardModal = checkListModal.addCheckList(checkListTitle);
     }
 
     /**
@@ -123,10 +122,8 @@ public class CardSteps {
      */
     @Then("the checklist section is displayed on the card details")
     public void theChecklistSectionIsDisplayedOnTheCardDetails() {
-        cardModal = new CardModal();
         boolean result = cardModal.searchCheckList("TestCheckList");
         Assert.assertTrue(result);
-        cardModal.clickCloseWindowsButton();
     }
 
     /**
@@ -135,7 +132,7 @@ public class CardSteps {
      * @param information defines a input data table.
      */
     @And("I assign a due date")
-    public void iAssignADueDate(final Map<String, String> information) {
+    public void assignADueDate(final Map<String, String> information) {
         dueDataModal = cardModal.clickDueDateButton();
         Date date = new Date();
         dueDataModal.setInformation(date, information);
@@ -151,8 +148,6 @@ public class CardSteps {
         dueDataModal = cardModal.clickDateButton();
         Assert.assertEquals(dueDataModal.getDate(), context.getDueDate().getDate());
         Assert.assertEquals(dueDataModal.getTime(), context.getDueDate().getTime());
-        cardModal = dueDataModal.clickCloseButton();
-        cardModal.clickCloseWindowsButton();
     }
 
     /**
@@ -176,7 +171,6 @@ public class CardSteps {
         for (int index = 0; index < context.getCard().getMembers().size(); index++) {
             Assert.assertEquals(cardModal.getMember(index), context.getCard().getMembers().get(index).getInitials());
         }
-        cardModal.clickCloseWindowsButton();
     }
 
     /**

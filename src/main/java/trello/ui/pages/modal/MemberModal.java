@@ -85,6 +85,6 @@ public class MemberModal extends BasePage {
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.visibilityOf(showMemberButton));
+        wait.until(ExpectedConditions.visibilityOf(searchMemberField));
     }
 }

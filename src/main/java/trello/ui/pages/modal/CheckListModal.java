@@ -43,10 +43,12 @@ public class CheckListModal extends BasePage {
      * Adds a checklist to card.
      *
      * @param checkListTitle defines the title od the new checklist.
+     * @return a instance of CardModal.
      */
-    public void addCheckList(final String checkListTitle) {
+    public CardModal addCheckList(final String checkListTitle) {
         WebDriverMethod.setTxtElement(checkListTitleField, checkListTitle);
         clickConfirmAddCheckListButton();
+        return new CardModal();
     }
 
     /**
