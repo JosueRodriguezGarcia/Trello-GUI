@@ -12,7 +12,6 @@
 
 package trello.steps;
 
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.testng.Assert;
@@ -143,7 +142,13 @@ public class ListSteps {
                 "Cards were not correctly sorted.");
     }
 
-    @And("I copy (.*) card to (.*) list")
+    /**
+     * Copies a card to other list.
+     *
+     * @param card      is the title of the card which is wanted to copy.
+     * @param listTitle is the title of the list which is wanted to copy the card to.
+     */
+    @Then("I copy (.*) card to (.*) list")
     public void copyCardToList(final String card, final String listTitle) {
         boardPage = new BoardPage();
         context.getCard().setTitle(card);
@@ -154,11 +159,13 @@ public class ListSteps {
         List sourceList = new List();
         String sourceListTitle = boardPage.getListWhereCardIs(card);
         sourceList.setTitle(sourceListTitle);
-        //sourceList.setCards(boardPage.getCardsInList(sourceListTitle));
         context.getLists().put("sourceList", sourceList);
-        boardPage.moveCard(card, listTitle);
+        boardPage.copyCardToList(card, listTitle);
     }
 
+    /**
+     * Verifies if the copied card appears on source and target list.
+     */
     @Then("the card appears correctly on target list")
     public void verifyCardAppearsOnSourceAndTargetList() {
         boardPage = new BoardPage();

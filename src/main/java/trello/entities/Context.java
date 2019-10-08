@@ -23,37 +23,21 @@ import java.util.Map;
  */
 public class Context {
 
-    private User user;
     private Board board;
-    private Map<String, List> lists;
     private Card card;
+    private Map<String, List> lists;
+    private Team team;
+    private User user;
 
     /**
      * Method constructor of Context class.
      */
     public Context() {
-        user = new User();
         board = new Board();
-        lists = new HashMap<>();
         card = new Card();
-    }
-
-    /**
-     * Gets User attribute of its class.
-     *
-     * @return the User attribute.
-     */
-    public User getUser() {
-        return user;
-    }
-
-    /**
-     * Sets context's user.
-     *
-     * @param user is the user to be shared in context.
-     */
-    public void setUser(final User user) {
-        this.user = user;
+        lists = new HashMap<>();
+        team = new Team();
+        user = new User();
     }
 
     /**
@@ -99,5 +83,41 @@ public class Context {
      */
     public Map<String, List> getLists() {
         return lists;
+    }
+
+    /**
+     * Gets team attribute of it's class.
+     *
+     * @return a Team object.
+     */
+    public Team getTeam() {
+        return team;
+    }
+
+    /**
+     * Sets team attribute of it's class.
+     *
+     * @param team is the team to be set.
+     */
+    public void setTeam(final Team team) {
+        this.team = team;
+    }
+
+    /**
+     * Gets User attribute of its class.
+     *
+     * @return the User attribute.
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Sets context's user.
+     *
+     * @param user is the user to be shared in context.
+     */
+    public void setUser(final User user) {
+        this.user = user;
     }
 }

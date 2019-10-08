@@ -90,13 +90,24 @@ public final class WebDriverMethod {
      * @param webElement use to search the webElement.
      */
     public static void waitElementBeClickable(final WebDriver webDriver, final WebElement webElement) {
-        final long time = 1;
+        final long time = 2;
         WebDriverWait webDriverWait = new WebDriverWait(webDriver, time);
         try {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(webElement));
         } catch (NoSuchElementException e) {
             throw new ElementClickInterceptedException("This element could not be clickable: " + webElement);
         }
+    }
+
+    /**
+     * Does click in the button element when it is clickable.
+     *
+     * @param webDriver  use to set up WebDriverWait.
+     * @param webElement use to search the webElement.
+     */
+    public static void clickButton(final WebDriver webDriver, final WebElement webElement) {
+        waitElementBeClickable(webDriver, webElement);
+        webElement.click();
     }
 
     /**
@@ -152,5 +163,15 @@ public final class WebDriverMethod {
     public static WebElement createWebElement(final WebDriver driver, final String locatorType, final String locator) {
         fillMapAccordingLocator(locator);
         return driver.findElement(byLocator.get(locatorType));
+    }
+
+    /**
+     * Gets the id of team from his url of team page.
+     *
+     * @param url is to get thi id of team.
+     * @return as string the id of team.
+     */
+    public static String getIdTeam(final String url) {
+        return url.substring(url.lastIndexOf('/') + 1);
     }
 }

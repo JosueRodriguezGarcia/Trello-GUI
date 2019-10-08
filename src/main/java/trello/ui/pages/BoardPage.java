@@ -49,6 +49,9 @@ public class BoardPage extends BasePage {
     private static final String COPY_CARD_QUICK_MENU_CSS = ".js-copy-card > .quick-card-editor-buttons-item-text";
     private static final String CARD_PARENT_XPATH = "//span[contains(text(), '%s')]/../../../..";
 
+    @FindBy(className = "js-board-editing-target")
+    private WebElement nameBoardButton;
+
     @FindBy(className = "placeholder")
     private WebElement newListButton;
 
@@ -98,6 +101,23 @@ public class BoardPage extends BasePage {
     private WebElement addAnotherList;
 
     private By listHeader = By.cssSelector("textarea[class*='header-name']");
+
+    /**
+     * Waits until Page object is found.
+     */
+    @Override
+    protected void waitUntilPageObjectIsLoaded() {
+        wait.until(ExpectedConditions.elementToBeClickable(addAnotherList));
+    }
+
+    /**
+     * Gets the name of Board into BoardPage.
+     *
+     * @return as string the name of Board.
+     */
+    public String getNameBoardButton() {
+        return nameBoardButton.getText();
+    }
 
     /**
      * Creates a new list.
@@ -234,14 +254,6 @@ public class BoardPage extends BasePage {
     }
 
     /**
-     * Waits until Page object is found.
-     */
-    @Override
-    protected void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.elementToBeClickable(addAnotherList));
-    }
-
-    /**
      * Moves all cards in given list to given target list.
      *
      * @param listFrom   is the list which the cards will be moved from.
@@ -322,7 +334,13 @@ public class BoardPage extends BasePage {
         sortByOldestFirstButton.click();
     }
 
-    public void moveCard(String cardTitle, String targetList) {
+    /**
+     * Copies a card to another list.
+     *
+     * @param cardTitle  is the title of the card to be copied.
+     * @param targetList is the list where is required the card to be copied to.
+     */
+    public void copyCardToList(final String cardTitle, final String targetList) {
         showQuickCardMenu(cardTitle);
         WebElement copyCardButton = driver.findElement(By.cssSelector(COPY_CARD_QUICK_MENU_CSS));
         copyCardButton.click();
@@ -333,6 +351,11 @@ public class BoardPage extends BasePage {
         createCardButton.click();
     }
 
+    /**
+     * Shows the quick card menu.
+     *
+     * @param cardTitle is the title of the card which the quick menu is required.
+     */
     public void showQuickCardMenu(final String cardTitle) {
         WebElement card = driver.findElement(By.xpath(String.format(CARD_XPATH, cardTitle)));
         Actions actions = new Actions(driver);
@@ -340,9 +363,25 @@ public class BoardPage extends BasePage {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ARCHIVE_CARD_QUICK_MENU_CSS)));
     }
 
-    public String getListWhereCardIs(String cardTitle) {
+    /**
+     * Gets the list where the card is.
+     *
+     * @param cardTitle is the title of the card whick the list where it belongs is required.
+     * @return the list where is the card.
+     */
+    public String getListWhereCardIs(final String cardTitle) {
         WebElement cardParent = driver.findElement(By.xpath(String.format(CARD_PARENT_XPATH, cardTitle)));
         WebElement cardListHeader = cardParent.findElement(listHeader);
         return cardListHeader.getText();
+    }
+
+    /**
+     * Gets the id Board from BoardPage.
+     *
+     * @return as string the id of Board.
+     */
+    public String getId() {
+        String uri = driver.getCurrentUrl();
+        return uri.substring(uri.lastIndexOf("b/") + 2, uri.lastIndexOf('/'));
     }
 }
