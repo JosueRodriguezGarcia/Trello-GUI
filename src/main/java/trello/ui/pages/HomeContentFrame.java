@@ -87,4 +87,21 @@ public class HomeContentFrame extends BasePage {
         }
         return result;
     }
+
+    /**
+     * Opens the board with the name and section sending as parameters.
+     *
+     * @param nameBoard is to find the board.
+     * @param nameSection is to select the section.
+     */
+    public void openBoard(final String nameBoard, final String nameSection) {
+        List<WebElement> boardsLink = getBoarSections().get(nameSection.toLowerCase());
+
+        for (WebElement element : boardsLink) {
+            if (element.getText().compareTo(nameBoard) == 0) {
+                element.click();
+                break;
+            }
+        }
+    }
 }

@@ -45,9 +45,6 @@ public class BoardPage extends BasePage {
     private static final String LIST_MENU_XPATH = LIST_TITLE_XPATH + LIST_MENU_SUFFIX;
     private static final String TARGET_LIST_TITLE_XPATH = "//a[contains(text(), '%s')]";
 
-    @FindBy(className = "js-board-editing-target")
-    private WebElement nameBoardButton;
-
     @FindBy(className = "placeholder")
     private WebElement newListButton;
 
@@ -97,27 +94,11 @@ public class BoardPage extends BasePage {
     private WebElement addAnotherList;
 
     /**
-     * Constructor method for init parameter of this class.
-     */
-    public BoardPage() {
-        listForm = new ListForm();
-    }
-
-    /**
      * Waits until Page object is found.
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
         wait.until(ExpectedConditions.elementToBeClickable(addAnotherList));
-    }
-
-    /**
-     * Gets the name of Board into BoardPage.
-     *
-     * @return as string the name of Board.
-     */
-    public String getNameBoardButton() {
-        return nameBoardButton.getText();
     }
 
     /**
@@ -343,14 +324,5 @@ public class BoardPage extends BasePage {
     public String getId() {
         String uri = driver.getCurrentUrl();
         return uri.substring(uri.lastIndexOf("b/") + 2, uri.lastIndexOf('/'));
-    }
-
-    /**
-     * Gets the list form attribute of this class.
-     *
-     * @return the listForm attribute.
-     */
-    public ListForm getListForm() {
-        return listForm;
     }
 }

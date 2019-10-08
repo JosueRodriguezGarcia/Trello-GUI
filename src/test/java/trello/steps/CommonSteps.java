@@ -6,7 +6,9 @@ import core.selenium.util.JsonConverter;
 import core.selenium.util.ReadJsonFile;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 import trello.entities.Context;
 import trello.entities.User;
 import trello.keys.NamePages;
@@ -87,6 +89,8 @@ public class CommonSteps {
     @When("I go to the Home page using top menu")
     public void goToHomePageUsingTopMenu() {
         TopMenu topMenu = new TopMenu();
+        Actions action = new Actions(topMenu.getDriver());
+        action.sendKeys(Keys.ESCAPE).build().perform();
         topMenu.openHomePage();
     }
 }
