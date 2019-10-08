@@ -12,6 +12,8 @@
 
 package trello.entities;
 
+import java.util.List;
+
 /**
  * Card class.
  *
@@ -21,6 +23,9 @@ package trello.entities;
 public class Card {
 
     private String id;
+    private List<String> idChecklists;
+    private List<String> idMembers;
+    private List<Label> labels;
     private String title;
 
     /**
@@ -39,6 +44,60 @@ public class Card {
      */
     public void setId(final String id) {
         this.id = id;
+    }
+
+    /**
+     * This method is used get list of idMembers.
+     *
+     * @return a list with the idMembers of card.
+     */
+    public List<String> getIdChecklists() {
+        return idChecklists;
+    }
+
+    /**
+     * This method is used to set idChecklists.
+     *
+     * @param idChecklists defines of input list with the idChecklists.
+     */
+    public void setIdChecklists(List<String> idChecklists) {
+        this.idChecklists = idChecklists;
+    }
+
+    /**
+     * This method is used get list of idMembers.
+     *
+     * @return a list with the idMembers of card.
+     */
+    public List<String> getIdMembers() {
+        return idMembers;
+    }
+
+    /**
+     * This method is used to set idMembers.
+     *
+     * @param idMembers defines of input list with the idMembers.
+     */
+    public void setIdMembers(List<String> idMembers) {
+        this.idMembers = idMembers;
+    }
+
+    /**
+     * This method is used get list of label.
+     *
+     * @return a list with the labels of card.
+     */
+    public List<Label> getLabels() {
+        return labels;
+    }
+
+    /**
+     * This method is used to set labels.
+     *
+     * @param labels defines of input list with the labels.
+     */
+    public void setLabels(List<Label> labels) {
+        this.labels = labels;
     }
 
     /**
