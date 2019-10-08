@@ -36,16 +36,16 @@ public class HomePage extends ApplicationBasePage {
     private static final String INITIAL_CLASS_NAME = "_24AWINHReYjNBf";
     private static final String CSS_TO_BOARD = "div[title='%s']";
 
-    private HomeContentFrame homeContent = new HomeContentFrame();
+//    private HomeContentFrame homeContent = new HomeContentFrame();
 
-    /**
-     * Gets the Content of HomePage.
-     *
-     * @return the homeContent attribute of it's class.
-     */
-    public HomeContentFrame getContentHomePage() {
-        return homeContent;
-    }
+//    /**
+//     * Gets the Content of HomePage.
+//     *
+//     * @return the homeContent attribute of it's class.
+//     */
+//    public HomeContentFrame getContentHomePage() {
+//        return homeContent;
+//    }
 
     /**
      * Wait until Page object was find for.

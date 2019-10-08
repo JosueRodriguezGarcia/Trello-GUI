@@ -150,6 +150,7 @@ public final class WebDriverMethod {
         byLocator.put("className", By.className(locator));
         byLocator.put("css", By.cssSelector(locator));
         byLocator.put("id", By.id(locator));
+        byLocator.put("xpath", By.xpath(locator));
     }
 
     /**
@@ -173,5 +174,19 @@ public final class WebDriverMethod {
      */
     public static String getIdTeam(final String url) {
         return url.substring(url.lastIndexOf('/') + 1);
+    }
+
+    /**
+     * Select the option from check list.
+     *
+     * @param driver is to get the DOM.
+     * @param locatorType is to type of locator to search a element.
+     * @param locator is to find the element into the DOM.
+     */
+    public static void selectCheckList(final WebDriver driver,
+                                       final String locatorType, final String locator) {
+        WebElement findOption = createWebElement(driver, locatorType, locator);
+        findOption.click();
+
     }
 }

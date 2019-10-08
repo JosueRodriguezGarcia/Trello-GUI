@@ -53,7 +53,9 @@ public class BoardAPIHook {
     public void afterScenario() {
         String id = context.getBoard().getId();
         String endPoint = "/boards/".concat(id);
+        System.out.println("#####################deleteBoardafter: " + context.getBoard().getId());
         response = request.delete(endPoint);
+        System.out.println(response.statusCode());
     }
 
     /**
@@ -68,6 +70,9 @@ public class BoardAPIHook {
         request.buildSpec(data);
         response = request.post(endPoint);
         context.getBoard().setId(response.getBody().jsonPath().get("id"));
+        System.out.println("#####################deleteBoardbefore: " + context.getBoard().getId());
+        context.getBoard().setName(response.getBody().jsonPath().get("name"));
+        System.out.println(response.statusCode());
     }
 }
 

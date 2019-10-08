@@ -17,8 +17,9 @@ import cucumber.api.java.en.When;
 import org.testng.Assert;
 import trello.entities.Context;
 import trello.ui.pages.BoardPage;
+import trello.ui.pages.HomeContentFrame;
 import trello.ui.pages.HomePage;
-import trello.ui.pages.board.BoardModalPage;
+import trello.ui.pages.board.*;
 
 /**
  * BoardSteps class.
@@ -29,6 +30,7 @@ import trello.ui.pages.board.BoardModalPage;
 public class BoardSteps {
 
     private Context context;
+    TopMenuBoardContent topMenuBoardContent;
 
     /**
      * Constructor method for share the context attribute apply DI.
@@ -47,8 +49,8 @@ public class BoardSteps {
     @When("I create a new Board with name {string}")
     public void createNewBoard(final String nameBoard) {
         context.getBoard().setName(nameBoard);
-        HomePage homePage = new HomePage();
-        homePage.getContentHomePage().openBoardModal();
+        HomeContentFrame homeContentFrame = new HomeContentFrame();
+        homeContentFrame.openBoardModal();
         BoardModalPage boardModal = new BoardModalPage();
         boardModal.createNewBoard(context.getBoard());
     }
@@ -59,9 +61,9 @@ public class BoardSteps {
     @Then("I should see the name of Board in BoardPage")
     public void seeNameOfBoard() {
         BoardPage boardPage = new BoardPage();
-        boardPage.getListForm().closeListForm();
+        TopMenuBoardContent topMenuBoardContent = new TopMenuBoardContent();
         context.getBoard().setId(boardPage.getId());
-        Assert.assertEquals(boardPage.getNameBoardButton(), context.getBoard().getName(),
+        Assert.assertEquals(topMenuBoardContent.getNameBoardButton(), context.getBoard().getName(),
                 "The name of this board is not correct");
     }
 
@@ -72,9 +74,49 @@ public class BoardSteps {
      */
     @Then("I should see the Board in the (.*) section")
     public void seeNameOfBoardInSections(final String nameSection) {
-        HomePage homePage = new HomePage();
-        Assert.assertTrue(homePage.getContentHomePage().
+//        HomePage homePage = new HomePage();
+        HomeContentFrame homeContentFrame = new HomeContentFrame();
+        Assert.assertTrue(homeContentFrame.
                 existBoardInSection(context.getBoard().getName(), nameSection),
                         "This board not exist in this section");
+    }
+
+    /**
+     * Opens Board thar was created previously.
+     *
+     * @param nameSection is to find the board to open it.
+     */
+    @When("I open the Board from (.*) section")
+    public void openBoard(final String nameSection) {
+//        HomePage homePage = new HomePage();
+        HomeContentFrame homeContentFrame = new HomeContentFrame();
+        homeContentFrame.openBoard(context.getBoard().getName(), nameSection);
+    }
+
+    /**
+     * Copy the board to team with the same title of Board.
+     */
+    @When("I copy this Board to Team with same title Board")
+    public void copyBoardToTeamWithSameTitle() {
+        BoardPage boardPage = new BoardPage();
+        MenuBoardPage menuBoardPage = new MenuBoardPage();
+        menuBoardPage.openMoreOption();
+        MoreOptionMenu moreOptionMenu = new MoreOptionMenu();
+        moreOptionMenu.openCopyBoardSection();
+        CopyBoardSection copyBoardSection = new CopyBoardSection();
+        topMenuBoardContent = copyBoardSection.copyBoard(context.getBoard().getName(),
+                context.getTeam().getName());
+    }
+
+    /**
+     * Sees the name of owner boards is the name team.
+     */
+    @Then("I should see that this Board belongs to Team")
+    public void seeBoardBelongsToTeam() {
+//        TopMenuBoardContent topMenuBoardContent = new TopMenuBoardContent();
+        System.out.println(topMenuBoardContent.getNameOwnerBoardButton() + " boardPage###################");
+        System.out.println(context.getTeam().getName() + " context###################");
+        Assert.assertEquals(topMenuBoardContent.getNameOwnerBoardButton(), context.getTeam().getName(),
+                "This name of Team not exist");
     }
 }
