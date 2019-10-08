@@ -30,8 +30,8 @@ public class TopMenuBoardContent extends BasePage {
     @FindBy(className = "js-board-editing-target")
     private WebElement nameBoardButton;
 
-    @FindBy(className = "mod-reset")
-    private WebElement butlerButton;
+    @FindBy(className = "org-label")
+    private WebElement freeLabel;
 
     @FindBy(xpath = NAME_OWNER_XPATH)
     private WebElement nameOwnerBoardButton;
@@ -61,7 +61,7 @@ public class TopMenuBoardContent extends BasePage {
      * @return as string the name of owner.
      */
     public String getNameOwnerBoardButton() {
-        WebDriverMethod.waitForATextInWebElement(wait, "xpath", NAME_OWNER_XPATH);
+        wait.until(ExpectedConditions.elementToBeClickable(freeLabel));
         return nameOwnerBoardButton.getText().replace("Free", "");
     }
 }

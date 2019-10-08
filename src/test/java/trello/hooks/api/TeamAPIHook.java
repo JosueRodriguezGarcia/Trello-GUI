@@ -23,12 +23,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TeamHooks class.
+ * TeamAPIHook class.
  *
  * @author Raul Choque
  * @version 0.0.1
  */
-public class TeamHooks {
+public class TeamAPIHook {
 
     private Context context;
     private Response response;
@@ -39,7 +39,7 @@ public class TeamHooks {
      *
      * @param context initializes context attribute.
      */
-    public TeamHooks(final Context context) {
+    public TeamAPIHook(final Context context) {
         this.context = context;
         request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
     }
@@ -47,7 +47,7 @@ public class TeamHooks {
     /**
      * Makes a requestBoard for create a Board.
      */
-    @Before("@create-board")
+    @Before("@create-team")
     public void beforeScenario() {
         String endPoint = "/organizations";
         String name = "Team empty";

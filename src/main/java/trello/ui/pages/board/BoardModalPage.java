@@ -13,6 +13,7 @@
 package trello.ui.pages.board;
 
 import core.selenium.util.WebDriverMethod;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -33,8 +34,14 @@ public class BoardModalPage extends BasePage {
     @FindBy(className = "subtle-input")
     private WebElement nameBoardField;
 
+    @FindBy(css = "span[class*='visible']")
+    private WebElement statusBoardButton;
+
     @FindBy(css = "button.button.primary")
     private WebElement createBoardButton;
+
+    @FindBy(xpath = "//span[contains(text(), 'No team')]")
+    private WebElement noTeamLabel;
 
     /**
      * Waits until a web element is visible.
@@ -51,6 +58,12 @@ public class BoardModalPage extends BasePage {
      */
     public void createNewBoard(final Board board) {
         WebDriverMethod.setTxtElement(nameBoardField, board.getName());
+        WebElement we = driver.findElement(By.cssSelector("span.icon-sm.icon-private"));
+        WebElement teamCheckList = we.findElement(By.xpath("../../preceding-sibling::*[1]/button"));
+        if (teamCheckList.isEnabled()) {
+            teamCheckList.click();
+            noTeamLabel.click();
+        }
         WebDriverMethod.clickButton(driver, createBoardButton);
     }
 }

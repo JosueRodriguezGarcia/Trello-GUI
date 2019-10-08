@@ -50,13 +50,13 @@ public class CopyBoardSection extends BasePage {
      *
      * @param titleBoard is to set the name the board;
      * @param nameTeam is to select the name of team.
-     * @return an instance of TopMenuContent class.
+     * @return an instance of MenuBoardPage class.
      */
-    public TopMenuBoardContent copyBoard(final String titleBoard, final String nameTeam) {
+    public MenuBoardPage copyBoard(final String titleBoard, final String nameTeam) {
         WebDriverMethod.setTxtElement(titleBoardField, titleBoard);
         String teamToSelect = String.format(OPTION_TEAM_XPATH, nameTeam);
         WebDriverMethod.selectCheckList(driver, "xpath", teamToSelect);
         submitButton.click();
-        return new TopMenuBoardContent();
+        return new MenuBoardPage();
     }
 }

@@ -30,7 +30,6 @@ import trello.ui.pages.board.*;
 public class BoardSteps {
 
     private Context context;
-    TopMenuBoardContent topMenuBoardContent;
 
     /**
      * Constructor method for share the context attribute apply DI.
@@ -104,8 +103,7 @@ public class BoardSteps {
         MoreOptionMenu moreOptionMenu = new MoreOptionMenu();
         moreOptionMenu.openCopyBoardSection();
         CopyBoardSection copyBoardSection = new CopyBoardSection();
-        topMenuBoardContent = copyBoardSection.copyBoard(context.getBoard().getName(),
-                context.getTeam().getName());
+        MenuBoardPage menuBoardPage1 = copyBoardSection.copyBoard(context.getBoard().getName(), context.getTeam().getName());
     }
 
     /**
@@ -113,7 +111,7 @@ public class BoardSteps {
      */
     @Then("I should see that this Board belongs to Team")
     public void seeBoardBelongsToTeam() {
-//        TopMenuBoardContent topMenuBoardContent = new TopMenuBoardContent();
+        TopMenuBoardContent topMenuBoardContent = new TopMenuBoardContent();
         System.out.println(topMenuBoardContent.getNameOwnerBoardButton() + " boardPage###################");
         System.out.println(context.getTeam().getName() + " context###################");
         Assert.assertEquals(topMenuBoardContent.getNameOwnerBoardButton(), context.getTeam().getName(),
