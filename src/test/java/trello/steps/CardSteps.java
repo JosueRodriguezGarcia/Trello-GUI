@@ -14,12 +14,17 @@ package trello.steps;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import org.testng.Assert;
+import trello.entities.Card;
 import trello.entities.Context;
+import trello.ui.PageTransporter;
 import trello.ui.pages.BoardPage;
 import trello.ui.pages.HomePage;
 import trello.ui.pages.modal.CardModal;
 import trello.ui.pages.modal.CheckListModal;
+
+import java.util.Map;
 
 /**
  * CardSteps class.
@@ -115,28 +120,43 @@ public class CardSteps {
         Assert.assertTrue(result);
     }
 
-    @Given("I am in my List")
-    public void i_am_in_my_List() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    /**
+     * Goes to the Board page using the PageTransporter.
+     */
+    @When("I go to the Board")
+    public void goToBoard() {
+        HomePage homePage = new HomePage();
+//        PageTransporter.navigateToURL(context.getBoard().getUrl());
+        PageTransporter.navigateToURL("https://trello.com/b/HxVABm4Z/board-to-card");
     }
 
+    /**
+     * Verify whether the title of list is in the board page.
+     */
+    @Then("I should see the title of the List")
+    public void seeTitleOfList() {
+        BoardPage boardPage = new BoardPage();
+//        Assert.assertEquals(boardPage.isThereThisListByTitle(context.getListIntoBoard().getTitle()));
+        Assert.assertTrue(boardPage.isThereThisListByTitle("List to test card"));
+    }
+
+    /**
+     * Create a new Card with cardDate parameter.
+     *
+     * @param cardData is to create a Card.
+     */
     @When("I create a new Card with data:")
-    public void i_create_a_new_Card_with_data(io.cucumber.datatable.DataTable dataTable) {
-        // Write code here that turns the phrase above into concrete actions
-        // For automatic transformation, change DataTable to one of
-        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-        // Double, Byte, Short, Long, BigInteger or BigDecimal.
-        //
-        // For other transformations you can register a DataTableType.
-        throw new cucumber.api.PendingException();
+    public void createNewCard(final Map<String, String> cardData) {
+        Card card = new Card();
+        card.addDataToCard(cardData);
+        context.setCard(card);
+//        boardPage.addCardInList(context.getListIntoBoard().getTitle(), card);
+        BoardPage boardPage = new BoardPage();
+        boardPage.addCardInList("List to test card", card);
     }
 
     @Then("I should see the data of new Card")
     public void i_should_see_the_data_of_new_Card() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
     }
 
 }

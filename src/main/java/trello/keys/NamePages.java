@@ -12,6 +12,8 @@
 
 package trello.keys;
 
+import trello.entities.Context;
+
 /**
  * NamePages class.
  *
@@ -22,12 +24,13 @@ public final class NamePages {
 
     private static final String BASE_URL = "https://trello.com";
     private static final String BASE_URL_API = "https://api.trello.com/1";
+    private Context context;
 
     /**
      * Empty constructor requested by checkstyle.
      */
-    private NamePages() {
-
+    private NamePages(final Context context) {
+        this.context = context;
     }
 
     /**

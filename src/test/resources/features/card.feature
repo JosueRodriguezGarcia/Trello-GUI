@@ -17,10 +17,29 @@ Feature: Card actions
   @create-board-empty @create-list-in-board-empty  @delete-board-empty
   Scenario: Create a Card with required or not required data.
     Given I log in as admin user
-      And I am in my List
+     When I go to the Board
+     Then I should see the title of the List
      When I create a new Card with data:
-      | Title     | Card to test      |
-      | Member    | tester            |
-      | Label     | blue              |
-      | Checklist | checklist to test |
+      | Title   | Card to test |
+      | Members | tester       |
+      | Labels  | blue, green  |
     Then I should see the data of new Card
+
+  @create-board-empty @create-list-in-board-empty  @delete-board-empty
+  Scenario: Create a Card with required or not required data.
+    Given I log in as admin user
+    When I go to the Board
+    Then I should see the title of the List
+    When I create a new Card with data:
+      | Title  | Card to test two |
+      | Labels | blue, green      |
+    Then I should see the data of new Card
+
+#  @create-board-empty @create-list-in-board-empty  @delete-board-empty
+#  Scenario: Create a Card with required or not required data.
+#    Given I log in as admin user
+#    When I go to the Board
+#    Then I should see the title of the List
+#    When I create a new Card with data:
+#      | Title   | Card to test |
+#    Then I should see the data of new Card
