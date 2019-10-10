@@ -13,8 +13,14 @@
 package core.selenium.util;
 
 
+import core.selenium.util.datecomponent.DayComponent;
+import core.selenium.util.datecomponent.HourComponent;
+import core.selenium.util.datecomponent.IDateComponent;
+import core.selenium.util.datecomponent.YearComponent;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +32,14 @@ import java.util.Map;
  * @version 0.0.1
  */
 public final class DateMethod {
+
+    private static Map<String, IDateComponent> dateComponent = new HashMap<>();
+    static {
+        dateComponent.put("hour", new HourComponent());
+        dateComponent.put("day", new DayComponent());
+        dateComponent.put("month", new Month());
+        dateComponent.put("year", new YearComponent());
+    }
 
     private static Map<String, Integer> hours = new HashMap<>();
 
@@ -40,6 +54,7 @@ public final class DateMethod {
         hours.put("Today", 0);
         hours.put("Tomorrow", 1);
     }
+
 
     /**
      * constructor method request to checkStyle.
@@ -68,8 +83,21 @@ public final class DateMethod {
      * @return a string with the date.
      */
     public static String getDate(final Date date, final String addDay) {
+        String[] comand = addDay.split(" ",3);
+        int cant = Integer.parseInt(WordsToNumbers.convert(comand[0]));
+        String newDate = getNewDate(comand[1],cant);
+        System.out.println(comand[0]);
+        System.out.println(num);
+        System.out.println(comand[1]);
+        System.out.println(comand[2]);
         DateFormat hourFormat = new SimpleDateFormat("MM/d/yyyy");
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE,1);
         return hourFormat.format(date);
+    }
+
+    public static String getNewDate(final String date, final int cant){
+        return dateComponent.get(date).newDateIncrement(cant);
     }
 
     /**
@@ -126,5 +154,33 @@ public final class DateMethod {
     private static String addZero(final int nextHour) {
         final int aux = 10;
         return nextHour < aux ? ("0" + nextHour) : String.valueOf(nextHour);
+    }
+
+    public String getNewDateWithNewHour(final int cant) {
+        DateFormat dateFormat = new SimpleDateFormat("M/d/yyyy H:mm a");
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR_OF_DAY,cant);
+        return dateFormat.format(calendar.getTime());
+    }
+
+    public String getNewDateWithNewDay(final int cant) {
+        DateFormat dateFormat = new SimpleDateFormat("M/d/yyyy H:mm a");
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE,1);
+        return dateFormat.format(calendar.getTime());
+    }
+
+    public String getNewDateWithNewMonth(final int cant) {
+        DateFormat dateFormat = new SimpleDateFormat("M/d/yyyy H:mm a");
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH,cant);
+        return dateFormat.format(calendar.getTime());
+    }
+
+    public String newDateWithNewYear(final int cant) {
+        DateFormat dateFormat = new SimpleDateFormat("M/d/yyyy H:mm a");
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR,cant);
+        return dateFormat.format(calendar.getTime());
     }
 }

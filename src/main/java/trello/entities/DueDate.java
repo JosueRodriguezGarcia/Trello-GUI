@@ -93,7 +93,6 @@ public class DueDate {
     public void setInformation(final Date date, final Map<String, String> information) {
         HashMap<String, Runnable> cmdList = new HashMap<>();
         cmdList.put("Date", () -> setDate(DateMethod.getDate(date, information.get("Date"))));
-        cmdList.put("Time", () -> setTime(DateMethod.getHour(date, information.get("Time"))));
         cmdList.put("Reminder", () -> setReminder(information.get("Reminder")));
         information.keySet().forEach(key -> cmdList.get(key).run());
     }

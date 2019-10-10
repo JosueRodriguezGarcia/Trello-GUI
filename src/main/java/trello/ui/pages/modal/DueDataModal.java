@@ -235,7 +235,6 @@ public class DueDataModal extends BasePage {
     public void setInformation(final Date date, final Map<String, String> information) {
         HashMap<String, Runnable> cmdList = new HashMap<>();
         cmdList.put("Date", () -> fillDateField(date, information.get("Date")));
-        cmdList.put("Time", () -> fillHourField(date, information.get("Time")));
         cmdList.put("Reminder", () -> setReminder(information.get("Reminder")));
         information.keySet().forEach(key -> cmdList.get(key).run());
     }
