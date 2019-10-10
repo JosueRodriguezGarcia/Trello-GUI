@@ -44,23 +44,35 @@ public class ListAPIHook {
         request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
     }
 
+//    /**
+//     * Makes a requestBoard for create a List.
+//     */
+//    @Before(order = orderBefore, value = "@create-list")
+//    public void beforeScenario() {
+//        String endPoint = "/lists/";
+//        String name = "TestList";
+//        String idBoard = context.getBoard().getId();
+//        Map<String, String> data = new HashMap<>();
+//        data.put("name", name);
+//        data.put("idBoard", idBoard);
+//        request.buildSpec(data);
+//        response = request.post(endPoint);
+//        context.getLists().get("list").setId(response.getBody().jsonPath().get("id"));
+//    }
+
     /**
-     * Makes a requestBoard for create a List.
+     * Makes a requestBoard for create a List to create a Card.
      */
-    @Before(order = orderBefore, value = "@create-list")
+    @Before(order = orderBefore, value ="@create-list-card")
     public void beforeScenario() {
-        String endPoint = "/lists/";
-        String name = "TestList";
-        String idBoard = context.getBoard().getId();
+        String endPoint = "/lists";
+        String name = "List to create a Card";
+        String idBoard = context.getBoardToCard().getId();
         Map<String, String> data = new HashMap<>();
         data.put("name", name);
         data.put("idBoard", idBoard);
         request.buildSpec(data);
         response = request.post(endPoint);
-        context.getLists().get("list").setId(response.getBody().jsonPath().get("id"));
+        context.getListToCard().setId(response.getBody().jsonPath().get("id"));
     }
 }
-
-
-
-

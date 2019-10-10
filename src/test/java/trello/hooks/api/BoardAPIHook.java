@@ -69,6 +69,32 @@ public class BoardAPIHook {
         response = request.post(endPoint);
         context.getBoard().setId(response.getBody().jsonPath().get("id"));
     }
+
+    /**
+     * Makes a requestBoard for create a Board to test of create Card.
+     */
+    @Before(order = orderBefore, value="@create-board-empty")
+    public void beforeScenarioToCreateCard() {
+        String endPoint = "/boards/";
+        String name = "Board to create Card";
+        Map<String, String> data = new HashMap<>();
+        data.put("name", name);
+        request.buildSpec(data);
+        response = request.post(endPoint);
+        context.getBoardToCard().setId(response.getBody().jsonPath().get("id"));
+        context.getBoardToCard().setUrl(response.getBody().jsonPath().get("url"));
+
+    }
+
+    /**
+     * Makes a requestBoard for create a Board to test of create Card.
+     */
+    @After(order = orderAfter, value ="@delete-board-empty")
+    public void afterScenarioToCreateCard() {
+        String id = context.getBoardToCard().getId();
+        String endPoint = "/boards/".concat(id);
+        response = request.delete(endPoint);
+    }
 }
 
 

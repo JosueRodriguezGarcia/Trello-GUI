@@ -21,6 +21,6 @@ package trello.keys;
 public class CardKeys {
 
     public static final String TITLE = "Title";
-    public static final String MEMBER = "Members";
+    public static final String MEMBER = "Member";
     public static final String LABELS = "Labels";
 }

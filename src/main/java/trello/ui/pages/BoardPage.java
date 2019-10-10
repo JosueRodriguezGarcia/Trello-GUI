@@ -14,7 +14,6 @@ package trello.ui.pages;
 
 import core.selenium.WebDriverConfig;
 import core.selenium.util.WebDriverMethod;
-import core.utils.IRunnable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
@@ -27,11 +26,10 @@ import trello.ui.pages.card.LabelPage;
 import trello.ui.pages.card.MemberPage;
 import trello.ui.pages.card.OptionPage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import static trello.keys.CardKeys.*;
 
 /**
  * BoardPage class.
@@ -203,7 +201,7 @@ public class BoardPage extends BasePage {
      * @param listTitle defines the lists where add a card.
      * @param card defines the card  to be add.
      */
-    public void addCardInList(final String listTitle, final Card card) {
+    public void addCardInList(final String listTitle, final Card card, final Set<String> keysCard) {
         for (WebElement list : lists) {
             if (list.findElement(By.className("js-list-name-input")).getText().equals(listTitle)) {
                 if (list.findElement(By.className("js-add-a-card")).isDisplayed()) {
@@ -211,10 +209,9 @@ public class BoardPage extends BasePage {
                 } else {
                     list.findElement(By.className("js-add-another-card")).click();
                 }
-                HashMap<String, IRunnable> runnableHashMap = getRunnableMap(card);
+                HashMap<String, Runnable> runnableHashMap = getRunnableMap(card);
                 card.getCardKeys();
-                card.getCardKeys().forEach(key -> runnableHashMap.get(key).runMethod());
-//                runnableHashMap.keySet().forEach(key -> runnableHashMap.get(key).runMethod());
+                keysCard.forEach(key -> runnableHashMap.get(key).run());
                 addCard.click();
             }
         }
@@ -226,11 +223,11 @@ public class BoardPage extends BasePage {
      * @param card is to get data of card.
      * @return an instance HashMap with keys and methods to run.
      */
-    private HashMap<String, IRunnable> getRunnableMap(final Card card) {
-        HashMap<java.lang.String, IRunnable> runnableHashMap = new HashMap<>();
-        runnableHashMap.put("Title", () -> setTitleCard(card.getTitle()));
-        runnableHashMap.put("Members", () -> setMembersToCard(card.getMembers()));
-        runnableHashMap.put("Labels", () -> card.getLabels().forEach(this::setLabelToCard));
+    private HashMap<String, Runnable> getRunnableMap(final Card card) {
+        HashMap<java.lang.String, Runnable> runnableHashMap = new HashMap<>();
+        runnableHashMap.put(TITLE,  () -> setTitleCard(card.getTitle()));
+        runnableHashMap.put(MEMBER, () -> setMembersToCard(card.getMembers()));
+        runnableHashMap.put(LABELS, () -> setLabelToCard(card.getLabels()));
         return runnableHashMap;
     }
 
@@ -258,13 +255,15 @@ public class BoardPage extends BasePage {
     /**
      * Sets the labels to create a new Card.
      *
-     * @param nameLabel is to get the nameLabel to create a Card.
+     * @param nameLabels is to get the nameLabel from list to create a Card.
      */
-    private void setLabelToCard(final String nameLabel) {
-        OptionPage optionPage = openOptionPage();
-        LabelPage labelPage = optionPage.openLabelPage();
-        OptionPage anotherOptionPage = labelPage.addLabel(nameLabel);
-        anotherOptionPage.closePage();
+    private void setLabelToCard(final List<String> nameLabels) {
+        for (final String nameLabel : nameLabels) {
+            OptionPage optionPage = openOptionPage();
+            LabelPage labelPage = optionPage.openLabelPage();
+            OptionPage anotherOptionPage = labelPage.addLabel(nameLabel);
+            anotherOptionPage.closePage();
+        }
     }
 
     /**

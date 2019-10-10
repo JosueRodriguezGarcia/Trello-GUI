@@ -16,6 +16,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.testng.Assert;
+import trello.entities.Board;
 import trello.entities.Card;
 import trello.entities.Context;
 import trello.ui.PageTransporter;
@@ -25,6 +26,7 @@ import trello.ui.pages.modal.CardModal;
 import trello.ui.pages.modal.CheckListModal;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * CardSteps class.
@@ -126,18 +128,8 @@ public class CardSteps {
     @When("I go to the Board")
     public void goToBoard() {
         HomePage homePage = new HomePage();
-//        PageTransporter.navigateToURL(context.getBoard().getUrl());
+//        PageTransporter.navigateToURL(context.getBoardToCard().getUrl());
         PageTransporter.navigateToURL("https://trello.com/b/HxVABm4Z/board-to-card");
-    }
-
-    /**
-     * Verify whether the title of list is in the board page.
-     */
-    @Then("I should see the title of the List")
-    public void seeTitleOfList() {
-        BoardPage boardPage = new BoardPage();
-//        Assert.assertEquals(boardPage.isThereThisListByTitle(context.getListIntoBoard().getTitle()));
-        Assert.assertTrue(boardPage.isThereThisListByTitle("List to test card"));
     }
 
     /**
@@ -150,13 +142,19 @@ public class CardSteps {
         Card card = new Card();
         card.addDataToCard(cardData);
         context.setCard(card);
-//        boardPage.addCardInList(context.getListIntoBoard().getTitle(), card);
         BoardPage boardPage = new BoardPage();
-        boardPage.addCardInList("List to test card", card);
+        Set<String> keysCard = cardData.keySet();
+        boardPage.addCardInList(context.getListToCard().getTitle(),
+                card, keysCard);
     }
 
+    /**
+     * Sees the data of Card that was created.
+     */
     @Then("I should see the data of new Card")
-    public void i_should_see_the_data_of_new_Card() {
+    public void seeDataOfNewCard() {
+        BoardPage boardPage = new BoardPage();
+//        boardPage
     }
 
 }

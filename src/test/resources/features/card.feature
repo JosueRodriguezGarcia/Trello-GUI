@@ -14,26 +14,45 @@ Feature: Card actions
 #      And I add a checklist with TestCheckList title
 #     Then the checklist section is displayed on the card details
 
-  @create-board-empty @create-list-in-board-empty  @delete-board-empty
-  Scenario: Create a Card with required or not required data.
-    Given I log in as admin user
-     When I go to the Board
-     Then I should see the title of the List
-     When I create a new Card with data:
-      | Title   | Card to test |
-      | Members | tester       |
-      | Labels  | blue, green  |
-    Then I should see the data of new Card
+#  @create-board-empty @create-list-card @delete-board-empty
 
-  @create-board-empty @create-list-in-board-empty  @delete-board-empty
-  Scenario: Create a Card with required or not required data.
+  @delete-card
+  Scenario: Create a Card in List "List to card",
+    it is into a Board with name "Board to card".
     Given I log in as admin user
     When I go to the Board
-    Then I should see the title of the List
-    When I create a new Card with data:
-      | Title  | Card to test two |
-      | Labels | blue, green      |
+      And I create a new Card with data:
+        | Title   | Card to test |
+        | Member  | tester       |
+        | Labels  | red, blue    |
     Then I should see the data of new Card
+
+  @delete-card
+  Scenario: Create a Card in List "List to card",
+    it is into a Board with name "Board to card".
+    Given I log in as admin user
+    When I go to the Board
+      And I create a new Card with data:
+      | Title   | testing a Card |
+    Then I should see the data of new Card
+
+  @delete-card
+  Scenario: Create a Card in List "List to card",
+    it is into a Board with name "Board to card".
+    Given I log in as admin user
+    When I go to the Board
+      And I create a new Card with title "testing a Card"
+    Then I should see the data of new Card
+
+#  @create-board-empty @create-list-in-board-empty @delete-board-empty
+#  Scenario: Create a Card with required or not required data.
+#    Given I log in as admin user
+#    When I go to the Board
+#    Then I should see the title of the List
+#    When I create a new Card with data:
+#      | Title  | Card to test two |
+#      | Labels | blue, green      |
+#    Then I should see the data of new Card
 
 #  @create-board-empty @create-list-in-board-empty  @delete-board-empty
 #  Scenario: Create a Card with required or not required data.

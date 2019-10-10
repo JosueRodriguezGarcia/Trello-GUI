@@ -12,13 +12,10 @@
 
 package trello.entities;
 
-import core.utils.IRunnable;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -42,6 +39,10 @@ public class Card {
     private String title;
     private Set<String> cardKeys = new HashSet<String>();
 
+    public Card(String title) {
+        this.title = title;
+    }
+
     /**
      * Constructor of this class.
      */
@@ -54,9 +55,9 @@ public class Card {
      *
      * @param cardData is the card data into Map.
      */
-    public void addDataToCard(Map<java.lang.String, java.lang.String> cardData) {
-        HashMap<java.lang.String, IRunnable> runnableMap = getRunnableMap(cardData);
-        runnableMap.keySet().forEach(key -> runnableMap.get(key).runMethod());
+    public void addDataToCard(final Map<String, String> cardData) {
+        HashMap<String, Runnable> runnableMap = composeRunnableMap(cardData);
+        cardData.keySet().forEach(key -> runnableMap.get(key).run());
     }
 
     /**
@@ -65,11 +66,11 @@ public class Card {
      * @param cardData is to get data of card.
      * @return an instance HashMap with keys and methods to run.
      */
-    private HashMap<java.lang.String, IRunnable> getRunnableMap(Map<java.lang.String, java.lang.String> cardData) {
-        HashMap<java.lang.String, IRunnable> runnableHashMap = new HashMap<>();
-        runnableHashMap.put(TITLE, () -> setTitle(cardData.get("Title")));
-        runnableHashMap.put(MEMBER, () -> setMembers(cardData.get("Members")));
-        runnableHashMap.put(LABELS, () -> setLabels(Arrays.asList(cardData.get("Labels").split((",\\s*")))));
+    private HashMap<String, Runnable> composeRunnableMap(final Map<String, String> cardData) {
+        HashMap<String, Runnable> runnableHashMap = new HashMap<>();
+        runnableHashMap.put(TITLE,  () -> setTitle(cardData.get(TITLE)));
+        runnableHashMap.put(MEMBER, () -> setMembers(cardData.get(MEMBER)));
+        runnableHashMap.put(LABELS, () -> setLabels(cardData.get(LABELS)));
         return runnableHashMap;
     }
 
@@ -154,6 +155,16 @@ public class Card {
     public void setLabels(List<String> labels) {
         cardKeys.add(LABELS);
         this.labels = labels;
+    }
+
+    /**
+     * This method is used to set labels.
+     *
+     * @param labels defines of input string with the labels.
+     */
+    public void setLabels(final String labels) {
+        cardKeys.add(LABELS);
+        this.labels = Arrays.asList(labels.split(("\\s*,\\s*")));
     }
 
     /**

@@ -24,8 +24,10 @@ import java.util.Map;
 public class Context {
 
     private Board board;
+    private Board boardToCard;
     private Card card;
     private Map<String, List> lists;
+    private List listToCard;
     private Team team;
     private User user;
 
@@ -34,10 +36,30 @@ public class Context {
      */
     public Context() {
         board = new Board();
+        boardToCard = new Board();
         card = new Card();
         lists = new HashMap<>();
+        listToCard = new List();
         team = new Team();
         user = new User();
+    }
+
+    /**
+     * Gets the Board to create a Card.
+     *
+     * @return a instance og Board class.
+     */
+    public Board getBoardToCard() {
+        return boardToCard;
+    }
+
+    /**
+     * Sets the boardToCard with new instance of Board class.
+     *
+     * @param boardToCard is to set the new value of boardToCard.
+     */
+    public void setBoardToCard(Board boardToCard) {
+        this.boardToCard = boardToCard;
     }
 
     /**
@@ -83,6 +105,24 @@ public class Context {
      */
     public Map<String, List> getLists() {
         return lists;
+    }
+
+    /**
+     * Gets the List to create a Card.
+     *
+     * @return a instance of List class.
+     */
+    public List getListToCard() {
+        return listToCard;
+    }
+
+    /**
+     * Sets the List to create Card.
+     *
+     * @param listToCard is to set the new instance in listToCard attribute.
+     */
+    public void setListToCard(List listToCard) {
+        this.listToCard = listToCard;
     }
 
     /**
