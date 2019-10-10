@@ -14,7 +14,6 @@ package trello.entities;
 
 import core.selenium.util.DateMethod;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +36,17 @@ public class DueDate {
      */
     public String getDate() {
         return date;
+    }
+
+    /**
+     * Sets the due date attribute of a card.
+     *
+     * @param date defines a input string with date to be set.
+     */
+    private void setDates(final String date) {
+        String newDate = DateMethod.getDate(date);
+        setDate(DateMethod.getOnlyDate(newDate));
+        setTime(DateMethod.getOnlyTime(newDate));
     }
 
     /**
@@ -87,13 +97,12 @@ public class DueDate {
     /**
      * Sets the attributes the a due date.
      *
-     * @param date defines a input string with the date of the system.
-     * @param information defines a input map with the information to be set.
+     * @param date defines a input map with the information to be set.
      */
-    public void setInformation(final Date date, final Map<String, String> information) {
+    public void setInformation(final Map<String, String> date) {
         HashMap<String, Runnable> cmdList = new HashMap<>();
-        cmdList.put("Date", () -> setDate(DateMethod.getDate(date, information.get("Date"))));
-        cmdList.put("Reminder", () -> setReminder(information.get("Reminder")));
-        information.keySet().forEach(key -> cmdList.get(key).run());
+        cmdList.put("Date", () -> setDates(date.get("Date")));
+        cmdList.put("Reminder", () -> setReminder(date.get("Reminder")));
+        date.keySet().forEach(key -> cmdList.get(key).run());
     }
 }

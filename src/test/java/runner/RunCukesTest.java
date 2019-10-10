@@ -28,7 +28,7 @@ import trello.report.ReportGenerator;
                 "html:target/cucumber",
                 "json:target/cucumber.json"},
         glue = {"trello/steps", "trello/hooks"},
-        features = {"src/test/resources/features/card.feature"},
+        features = {"src/test/resources/features/"},
         monochrome = true)
 public class RunCukesTest extends AbstractTestNGCucumberTests {
 

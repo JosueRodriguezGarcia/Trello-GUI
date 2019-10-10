@@ -21,7 +21,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import trello.ui.pages.BasePage;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,9 +65,6 @@ public class DueDataModal extends BasePage {
 
     @FindBy(className = "js-dpicker-date-input")
     private WebElement dateField;
-
-    @FindBy(className = "js-dpicker-time-input")
-    private WebElement hourField;
 
     /**
      * Gets the Modal Title.
@@ -134,28 +130,37 @@ public class DueDataModal extends BasePage {
      * Does clear in hour field.
      */
     private void clearHourField() {
-        hourField.sendKeys(Keys.CONTROL, "a", Keys.DELETE);
+        timeField.sendKeys(Keys.CONTROL, "a", Keys.DELETE);
     }
 
     /**
      * Fills the date Field.
      *
-     * @param date defines a input date for field to by set.
-     * @param addDay defines a input string with the numebr of day to be add.
+     * @param addDay defines a input string with the number of day to be add.
      */
-    public void fillDateField(final Date date, final String addDay) {
-        WebDriverMethod.setTxtElement(dataField, DateMethod.getDate(date, addDay));
+    public void fillDateFields(final String addDay) {
+        String newDate = DateMethod.getDate(addDay);
+        fillDateField(DateMethod.getOnlyDate(newDate));
+        fillTimeField(DateMethod.getOnlyTime(newDate));
+    }
+
+    /**
+     * Fills the date Field.
+     *
+     * @param date defines a input string with the number of day to be add.
+     */
+    public void fillDateField(final String date) {
+        WebDriverMethod.setTxtElement(dataField, date);
     }
 
     /**
      * Fills the hour Field.
      *
-     * @param date    defines a input hour for field to by set.
-     * @param addHour defines a number of hour to by set.
+     * @param time defines a number of hour to by set.
      */
-    public void fillHourField(final Date date, final String addHour) {
+    public void fillTimeField(final String time) {
         clearHourField();
-        WebDriverMethod.setTxtElement(hourField, DateMethod.getHour(date, addHour));
+        WebDriverMethod.setTxtElement(timeField, time);
     }
 
     /**
@@ -229,13 +234,12 @@ public class DueDataModal extends BasePage {
     /**
      * Sets the attributes the a due date.
      *
-     * @param date defines a input string with the date of the system.
-     * @param information defines a input map with the information to be set.
+     * @param dataTable defines a input map with the information to be set.
      */
-    public void setInformation(final Date date, final Map<String, String> information) {
+    public void setInformation(final Map<String, String> dataTable) {
         HashMap<String, Runnable> cmdList = new HashMap<>();
-        cmdList.put("Date", () -> fillDateField(date, information.get("Date")));
-        cmdList.put("Reminder", () -> setReminder(information.get("Reminder")));
-        information.keySet().forEach(key -> cmdList.get(key).run());
+        cmdList.put("Date", () -> fillDateFields(dataTable.get("Date")));
+        cmdList.put("Reminder", () -> setReminder(dataTable.get("Reminder")));
+        dataTable.keySet().forEach(key -> cmdList.get(key).run());
     }
 }

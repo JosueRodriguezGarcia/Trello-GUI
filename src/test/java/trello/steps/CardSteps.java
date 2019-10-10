@@ -129,14 +129,13 @@ public class CardSteps {
     /**
      * Assigns a due data.
      *
-     * @param information defines a input data table.
+     * @param dataTable defines a input data table.
      */
     @And("I assign a due date")
-    public void assignADueDate(final Map<String, String> information) {
+    public void assignADueDate(final Map<String, String> dataTable) {
         dueDataModal = cardModal.clickDueDateButton();
-        Date date = new Date();
-        dueDataModal.setInformation(date, information);
-        context.getDueDate().setInformation(date, information);
+        dueDataModal.setInformation(dataTable);
+        context.getDueDate().setInformation(dataTable);
         cardModal = dueDataModal.clickSaveButton();
     }
 
