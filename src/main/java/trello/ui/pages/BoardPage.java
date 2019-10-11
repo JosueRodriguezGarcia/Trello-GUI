@@ -384,6 +384,16 @@ public class BoardPage extends ApplicationBasePage {
     }
 
     /**
+     * Gets the id Board from BoardPage.
+     *
+     * @return as string the id of Board.
+     */
+    public String getId() {
+        String uri = driver.getCurrentUrl();
+        return uri.substring(uri.lastIndexOf("b/") + 2, uri.lastIndexOf('/'));
+    }
+
+    /**
      * Does click in invite button.
      *
      * @return a InviteToBoardModal.
