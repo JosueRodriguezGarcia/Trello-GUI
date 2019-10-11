@@ -43,17 +43,18 @@ public class MemberAPIHook {
         this.context = context;
         request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
     }
+
     /**
      * Makes a request for add members to board.
      */
-    @Before(order = orderBefore,value = "@add-member")
+    @Before(order = orderBefore, value = "@add-member")
     public void beforeScenario() {
         String idBoard = context.getBoard().getId();
-        String[] members = {"5d8193194e32bb68987c99f7","5d83941066e73463ea07bb10","5d839a3202eee76812c1c783"};
+        String[] members = {"5d8193194e32bb68987c99f7", "5d83941066e73463ea07bb10", "5d839a3202eee76812c1c783"};
         Map<String, String> data = new HashMap<>();
         data.put("type", "normal");
-        for (int i = 0; i<members.length;i++){
-            String endPoint = "/boards/"+idBoard+"/members/"+members[i];
+        for (int i = 0; i < members.length; i++) {
+            String endPoint = "/boards/" + idBoard + "/members/" + members[i];
             request.buildSpec(data);
             response = request.put(endPoint);
         }

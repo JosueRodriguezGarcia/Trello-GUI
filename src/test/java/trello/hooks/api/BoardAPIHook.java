@@ -64,8 +64,7 @@ public class BoardAPIHook {
         String endPoint = "/boards/";
         Map<String, String> data = new HashMap<>();
         data.put("name", "BoardTest");
-        String sdata = "{\"name\":\"BoardTest\"," +
-                        "\"defaultLists\":false}";
+        String sdata = "{\"name\":\"BoardTest\",\"defaultLists\":false}";
         request.buildSpec(sdata);
         response = request.post(endPoint);
         context.getBoard().setId(response.getBody().jsonPath().get("id"));

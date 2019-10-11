@@ -22,12 +22,50 @@ import java.util.List;
  * @author Josue Rodriguez.
  * @version 0.0.1
  */
-public class WordsToNumbers {
+public final class WordsToNumbers {
 
-    private final static List<String> allowedStrings = Arrays.asList("and", "zero", "one", "two", "three", "four", "five",
-            "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
-            "seventeen", "eighteen", "nineteen", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty",
-            "ninety", "hundred", "thousand", "million", "billion", "trillion");
+    private static final List<String> ALLOWED_STRINGS = Arrays.asList("and", "zero", "one", "two", "three", "four",
+            "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+            "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "thirty", "forty", "fifty", "sixty", "seventy",
+            "eighty", "ninety", "hundred", "thousand", "million", "billion", "trillion");
+    public static final int INTERMEDIATE_RESULT = 3;
+    public static final int INTERMEDIATE_RESULT1 = 4;
+    public static final int INTERMEDIATE_RESULT2 = 5;
+    public static final int INTERMEDIATE_RESULT3 = 6;
+    public static final int INTERMEDIATE_RESULT4 = 7;
+    public static final int INTERMEDIATE_RESULT5 = 8;
+    public static final int INTERMEDIATE_RESULT6 = 9;
+    public static final int INTERMEDIATE_RESULT7 = 10;
+    public static final int INTERMEDIATE_RESULT8 = 11;
+    public static final int INTERMEDIATE_RESULT9 = 12;
+    public static final int INTERMEDIATE_RESULT10 = 13;
+    public static final int INTERMEDIATE_RESULT11 = 14;
+    public static final int INTERMEDIATE_RESULT12 = 15;
+    public static final int INTERMEDIATE_RESULT13 = 16;
+    public static final int INTERMEDIATE_RESULT14 = 17;
+    public static final int INTERMEDIATE_RESULT15 = 18;
+    public static final int INTERMEDIATE_RESULT16 = 19;
+    public static final int INTERMEDIATE_RESULT17 = 20;
+    public static final int INTERMEDIATE_RESULT18 = 30;
+    public static final int INTERMEDIATE_RESULT19 = 40;
+    public static final int INTERMEDIATE_RESULT20 = 50;
+    public static final int INTERMEDIATE_RESULT21 = 60;
+    public static final int INTERMEDIATE_RESULT22 = 70;
+    public static final int INTERMEDIATE_RESULT23 = 80;
+    public static final int INTERMEDIATE_RESULT24 = 90;
+    public static final int INTERMEDIATE_RESULT25 = 100;
+    public static final int INTERMEDIATE_RESULT26 = 1000;
+    public static final int INTERMEDIATE_RESULT27 = 1000000;
+    public static final int INTERMEDIATE_RESULT28 = 1000000000;
+    public static final long INTERMEDIATE_RESULT29 = 1000000000000L;
+
+
+    /**
+     * Private constructor requested by checkstyle.
+     */
+    private WordsToNumbers() {
+
+    }
 
     /**
      * Main driver method. Converts textual numbers (e.g. twenty five) to
@@ -35,9 +73,10 @@ public class WordsToNumbers {
      *
      * Does not currently cater for decimal points. e.g. "five point two"
      *
-     * @param inputText
+     * @param inputText a string.
+     * @return a string.
      */
-    public static String convert(String inputText) {
+    public static String convert(final String inputText) {
 
         List<String> words = new LinkedList<String>(cleanAndTokenizeText(inputText));
 
@@ -48,12 +87,12 @@ public class WordsToNumbers {
 
     /**
      * Does the replacement of textual numbers, processing each word at a time
-     * and grouping them before doing the conversion
+     * and grouping them before doing the conversion.
      *
-     * @param words
-     * @return
+     * @param words defines a list.
+     * @return a list.
      */
-    private static List<String> replaceTextualNumbers(List<String> words) {
+    private static List<String> replaceTextualNumbers(final List<String> words) {
 
         List<String> processingList = new LinkedList<String>();
 
@@ -65,7 +104,7 @@ public class WordsToNumbers {
             }
 
             String wordStripped = word.replaceAll("[^a-zA-Z\\s]", "").toLowerCase();
-            if (allowedStrings.contains(wordStripped) && !(processingList.size() == 0 && wordStripped.equals("and"))) {
+            if (ALLOWED_STRINGS.contains(wordStripped) && !(processingList.size() == 0 && wordStripped.equals("and"))) {
                 words.remove(i);
                 processingList.add(word);
             } else if (processingList.size() > 0) {
@@ -94,22 +133,23 @@ public class WordsToNumbers {
      *
      * e.g. (seventy two) -> (72)
      *
-     * @param processingList
-     * @param wordAsDigits
-     * @return
+     * @param processingList defines a list.
+     * @param wordAsDigits defines a string
+     * @return a string.
      */
-    private static String retainPunctuation(List<String> processingList, String wordAsDigits) {
+    private static String retainPunctuation(final List<String> processingList, final String wordAsDigits) {
+        String aux = wordAsDigits;
 
         String lastWord = processingList.get(processingList.size() - 1);
         char lastChar = lastWord.trim().charAt(lastWord.length() - 1);
         if (!Character.isLetter(lastChar)) {
-            wordAsDigits += lastChar;
+            aux += lastChar;
         }
 
         String firstWord = processingList.get(0);
         char firstChar = firstWord.trim().charAt(0);
         if (!Character.isLetter(firstChar)) {
-            wordAsDigits = firstChar + wordAsDigits;
+            aux = firstChar + wordAsDigits;
         }
 
         return wordAsDigits;
@@ -118,10 +158,10 @@ public class WordsToNumbers {
     /**
      * Splits up hyphenated textual words. e.g. twenty-two -> twenty two
      *
-     * @param sentence
-     * @return
+     * @param sentence defines a string.
+     * @return a list.
      */
-    private static List<String> cleanAndTokenizeText(String sentence) {
+    private static List<String> cleanAndTokenizeText(final String sentence) {
         List<String> words = new LinkedList<String>(Arrays.asList(sentence.split(" ")));
 
         // remove hyphenated textual numbers
@@ -132,7 +172,7 @@ public class WordsToNumbers {
 
                 // just check the first word is a textual number. Caters for
                 // "twenty-five," without having to strip the comma
-                if (splitWords.size() > 1 && allowedStrings.contains(splitWords.get(0))) {
+                if (splitWords.size() > 1 && ALLOWED_STRINGS.contains(splitWords.get(0))) {
                     words.remove(i);
                     words.addAll(i, splitWords);
                 }
@@ -144,12 +184,12 @@ public class WordsToNumbers {
     }
 
     /**
-     * Creates string including spaces from a list of words
+     * Creates string including spaces from a list of words.
      *
-     * @param list
-     * @return
+     * @param list defines a list.
+     * @return a string.
      */
-    private static String wordListToString(List<String> list) {
+    private static String wordListToString(final List<String> list) {
         StringBuilder result = new StringBuilder("");
         for (int i = 0; i < list.size(); i++) {
             String str = list.get(i);
@@ -166,15 +206,15 @@ public class WordsToNumbers {
     /**
      * Logic for taking a textual number string and converting it into a number
      * e.g. twenty five -> 25
-     *
+     * <p>
      * This relies on there only being one textual number being processed. Steps
      * prior to this deal with breaking a paragraph down into individual textual
      * numbers, which could consist of a number of words.
      *
-     * @param words
-     * @return
+     * @param words defines a list.
+     * @return a long.
      */
-    private static long convertWordsToNum(List<String> words) {
+    private static long convertWordsToNum(final List<String> words) {
         long finalResult = 0;
         long intermediateResult = 0;
         for (String str : words) {
@@ -187,71 +227,71 @@ public class WordsToNumbers {
             } else if (str.equalsIgnoreCase("two")) {
                 intermediateResult += 2;
             } else if (str.equalsIgnoreCase("three")) {
-                intermediateResult += 3;
+                intermediateResult += INTERMEDIATE_RESULT;
             } else if (str.equalsIgnoreCase("four")) {
-                intermediateResult += 4;
+                intermediateResult += INTERMEDIATE_RESULT1;
             } else if (str.equalsIgnoreCase("five")) {
-                intermediateResult += 5;
+                intermediateResult += INTERMEDIATE_RESULT2;
             } else if (str.equalsIgnoreCase("six")) {
-                intermediateResult += 6;
+                intermediateResult += INTERMEDIATE_RESULT3;
             } else if (str.equalsIgnoreCase("seven")) {
-                intermediateResult += 7;
+                intermediateResult += INTERMEDIATE_RESULT4;
             } else if (str.equalsIgnoreCase("eight")) {
-                intermediateResult += 8;
+                intermediateResult += INTERMEDIATE_RESULT5;
             } else if (str.equalsIgnoreCase("nine")) {
-                intermediateResult += 9;
+                intermediateResult += INTERMEDIATE_RESULT6;
             } else if (str.equalsIgnoreCase("ten")) {
-                intermediateResult += 10;
+                intermediateResult += INTERMEDIATE_RESULT7;
             } else if (str.equalsIgnoreCase("eleven")) {
-                intermediateResult += 11;
+                intermediateResult += INTERMEDIATE_RESULT8;
             } else if (str.equalsIgnoreCase("twelve")) {
-                intermediateResult += 12;
+                intermediateResult += INTERMEDIATE_RESULT9;
             } else if (str.equalsIgnoreCase("thirteen")) {
-                intermediateResult += 13;
+                intermediateResult += INTERMEDIATE_RESULT10;
             } else if (str.equalsIgnoreCase("fourteen")) {
-                intermediateResult += 14;
+                intermediateResult += INTERMEDIATE_RESULT11;
             } else if (str.equalsIgnoreCase("fifteen")) {
-                intermediateResult += 15;
+                intermediateResult += INTERMEDIATE_RESULT12;
             } else if (str.equalsIgnoreCase("sixteen")) {
-                intermediateResult += 16;
+                intermediateResult += INTERMEDIATE_RESULT13;
             } else if (str.equalsIgnoreCase("seventeen")) {
-                intermediateResult += 17;
+                intermediateResult += INTERMEDIATE_RESULT14;
             } else if (str.equalsIgnoreCase("eighteen")) {
-                intermediateResult += 18;
+                intermediateResult += INTERMEDIATE_RESULT15;
             } else if (str.equalsIgnoreCase("nineteen")) {
-                intermediateResult += 19;
+                intermediateResult += INTERMEDIATE_RESULT16;
             } else if (str.equalsIgnoreCase("twenty")) {
-                intermediateResult += 20;
+                intermediateResult += INTERMEDIATE_RESULT17;
             } else if (str.equalsIgnoreCase("thirty")) {
-                intermediateResult += 30;
+                intermediateResult += INTERMEDIATE_RESULT18;
             } else if (str.equalsIgnoreCase("forty")) {
-                intermediateResult += 40;
+                intermediateResult += INTERMEDIATE_RESULT19;
             } else if (str.equalsIgnoreCase("fifty")) {
-                intermediateResult += 50;
+                intermediateResult += INTERMEDIATE_RESULT20;
             } else if (str.equalsIgnoreCase("sixty")) {
-                intermediateResult += 60;
+                intermediateResult += INTERMEDIATE_RESULT21;
             } else if (str.equalsIgnoreCase("seventy")) {
-                intermediateResult += 70;
+                intermediateResult += INTERMEDIATE_RESULT22;
             } else if (str.equalsIgnoreCase("eighty")) {
-                intermediateResult += 80;
+                intermediateResult += INTERMEDIATE_RESULT23;
             } else if (str.equalsIgnoreCase("ninety")) {
-                intermediateResult += 90;
+                intermediateResult += INTERMEDIATE_RESULT24;
             } else if (str.equalsIgnoreCase("hundred")) {
-                intermediateResult *= 100;
+                intermediateResult *= INTERMEDIATE_RESULT25;
             } else if (str.equalsIgnoreCase("thousand")) {
-                intermediateResult *= 1000;
+                intermediateResult *= INTERMEDIATE_RESULT26;
                 finalResult += intermediateResult;
                 intermediateResult = 0;
             } else if (str.equalsIgnoreCase("million")) {
-                intermediateResult *= 1000000;
+                intermediateResult *= INTERMEDIATE_RESULT27;
                 finalResult += intermediateResult;
                 intermediateResult = 0;
             } else if (str.equalsIgnoreCase("billion")) {
-                intermediateResult *= 1000000000;
+                intermediateResult *= INTERMEDIATE_RESULT28;
                 finalResult += intermediateResult;
                 intermediateResult = 0;
             } else if (str.equalsIgnoreCase("trillion")) {
-                intermediateResult *= 1000000000000L;
+                intermediateResult *= INTERMEDIATE_RESULT29;
                 finalResult += intermediateResult;
                 intermediateResult = 0;
             }
