@@ -110,7 +110,7 @@ public class ListSteps {
         List list = new List();
         list.setTitle(listTitle);
         list.setCards(boardPage.getCardsInList(listTitle));
-        context.getLists().put("list", list);
+        context.getLists().put(listTitle, list);
         boardPage.sortCardsInListByName(listTitle);
     }
 
@@ -130,8 +130,8 @@ public class ListSteps {
     @Then("all cards should be displayed correctly sorted")
     public void verifyCardsSortedByName() {
         boardPage = new BoardPage();
-        Assert.assertTrue(context.getLists().get("list").isSortedByName(boardPage.getCardsInList(context.getLists()
-                        .get("list").getTitle())),
+        Assert.assertTrue(context.getLists().get("SourceList").isSortedByName(boardPage.getCardsInList(context.getLists()
+                        .get("SourceList").getTitle())),
                 "Cards were not correctly sorted.");
     }
 
