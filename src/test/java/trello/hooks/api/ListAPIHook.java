@@ -50,7 +50,7 @@ public class ListAPIHook {
 //    @Before(order = orderBefore, value = "@create-list")
 //    public void beforeScenario() {
 //        String endPoint = "/lists/";
-//        String name = "TestList";
+//        String name = "Test List";
 //        String idBoard = context.getBoard().getId();
 //        Map<String, String> data = new HashMap<>();
 //        data.put("name", name);
@@ -63,16 +63,17 @@ public class ListAPIHook {
     /**
      * Makes a requestBoard for create a List to create a Card.
      */
-    @Before(order = orderBefore, value ="@create-list-card")
+    @Before(order = orderBefore, value ="@create-list")
     public void beforeScenario() {
         String endPoint = "/lists";
         String name = "List to create a Card";
-        String idBoard = context.getBoardToCard().getId();
+        String idBoard = context.getBoard().getId();
         Map<String, String> data = new HashMap<>();
         data.put("name", name);
         data.put("idBoard", idBoard);
         request.buildSpec(data);
         response = request.post(endPoint);
         context.getListToCard().setId(response.getBody().jsonPath().get("id"));
+        context.getListToCard().setTitle(response.getBody().jsonPath().get("name"));
     }
 }

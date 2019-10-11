@@ -40,8 +40,7 @@ public final class PageTransporter {
             WebDriver driver = WebDriverManager.getInstance().getWebDriver();
             driver.navigate().to(namePage);
         } catch (NullPointerException ex) {
-            ex.printStackTrace();
-            throw new NullPointerException("This url is not valid :" + ex.getMessage());
+            throw new NullPointerException("This url is not valid or not exist!! : " + namePage);
         }
     }
 }

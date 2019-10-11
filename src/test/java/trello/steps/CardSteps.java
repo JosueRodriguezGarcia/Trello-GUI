@@ -128,8 +128,8 @@ public class CardSteps {
     @When("I go to the Board")
     public void goToBoard() {
         HomePage homePage = new HomePage();
-//        PageTransporter.navigateToURL(context.getBoardToCard().getUrl());
-        PageTransporter.navigateToURL("https://trello.com/b/HxVABm4Z/board-to-card");
+        PageTransporter.navigateToURL(context.getBoard().getUrl());
+//        PageTransporter.navigateToURL("https://trello.com/b/HxVABm4Z/board-to-card");
     }
 
     /**

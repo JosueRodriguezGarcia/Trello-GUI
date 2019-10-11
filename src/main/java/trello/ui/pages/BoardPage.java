@@ -203,14 +203,15 @@ public class BoardPage extends BasePage {
      */
     public void addCardInList(final String listTitle, final Card card, final Set<String> keysCard) {
         for (WebElement list : lists) {
+            System.out.println(listTitle + " into for  ###########################");
             if (list.findElement(By.className("js-list-name-input")).getText().equals(listTitle)) {
+                System.out.println("into list  ########################");
                 if (list.findElement(By.className("js-add-a-card")).isDisplayed()) {
                     list.findElement(By.className("js-add-a-card")).click();
                 } else {
                     list.findElement(By.className("js-add-another-card")).click();
                 }
                 HashMap<String, Runnable> runnableHashMap = getRunnableMap(card);
-                card.getCardKeys();
                 keysCard.forEach(key -> runnableHashMap.get(key).run());
                 addCard.click();
             }
