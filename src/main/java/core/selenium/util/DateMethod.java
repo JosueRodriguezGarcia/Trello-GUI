@@ -74,11 +74,10 @@ public final class DateMethod {
      * @return a string with the date request.
      */
     public static String getDate(final String date) {
-        final int numberOfsection = 3;
-        String[] comand = date.split(" ", numberOfsection);
-        int cant = Integer.parseInt(WordsToNumbers.convert(comand[0]));
-        String newDate = getNewDate(cant, comand[1], comand[2]);
-        return newDate;
+        final int numberOfSection = 3;
+        String[] command = date.split(" ", numberOfSection);
+        int cant = Integer.parseInt(WordsToNumbers.convert(command[0]));
+        return getNewDate(cant, command[1], command[2]);
     }
 
     /**
