@@ -10,15 +10,21 @@
  * with Jala Foundation.
  */
 
-package trello.hooks;
-
+package core.selenium.util.datecomponents;
 
 /**
- * Hooks class.
+ * IDateComponent interface.
  *
- * @author Raul Choque, Josue Rodriguez Garcia.
+ * @author Josue Rodriguez Garcia.
  * @version 0.0.1
  */
-public class Hooks {
+public interface IDateComponent {
 
+    /**
+     * Defines the behaviour in class to be implement.
+     *
+     * @param num defines a input number.
+     * @return a string with new date.
+     */
+    String newDate(int num);
 }

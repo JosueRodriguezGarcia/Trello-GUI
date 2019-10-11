@@ -174,4 +174,19 @@ public final class WebDriverMethod {
     public static String getIdTeam(final String url) {
         return url.substring(url.lastIndexOf('/') + 1);
     }
+
+    /**
+     * Gets the initials of a full name.
+     *
+     * @param fullName defines a input string with the full name.
+     * @return a string with the initials.
+     */
+    public static String getFullNameInitials(final String fullName) {
+        String res = "";
+        String[] splitName = fullName.split("\\s+");
+        for (String initLetter : splitName) {
+            res = res + initLetter.substring(0, 1).toUpperCase();
+        }
+        return res;
+    }
 }

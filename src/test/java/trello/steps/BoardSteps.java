@@ -19,6 +19,7 @@ import trello.entities.Context;
 import trello.ui.pages.BoardPage;
 import trello.ui.pages.HomePage;
 import trello.ui.pages.board.BoardModalPage;
+import trello.ui.pages.board.ListForm;
 
 /**
  * BoardSteps class.
@@ -59,7 +60,8 @@ public class BoardSteps {
     @Then("I should see the name of Board in BoardPage")
     public void seeNameOfBoard() {
         BoardPage boardPage = new BoardPage();
-        context.getBoard().setId(boardPage.getId());
+        ListForm listForm = new ListForm();
+        listForm.closeListForm();
         Assert.assertEquals(boardPage.getNameBoardButton(), context.getBoard().getName(),
                 "The name of this board is not correct");
     }

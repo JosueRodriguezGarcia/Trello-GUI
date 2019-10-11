@@ -125,14 +125,6 @@ public class TopMenu extends BasePage {
     }
 
     /**
-     * Logout from the page.
-     */
-    public void logoutPage() {
-        openUserActionButton();
-        logoutButton.click();
-    }
-
-    /**
      * Gets the initial full name of HomePage class.
      *
      * @return as string the initial of full name.

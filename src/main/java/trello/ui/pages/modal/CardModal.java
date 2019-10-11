@@ -17,8 +17,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import trello.ui.pages.BasePage;
+import trello.ui.pages.BoardPage;
 
 import java.util.List;
+
 
 /**
  * CardModal class.
@@ -42,18 +44,85 @@ public class CardModal extends BasePage {
 
     private static final String CARD_TITLE = "hide-on-edit";
 
+    @FindBy(className = "js-add-due-date")
+    private WebElement dueDateButton;
+
+    @FindBy(className = "js-details-edit-due-date")
+    private WebElement dateButton;
+
+    @FindBy(className = "js-change-card-members")
+    private WebElement memberButton;
+
+    @FindBy(className = "js-card-detail-members-list")
+    private WebElement cardMembersList;
+
+    private List<WebElement> cardMemberItem;
+
     /**
      * Does click the "add checklist button".
+     *
+     * @return a instance of CheckListModal class.
      */
-    public void clickCheckListButton() {
+    public CheckListModal clickCheckListButton() {
         checkListButton.click();
+        return new CheckListModal();
     }
 
     /**
-     * Does click the "close button".
+     * Does click the "Due Date" button.
+     *
+     * @return a instance of DueDataModal class.
      */
-    public void clickCloseWindowsButton() {
+    public DueDataModal clickDueDateButton() {
+        dueDateButton.click();
+        return new DueDataModal();
+    }
+
+    /**
+     * Does click in the member button.
+     *
+     * @return a instance of memberModal.
+     */
+    public MemberModal clickMemberButton() {
+       memberButton.click();
+       return new MemberModal();
+    }
+    /**
+     * Does click the "close button".
+     *
+     * @return a instance of BoardPage class.
+     */
+    public BoardPage clickCloseWindowsButton() {
         closeWindowsButton.click();
+        return new BoardPage();
+    }
+
+    /**
+     * Does click the date button.
+     *
+     * @return a instance of DueDataModal class.
+     */
+    public DueDataModal clickDateButton() {
+        dateButton.click();
+        return new DueDataModal();
+    }
+
+    /**
+     * Gets the list of member that exist.
+     */
+    private void getCardMembersList() {
+        cardMemberItem = cardMembersList.findElements(By.className("js-member-on-card-menu"));
+    }
+
+    /**
+     * Gets a member of a list.
+     *
+     * @param index defines the position of the list
+     * @return a string with the initials of a member in a card.
+     */
+    public String getMember(final int index) {
+        getCardMembersList();
+        return cardMemberItem.get(index).getText();
     }
 
     /**
@@ -77,6 +146,6 @@ public class CardModal extends BasePage {
      */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.visibilityOf(cardTitle));
+        wait.until(ExpectedConditions.elementToBeClickable(dueDateButton));
     }
 }
