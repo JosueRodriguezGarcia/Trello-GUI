@@ -50,7 +50,7 @@ public class ListHooks {
     @After("@MoveAllCards")
     public void returnCardsToFromList() {
         boardPage = new BoardPage();
-        boardPage.moveAllCards(context.getLists().get("targetList").getTitle(), context.getLists().get("sourceList")
+        boardPage.moveAllCards(context.getLists().get("TargetList").getTitle(), context.getLists().get("SourceList")
                 .getTitle());
     }
 
@@ -60,6 +60,6 @@ public class ListHooks {
     @After("@SortCardsByName")
     public void sortCardsByOldestFirst() {
         boardPage = new BoardPage();
-        boardPage.sortCardsInListByOldestFirst(context.getLists().get("list").getTitle());
+        boardPage.sortCardsInListByOldestFirst(context.getLists().get("SourceList").getTitle());
     }
 }

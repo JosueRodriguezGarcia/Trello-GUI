@@ -12,6 +12,7 @@
 
 package trello.hooks.api;
 
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
 import trello.api.rest.Authentication;
@@ -47,17 +48,33 @@ public class ListAPIHook {
     /**
      * Makes a requestBoard for create a List.
      */
-    @Before(order = orderBefore, value = "@create-list")
-    public void beforeScenario() {
-        String endPoint = "/lists/";
-        String name = "TestList";
-        String idBoard = context.getBoard().getId();
+    @Before("@ArchivesList")
+    public void createBoard() {
+        String endPoint = "/boards/";
+        String name = "TestBoard";
         Map<String, String> data = new HashMap<>();
         data.put("name", name);
-        data.put("idBoard", idBoard);
         request.buildSpec(data);
         response = request.post(endPoint);
-        context.getLists().get("list").setId(response.getBody().jsonPath().get("id"));
+        context.getBoard().setId(response.getBody().jsonPath().get("id"));
+    }
+
+    @After("@ArchivesList")
+    public void deleteBoard() {
+        String endPoint = "/boards/";
+        String name = "TestBoard";
+        Map<String, String> data = new HashMap<>();
+        data.put("name", name);
+        request.buildSpec(data);
+        response = request.post(endPoint);
+        context.getBoard().setId(response.getBody().jsonPath().get("id"));
+    }
+
+    @After("@ArchivesList")
+    public void afterScenario() {
+        String id = context.getBoard().getId();
+        String endPoint = "/boards/".concat(id);
+        response = request.delete(endPoint);
     }
 }
 

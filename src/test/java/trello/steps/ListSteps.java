@@ -12,6 +12,7 @@
 
 package trello.steps;
 
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.testng.Assert;
@@ -84,14 +85,6 @@ public class ListSteps {
      */
     @When("I move all cards in (.*) to (.*)")
     public void moveAllCardsInList(final String listSource, final String listTarget) {
-        boardPage = new BoardPage();
-        List sourceList = new List();
-        sourceList.setTitle(listSource);
-        sourceList.setCards(boardPage.getCardsInList(listSource));
-        context.getLists().put("sourceList", sourceList);
-        List targetList = new List();
-        targetList.setTitle(listTarget);
-        context.getLists().put("targetList", targetList);
         boardPage.moveAllCards(listSource, listTarget);
     }
 
@@ -101,8 +94,8 @@ public class ListSteps {
     @Then("all cards that were on source list should appear on target list")
     public void verifyCardsOnTargetList() {
         boardPage = new BoardPage();
-        Assert.assertTrue(context.getLists().get("sourceList")
-                        .areListsEquals(boardPage.getCardsInList(context.getLists().get("targetList").getTitle())),
+        Assert.assertTrue(context.getLists().get("SourceList")
+                        .areListsEquals(boardPage.getCardsInList(context.getLists().get("TargetList").getTitle())),
                 "Cards were not correctly moved.");
     }
 
@@ -127,7 +120,7 @@ public class ListSteps {
     @Then("the source list should be empty")
     public void verifySourceList() {
         boardPage = new BoardPage();
-        Assert.assertEquals(boardPage.getQttyCardsInList(context.getLists().get("sourceList").getTitle()), 0,
+        Assert.assertEquals(boardPage.getQttyCardsInList(context.getLists().get("SourceList").getTitle()), 0,
                 "Cards were not correctly moved. Cards are still in source list.");
     }
 
@@ -166,7 +159,7 @@ public class ListSteps {
     /**
      * Verifies if the copied card appears on source and target list.
      */
-    @Then("the card appears correctly on target list")
+    @Then("the card appears correctly on source and target list")
     public void verifyCardAppearsOnSourceAndTargetList() {
         boardPage = new BoardPage();
         SoftAssert softAssert = new SoftAssert();
@@ -175,5 +168,17 @@ public class ListSteps {
         softAssert.assertTrue(boardPage.searchCardInList(context.getLists().get("sourceList").getTitle(),
                 context.getCard().getTitle()));
         softAssert.assertAll();
+    }
+
+
+    @Given("there are following lists in the board")
+    public void thereAreFollowingListsInTheBoard(final java.util.List<String> lists) {
+        boardPage = new BoardPage();
+        for (int index = 0; index < lists.size(); index++) {
+            List list = new List();
+            list.setTitle(lists.get(index));
+            list.setCards(boardPage.getCardsInList(lists.get(index)));
+            context.getLists().put(lists.get(index), list);
+        }
     }
 }
