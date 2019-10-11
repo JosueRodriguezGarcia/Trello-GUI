@@ -59,7 +59,6 @@ public final class WordsToNumbers {
     public static final int INTERMEDIATE_RESULT28 = 1000000000;
     public static final long INTERMEDIATE_RESULT29 = 1000000000000L;
 
-
     /**
      * Private constructor requested by checkstyle.
      */
@@ -77,11 +76,8 @@ public final class WordsToNumbers {
      * @return a string.
      */
     public static String convert(final String inputText) {
-
         List<String> words = new LinkedList<String>(cleanAndTokenizeText(inputText));
-
         words = replaceTextualNumbers(words);
-
         return wordListToString(words);
     }
 
@@ -93,16 +89,13 @@ public final class WordsToNumbers {
      * @return a list.
      */
     private static List<String> replaceTextualNumbers(final List<String> words) {
-
         List<String> processingList = new LinkedList<String>();
-
         int i = 0;
         while (i < words.size() || !processingList.isEmpty()) {
             String word = "";
             if (i < words.size()) {
                 word = words.get(i);
             }
-
             String wordStripped = word.replaceAll("[^a-zA-Z\\s]", "").toLowerCase();
             if (ALLOWED_STRINGS.contains(wordStripped) && !(processingList.size() == 0 && wordStripped.equals("and"))) {
                 words.remove(i);
@@ -114,7 +107,6 @@ public final class WordsToNumbers {
                     processingList.remove(processingList.size() - 1);
                 }
                 String wordAsDigits = String.valueOf(convertWordsToNum(processingList));
-
                 wordAsDigits = retainPunctuation(processingList, wordAsDigits);
                 words.add(i, String.valueOf(wordAsDigits));
 
@@ -124,7 +116,6 @@ public final class WordsToNumbers {
                 i++;
             }
         }
-
         return words;
     }
 
@@ -134,24 +125,21 @@ public final class WordsToNumbers {
      * e.g. (seventy two) -> (72)
      *
      * @param processingList defines a list.
-     * @param wordAsDigits defines a string
+     * @param wordAsDigits   defines a string
      * @return a string.
      */
     private static String retainPunctuation(final List<String> processingList, final String wordAsDigits) {
         String aux = wordAsDigits;
-
         String lastWord = processingList.get(processingList.size() - 1);
         char lastChar = lastWord.trim().charAt(lastWord.length() - 1);
         if (!Character.isLetter(lastChar)) {
             aux += lastChar;
         }
-
         String firstWord = processingList.get(0);
         char firstChar = firstWord.trim().charAt(0);
         if (!Character.isLetter(firstChar)) {
             aux = firstChar + wordAsDigits;
         }
-
         return wordAsDigits;
     }
 
@@ -163,23 +151,16 @@ public final class WordsToNumbers {
      */
     private static List<String> cleanAndTokenizeText(final String sentence) {
         List<String> words = new LinkedList<String>(Arrays.asList(sentence.split(" ")));
-
-        // remove hyphenated textual numbers
         for (int i = 0; i < words.size(); i++) {
             String str = words.get(i);
             if (str.contains("-")) {
                 List<String> splitWords = Arrays.asList(str.split("-"));
-
-                // just check the first word is a textual number. Caters for
-                // "twenty-five," without having to strip the comma
                 if (splitWords.size() > 1 && ALLOWED_STRINGS.contains(splitWords.get(0))) {
                     words.remove(i);
                     words.addAll(i, splitWords);
                 }
             }
-
         }
-
         return words;
     }
 
@@ -199,14 +180,13 @@ public final class WordsToNumbers {
                 result.append(" " + list.get(i));
             }
         }
-
         return result.toString();
     }
 
     /**
      * Logic for taking a textual number string and converting it into a number
      * e.g. twenty five -> 25
-     * <p>
+     *
      * This relies on there only being one textual number being processed. Steps
      * prior to this deal with breaking a paragraph down into individual textual
      * numbers, which could consist of a number of words.
@@ -296,7 +276,6 @@ public final class WordsToNumbers {
                 intermediateResult = 0;
             }
         }
-
         finalResult += intermediateResult;
         intermediateResult = 0;
         return finalResult;

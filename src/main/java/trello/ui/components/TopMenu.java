@@ -17,7 +17,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import trello.ui.pages.BasePage;
-import trello.ui.pages.LoggedOutPage;
 
 /**
  * TopMenu class.
@@ -123,17 +122,6 @@ public class TopMenu extends BasePage {
     public void openUserCardsPage() {
         openUserActionButton();
         userCardsLink.click();
-    }
-
-    /**
-     * Logout from the page.
-     *
-     * @return a LoggedOutPage.
-     */
-    public LoggedOutPage logoutPage() {
-        openUserActionButton();
-        logoutButton.click();
-        return new LoggedOutPage();
     }
 
     /**

@@ -24,6 +24,12 @@ import java.util.Calendar;
  */
 public class HourComponent implements IDateComponent {
 
+    /**
+     * Gets a new date.
+     *
+     * @param num defines a input number.
+     * @return a string.
+     */
     @Override
     public String newDate(final int num) {
         DateFormat dateFormat = new SimpleDateFormat("M/d/yyyy h:mm a");
