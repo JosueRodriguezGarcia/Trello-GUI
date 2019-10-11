@@ -46,9 +46,6 @@ public class CardSteps {
     private MemberModal memberModal;
     private InviteToBoardModal inviteToBoardModal;
 
-
-
-
     /**
      * Constructor method initializes the attributes.
      *

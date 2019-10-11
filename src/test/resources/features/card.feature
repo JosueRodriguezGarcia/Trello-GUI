@@ -23,7 +23,7 @@ Feature: Card actions
       And I select CardTest card
       And I assign a due date
         | Date     | One day from now |
-        | Reminder | None              |
+        | Reminder | None             |
      Then The due date section is displayed on the card details
 
   @create-board @create-list @create-card @add-member @delete-board

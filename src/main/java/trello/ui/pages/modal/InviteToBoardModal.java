@@ -59,6 +59,9 @@ public class InviteToBoardModal extends BasePage {
         return new BoardPage();
     }
 
+    /**
+     * Waits that the button send invite is visibility.
+     */
     @Override
     protected void waitUntilPageObjectIsLoaded() {
         wait.until(ExpectedConditions.visibilityOf(emailOrUserField));

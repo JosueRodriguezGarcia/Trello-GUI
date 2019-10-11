@@ -103,12 +103,10 @@ public class BoardPage extends ApplicationBasePage {
     @FindBy(className = "js-open-add-list")
     private WebElement addAnotherList;
 
-
     @FindBy(className = "js-open-manage-board-members")
     private WebElement inviteButton;
 
     private By listHeader = By.cssSelector("textarea[class*='header-name']");
-
 
     /**
      * Waits until Page object is found.
