@@ -163,13 +163,12 @@ public class ListSteps {
     public void verifyCardAppearsOnSourceAndTargetList() {
         boardPage = new BoardPage();
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(boardPage.searchCardInList(context.getLists().get("targetList").getTitle(),
-                context.getCard().getTitle()));
-        softAssert.assertTrue(boardPage.searchCardInList(context.getLists().get("sourceList").getTitle(),
-                context.getCard().getTitle()));
+        softAssert.assertTrue(boardPage.isCardInList(context.getCard().getTitle(), context.getLists()
+                .get("targetList").getTitle()));
+        softAssert.assertTrue(boardPage.isCardInList(context.getCard().getTitle(), context.getLists()
+                .get("sourceList").getTitle()));
         softAssert.assertAll();
     }
-
 
     @Given("there are following lists in the board")
     public void thereAreFollowingListsInTheBoard(final java.util.List<String> lists) {
