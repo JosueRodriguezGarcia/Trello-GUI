@@ -1,9 +1,27 @@
+/*
+ * Copyright (c) 2019 Jala Foundation.
+ * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of
+ * Jala Foundation, ("Confidential Information"). You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Jala Foundation.
+ */
+
 package core.selenium.util;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * WordsToNumbers class.
+ *
+ * @author Josue Rodriguez.
+ * @version 0.0.1
+ */
 public class WordsToNumbers {
 
     private final static List<String> allowedStrings = Arrays.asList("and", "zero", "one", "two", "three", "four", "five",
@@ -21,15 +39,10 @@ public class WordsToNumbers {
      */
     public static String convert(String inputText) {
 
-        // splits text into words and deals with hyphenated numbers. Use linked
-        // list due to manipulation during processing
         List<String> words = new LinkedList<String>(cleanAndTokenizeText(inputText));
 
-        // replace all the textual numbers
         words = replaceTextualNumbers(words);
 
-        // put spaces back in and return the string. Should be the same as input
-        // text except from textual numbers
         return wordListToString(words);
     }
 
@@ -42,37 +55,25 @@ public class WordsToNumbers {
      */
     private static List<String> replaceTextualNumbers(List<String> words) {
 
-        // holds each group of textual numbers being processed together. e.g.
-        // "one" or "five hundred and two"
         List<String> processingList = new LinkedList<String>();
 
         int i = 0;
         while (i < words.size() || !processingList.isEmpty()) {
-
-            // caters for sentences only containing one word (that is a number)
             String word = "";
             if (i < words.size()) {
                 word = words.get(i);
             }
 
-            // strip word of all punctuation to make it easier to process
             String wordStripped = word.replaceAll("[^a-zA-Z\\s]", "").toLowerCase();
-
-            // 2nd condition: skip "and" words by themselves and at start of num
             if (allowedStrings.contains(wordStripped) && !(processingList.size() == 0 && wordStripped.equals("and"))) {
-                words.remove(i); // remove from main list, will process later
+                words.remove(i);
                 processingList.add(word);
             } else if (processingList.size() > 0) {
-                // found end of group of textual words to process
-
-                //if "and" is the last word, add it back in to original list
                 String lastProcessedWord = processingList.get(processingList.size() - 1);
                 if (lastProcessedWord.equals("and")) {
                     words.add(i, "and");
                     processingList.remove(processingList.size() - 1);
                 }
-
-                // main logic here, does the actual conversion
                 String wordAsDigits = String.valueOf(convertWordsToNum(processingList));
 
                 wordAsDigits = retainPunctuation(processingList, wordAsDigits);

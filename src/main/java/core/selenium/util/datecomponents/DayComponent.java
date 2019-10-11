@@ -26,7 +26,7 @@ public class DayComponent implements IDateComponent {
 
     @Override
     public String newDate(final int num) {
-        DateFormat dateFormat = new SimpleDateFormat("M/d/yyyy H:mm a");
+        DateFormat dateFormat = new SimpleDateFormat("M/d/yyyy h:mm a");
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, num);
         return dateFormat.format(calendar.getTime());
