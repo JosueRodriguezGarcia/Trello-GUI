@@ -10,7 +10,7 @@
  * with Jala Foundation.
  */
 
-package trello.hooks;
+package hooks;
 import cucumber.api.java.After;
 import trello.entities.Context;
 import trello.ui.pages.BoardPage;

@@ -10,7 +10,7 @@
  * with Jala Foundation.
  */
 
-package trello.hooks;
+package hooks;
 
 import core.selenium.WebDriverManager;
 import cucumber.api.Scenario;
@@ -41,7 +41,7 @@ public class Hooks {
      *
      * @param scenario - Scenario to test.
      */
-    @After(order = 9999)
+    @After
     public void takeScreenshot(final Scenario scenario) {
         if (scenario.isFailed()) {
             final byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);

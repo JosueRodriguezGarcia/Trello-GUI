@@ -10,7 +10,7 @@
  * with Jala Foundation.
  */
 
-package trello.hooks.api;
+package hooks.api;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -23,52 +23,51 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * BoardHook class.
+ * CardAPIHook class.
  *
  * @author Josue Rodriguez.
  * @version 0.0.1
  */
-public class BoardAPIHook {
+public class CardAPIHook {
 
     private Context context;
     private Response response;
     private RestClientAPI request;
-    private final int orderAfter = 3;
-    private final int orderBefore = 1;
+    private final int orderAfter = 1;
+    private final int orderBefore = 3;
 
     /**
-     * This method constructor initializes the variables.
+     * Constructor method initializes the attributes.
      *
      * @param context initializes context attribute.
      */
-    public BoardAPIHook(final Context context) {
+    public CardAPIHook(final Context context) {
         this.context = context;
         request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
     }
 
     /**
-     * Makes a requestBoard for delete a Board by id.
+     * Makes a requestBoard for delete a Card by id.
      */
-    @After(order = orderAfter, value = "@delete-board")
+    @After(order = orderAfter, value = "@delete-card")
     public void afterScenario() {
-        String id = context.getBoard().getId();
-        String endPoint = "/boards/".concat(id);
+        String id = context.getCard().getId();
+        String endPoint = "/cards/".concat(id);
         response = request.delete(endPoint);
     }
 
     /**
-     * Makes a requestBoard for create a Board.
+     * Makes a requestBoard for create a Card.
      */
-    @Before(order = orderBefore, value = "@create-board")
+    @Before(order = orderBefore, value = "@create-card")
     public void beforeScenario() {
-        String endPoint = "/boards/";
-        String name = "TestBoard2";
+        String endPoint = "/cards/";
+        String idList = context.getList().getId();
         Map<String, String> data = new HashMap<>();
-        data.put("name", name);
+        data.put("name", "CardTest");
+        data.put("idList", idList);
         request.buildSpec(data);
         response = request.post(endPoint);
-        context.getBoard().setId(response.getBody().jsonPath().get("id"));
+        context.getCard().setId(response.jsonPath().get("id"));
     }
 }
-
-

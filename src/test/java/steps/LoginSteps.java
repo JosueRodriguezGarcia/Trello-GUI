@@ -10,7 +10,7 @@
  * with Jala Foundation.
  */
 
-package trello.steps;
+package steps;
 
 import core.selenium.util.JsonConverter;
 import core.selenium.util.ReadJsonFile;

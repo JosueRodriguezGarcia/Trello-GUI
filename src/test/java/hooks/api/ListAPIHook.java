@@ -10,7 +10,7 @@
  * with Jala Foundation.
  */
 
-package trello.hooks.api;
+package hooks.api;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -60,11 +60,11 @@ public class ListAPIHook {
      */
     @Before("@MoveAllCards, @SortCardsByName")
     public void createTwoListAndRandomCards() {
-        final int CARDS_QUANTITY = 4;
+        final int cardsQuantity = 4;
         String boardId = trelloAPIMethods.createBoardWODefaultLists("MoveSortBoard");
         context.getBoard().setId(boardId);
         String sourceListId = trelloAPIMethods.createList(boardId, "SourceList");
-        trelloAPIMethods.createRandomCards(sourceListId, CARDS_QUANTITY);
+        trelloAPIMethods.createRandomCards(sourceListId, cardsQuantity);
         trelloAPIMethods.createList(boardId, "TargetList");
     }
 
@@ -78,12 +78,6 @@ public class ListAPIHook {
         String sourceListId = trelloAPIMethods.createList(boardId, "SourceList");
         trelloAPIMethods.createCard(sourceListId, "Card2");
         trelloAPIMethods.createCard(sourceListId, "Card1");
-        trelloAPIMethods.createCard(sourceListId, "Card3");
-        trelloAPIMethods.createCard(sourceListId, "Card0");
         trelloAPIMethods.createList(boardId, "TargetList");
     }
 }
-
-
-
-

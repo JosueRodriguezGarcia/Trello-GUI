@@ -23,6 +23,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import trello.entities.Card;
 
+import trello.ui.pages.modal.CardModal;
+import trello.ui.pages.modal.InviteToBoardModal;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -33,7 +36,7 @@ import java.util.concurrent.TimeUnit;
  * @author Raul Choque, Melissa Román
  * @version 0.0.1
  */
-public class BoardPage extends BasePage {
+public class BoardPage extends ApplicationBasePage {
 
     private static final String ARCHIVE_LIST_CLASS = "js-close-list";
     private static final String TARGET_LIST_CLASS = "js-select-list";
@@ -100,6 +103,9 @@ public class BoardPage extends BasePage {
 
     @FindBy(className = "js-open-add-list")
     private WebElement addAnotherList;
+
+    @FindBy(className = "js-open-manage-board-members")
+    private WebElement inviteButton;
 
     private By listHeader = By.cssSelector("textarea[class*='header-name']");
 
@@ -253,13 +259,15 @@ public class BoardPage extends BasePage {
      * Does click a card to be selected.
      *
      * @param cardTitle defines the card title that search.
+     * @return a instance of cardModal class.
      */
-    public void selectCard(final String cardTitle) {
+    public CardModal selectedCard(final String cardTitle) {
         for (int i = 0; i < cards.size(); i++) {
             if (cards.get(i).getText().equals(cardTitle)) {
                 cards.get(i).click();
             }
         }
+        return new CardModal();
     }
 
     /**
@@ -425,5 +433,15 @@ public class BoardPage extends BasePage {
     public String getId() {
         String uri = driver.getCurrentUrl();
         return uri.substring(uri.lastIndexOf("b/") + 2, uri.lastIndexOf('/'));
+    }
+
+    /**
+     * Does click in invite button.
+     *
+     * @return a InviteToBoardModal.
+     */
+    public InviteToBoardModal clickInviteButton() {
+        inviteButton.click();
+        return new InviteToBoardModal();
     }
 }

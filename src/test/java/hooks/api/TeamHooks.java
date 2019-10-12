@@ -10,7 +10,7 @@
  * with Jala Foundation.
  */
 
-package trello.hooks.api;
+package hooks.api;
 
 import cucumber.api.java.After;
 import io.restassured.response.Response;

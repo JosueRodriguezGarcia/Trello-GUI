@@ -24,20 +24,24 @@ import java.util.Map;
 public class Context {
 
     private Board board;
+    private List list;
     private Card card;
     private Map<String, List> lists;
     private Team team;
     private User user;
+    private DueDate dueDate;
 
     /**
      * Method constructor of Context class.
      */
     public Context() {
         board = new Board();
+        list = new List();
         card = new Card();
         lists = new HashMap<>();
         team = new Team();
         user = new User();
+        dueDate = new DueDate();
     }
 
     /**
@@ -56,6 +60,24 @@ public class Context {
      */
     public void setBoard(final Board board) {
         this.board = board;
+    }
+
+    /**
+     * Gets List attribute of its class.
+     *
+     * @return the list attribute.
+     */
+    public List getList() {
+        return list;
+    }
+
+    /**
+     * Sets a list.
+     *
+     * @param list a defines a input list.
+     */
+    public void setList(final List list) {
+        this.list = list;
     }
 
     /**
@@ -120,4 +142,14 @@ public class Context {
     public void setUser(final User user) {
         this.user = user;
     }
+
+    /**
+     * Gets due date attribute of its class.
+     *
+     * @return a due date attribute.
+     */
+    public DueDate getDueDate() {
+        return dueDate;
+    }
+
 }
