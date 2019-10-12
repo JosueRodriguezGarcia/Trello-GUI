@@ -14,27 +14,19 @@ package hooks.api;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import io.restassured.response.Response;
-import trello.api.rest.Authentication;
-import trello.api.rest.RestClientAPI;
+import trello.api.rest.TrelloAPIMethods;
 import trello.entities.Context;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * CardAPIHook class.
  *
  * @author Josue Rodriguez.
- * @version 0.0.1
+ * @version 0.0.2
  */
 public class CardAPIHook {
 
     private Context context;
-    private Response response;
-    private RestClientAPI request;
-    private final int orderAfter = 1;
-    private final int orderBefore = 3;
+    private TrelloAPIMethods trelloAPIMethods;
 
     /**
      * Constructor method initializes the attributes.
@@ -43,31 +35,65 @@ public class CardAPIHook {
      */
     public CardAPIHook(final Context context) {
         this.context = context;
-        request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
+        trelloAPIMethods = new TrelloAPIMethods();
     }
 
     /**
-     * Makes a requestBoard for delete a Card by id.
+     * Creates a Board with a list. used for add a card.
      */
-    @After(order = orderAfter, value = "@delete-card")
-    public void afterScenario() {
-        String id = context.getCard().getId();
-        String endPoint = "/cards/".concat(id);
-        response = request.delete(endPoint);
+    @Before(value = "@CreateCard")
+    public void createBoardWithList() {
+        String idBoard = trelloAPIMethods.createBoardWODefaultLists("BoardForCard");
+        context.getBoard().setId(idBoard);
+        String idList = trelloAPIMethods.createList(context.getBoard().getId(), "ListForCard");
+        context.getList().setId(idList);
     }
 
     /**
-     * Makes a requestBoard for create a Card.
+     * Deletes the board that is in the context.
      */
-    @Before(order = orderBefore, value = "@create-card")
-    public void beforeScenario() {
-        String endPoint = "/cards/";
-        String idList = context.getList().getId();
-        Map<String, String> data = new HashMap<>();
-        data.put("name", "CardTest");
-        data.put("idList", idList);
-        request.buildSpec(data);
-        response = request.post(endPoint);
-        context.getCard().setId(response.jsonPath().get("id"));
+    @After(value = "@CreateCard, @AssignChecklist, @AssignDueDate, @AssignMembers", order = 0)
+    public void deleteBoard() {
+        trelloAPIMethods.deleteBoard(context.getBoard().getId());
+    }
+
+    /**
+     * Creates a Board with a list and a card. Used for add a checklist.
+     */
+    @Before(value = "@AssignChecklist")
+    public void createCardForChecklist() {
+        String idBoard = trelloAPIMethods.createBoardWODefaultLists("BoardForCard");
+        context.getBoard().setId(idBoard);
+        String idList = trelloAPIMethods.createList(context.getBoard().getId(), "ListForCard");
+        context.getList().setId(idList);
+        String idCard = trelloAPIMethods.createCard(context.getList().getId(), "CardForChecklist");
+        context.getCard().setId(idCard);
+    }
+
+    /**
+     * Creates a Board with a list and a card. Used for assign a due date.
+     */
+    @Before(value = "@AssignDueDate")
+    public void createCardForDueDate() {
+        String idBoard = trelloAPIMethods.createBoardWODefaultLists("BoardForCard");
+        context.getBoard().setId(idBoard);
+        String idList = trelloAPIMethods.createList(context.getBoard().getId(), "ListForCard");
+        context.getList().setId(idList);
+        String idCard = trelloAPIMethods.createCard(context.getList().getId(), "CardForDueDate");
+        context.getCard().setId(idCard);
+    }
+
+    /**
+     * Creates a Board with a list and a card. used for add members.
+     */
+    @Before(value = "@AssignMembers")
+    public void createCardAddMembers() {
+        String idBoard = trelloAPIMethods.createBoardWODefaultLists("BoardForCard");
+        context.getBoard().setId(idBoard);
+        String idList = trelloAPIMethods.createList(context.getBoard().getId(), "ListForCard");
+        context.getList().setId(idList);
+        String idCard = trelloAPIMethods.createCard(context.getList().getId(), "CardAddMembers");
+        context.getCard().setId(idCard);
+        trelloAPIMethods.addMembersToBoard(context.getBoard().getId());
     }
 }
