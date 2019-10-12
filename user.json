@@ -2,14 +2,14 @@
   "users": [
     {
       "admin": {
-        "username": "josephtaylor63",
-        "password": "Control123!",
-        "fullName": "Joseph Taylor",
-        "email": "joseph.taylor.tr3110@mail.com",
-        "consumerKey": "f62b4eb60493a2e4112c6e4befbafa86",
-        "consumerSecret": "996e9591d9d4925ee5a4151d466aa84c695bff1c06444bda5ea380dc19b038dd",
-        "accessToken": "e119186b99a9df084dd871beb4193d3a762b84b0c24299e29b323b6f41bc081b",
-        "tokenSecret": "e119186b99a9df084dd871beb4193d3a762b84b0c24299e29b323b6f41bc081b"
+        "username": "put your username",
+        "password": "put your password",
+        "fullName": "put your full name",
+        "email": "put your email",
+        "consumerKey": "put your consumer key",
+        "consumerSecret": "put your consumer secret",
+        "accessToken": "put your access token",
+        "tokenSecret": "put your token secret"
       }
     },
     {
