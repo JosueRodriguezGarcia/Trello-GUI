@@ -47,20 +47,30 @@ public class ListAPIHook {
         context.getBoard().setId(boardId);
     }
 
+    /**
+     * Deletes the board that is in the context.
+     */
     @After(value = "@CreateList, @MoveAllCards, @SortCardsByName, @CopyACard", order = 0)
     public void deleteBoard() {
         trelloAPIMethods.deleteBoard(context.getBoard().getId());
     }
 
+    /**
+     * Creates two list with random cards. Used for move all cards and sort cards scenarios.
+     */
     @Before("@MoveAllCards, @SortCardsByName")
     public void createTwoListAndRandomCards() {
+        final int CARDS_QUANTITY = 4;
         String boardId = trelloAPIMethods.createBoardWODefaultLists("MoveSortBoard");
         context.getBoard().setId(boardId);
         String sourceListId = trelloAPIMethods.createList(boardId, "SourceList");
-        trelloAPIMethods.createRandomCards(sourceListId, 4);
+        trelloAPIMethods.createRandomCards(sourceListId, CARDS_QUANTITY);
         trelloAPIMethods.createList(boardId, "TargetList");
     }
 
+    /**
+     * Creates two list, one with specific cards. Used for copy a card scenario.
+     */
     @Before("@CopyACard")
     public void createTwoListAndCards() {
         String boardId = trelloAPIMethods.createBoardWODefaultLists("CopyCardBoard");

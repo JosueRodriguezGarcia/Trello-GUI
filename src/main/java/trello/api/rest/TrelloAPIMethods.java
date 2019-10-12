@@ -13,8 +13,6 @@
 package trello.api.rest;
 
 import io.restassured.response.Response;
-import trello.api.rest.Authentication;
-import trello.api.rest.RestClientAPI;
 
 import com.github.javafaker.Faker;
 
@@ -63,8 +61,8 @@ public class TrelloAPIMethods {
      */
     public String createBoardWODefaultLists(final String name) {
         String endPoint = "/boards/";
-        String dataJson = "{\"name\":\"%s\"," +
-                "\"defaultLists\":false}";
+        String dataJson = "{\"name\":\"%s\","
+                + "\"defaultLists\":false}";
         request.buildSpec(String.format(dataJson, name));
         response = request.post(endPoint);
         return response.getBody().jsonPath().get("id");
@@ -114,6 +112,11 @@ public class TrelloAPIMethods {
         return response.jsonPath().get("id");
     }
 
+    /**
+     * Creates given quantity of random cards on given list.
+     * @param listID is de id of the list where the cards will be created.
+     * @param qty is the quantity of cards to be created.
+     */
     public void createRandomCards(final String listID, final int qty) {
         for (int index = 0; index < qty; index++) {
             Faker faker = new Faker();
