@@ -21,20 +21,20 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 /**
- * ReadJsonFile class, read the file of users.
+ * JsonFileReader class, read the file of users.
  *
  * @author Raul Choque, Melissa Román
  * @version 0.0.1
  */
-public final class ReadJsonFile {
+public final class JsonFileReader {
 
-    private static ReadJsonFile readJsonFile;
+    private static JsonFileReader readJsonFile;
     private JsonArray account;
 
     /**
-     * Constructor of ReadJsonFile class.
+     * Constructor of JsonFileReader class.
      */
-    private ReadJsonFile() {
+    private JsonFileReader() {
         try {
             JsonParser parser = new JsonParser();
             JsonElement jsonElement = parser.parse(new FileReader("./user.json"));
@@ -46,13 +46,13 @@ public final class ReadJsonFile {
     }
 
     /**
-     * Gets only instance of ReadJsonFile class.
+     * Gets only instance of JsonFileReader class.
      *
-     * @return a ReadJsonFile object.
+     * @return a JsonFileReader object.
      */
-    public static ReadJsonFile getInstance() {
+    public static JsonFileReader getInstance() {
         if (readJsonFile == null) {
-            readJsonFile = new ReadJsonFile();
+            readJsonFile = new JsonFileReader();
         }
         return readJsonFile;
     }

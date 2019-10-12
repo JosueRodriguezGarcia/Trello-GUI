@@ -13,7 +13,7 @@
 package steps;
 
 import core.selenium.util.JsonConverter;
-import core.selenium.util.ReadJsonFile;
+import core.selenium.util.JsonFileReader;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.testng.Assert;
@@ -51,7 +51,7 @@ public class LoginSteps {
      */
     @When("I log in as (.*) user")
     public void loginAsUser(final String userType) {
-        User user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType(userType));
+        User user = JsonConverter.jsonToUser(JsonFileReader.getInstance().getDataByUserType(userType));
         context.setUser(user);
         PageTransporter.navigateToURL(NamePages.getLoginPageUrl());
         LoginPage loginPage = new LoginPage();

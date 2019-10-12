@@ -37,7 +37,8 @@ public class ProvisionalTopMenu extends BasePage {
 
     /**
      * Verifies if there is the login button displayed in the page.
-     * @return
+     *
+     * @return true if the login button is displayed.
      */
     public boolean isLoginButtonDisplayed() {
         boolean answer = true;

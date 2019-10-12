@@ -12,14 +12,11 @@
 
 package steps;
 
-import core.selenium.WebDriverConfig;
-import core.selenium.WebDriverManager;
 import core.selenium.util.JsonConverter;
-import core.selenium.util.ReadJsonFile;
+import core.selenium.util.JsonFileReader;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import trello.entities.Context;
 import trello.entities.User;
@@ -29,9 +26,6 @@ import trello.ui.components.ProvisionalTopMenu;
 import trello.ui.components.TopMenu;
 import trello.ui.pages.HomePage;
 import trello.ui.pages.LoginPage;
-
-import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
 
 /**
  * CommonSteps class.
@@ -45,7 +39,6 @@ public class CommonSteps {
     private HomePage homePage;
     private LoginPage loginPage;
     private ProvisionalTopMenu provisionalTopMenu;
-    private TopMenu topMenuOfHome;
     private User user;
     private Context context;
 
@@ -69,8 +62,8 @@ public class CommonSteps {
     public void verifyLoggedInByUserType(final String userType) {
         PageTransporter.navigateToURL(NamePages.getHomePageUrl(context.getUser().getUsername()));
         provisionalTopMenu = new ProvisionalTopMenu();
-        user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType(userType));
-        if(provisionalTopMenu.isLoginButtonDisplayed()) {
+        user = JsonConverter.jsonToUser(JsonFileReader.getInstance().getDataByUserType(userType));
+        if (provisionalTopMenu.isLoginButtonDisplayed()) {
             PageTransporter.navigateToURL(NamePages.getLoginPageUrl());
             loginPage = new LoginPage();
             loginPage.login(user);
@@ -78,7 +71,7 @@ public class CommonSteps {
             homePage = new HomePage();
             String userInitials = homePage.getTopMenu().getFullNameInitials();
             if (!user.getFullNameInitials().equals(userInitials)) {
-                topMenuOfHome.logoutPage();
+                homePage.getTopMenu().logoutPage();
                 PageTransporter.navigateToURL(NamePages.getLoginPageUrl());
                 loginPage = new LoginPage();
                 loginPage.login(user);
