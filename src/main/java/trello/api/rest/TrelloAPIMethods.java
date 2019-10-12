@@ -16,6 +16,8 @@ import io.restassured.response.Response;
 import trello.api.rest.Authentication;
 import trello.api.rest.RestClientAPI;
 
+import com.github.javafaker.Faker;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -110,5 +112,13 @@ public class TrelloAPIMethods {
         request.buildSpec(data);
         response = request.post(endPoint);
         return response.jsonPath().get("id");
+    }
+
+    public void createRandomCards(final String listID, final int qty) {
+        for (int index = 0; index < qty; index++) {
+            Faker faker = new Faker();
+            String cardTitle = faker.job().keySkills();
+            createCard(listID, cardTitle);
+        }
     }
 }

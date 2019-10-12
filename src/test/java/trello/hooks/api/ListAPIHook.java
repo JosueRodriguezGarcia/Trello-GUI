@@ -20,7 +20,7 @@ import trello.entities.Context;
 /**
  * ListAPIHook class.
  *
- * @author Josue Rodriguez.
+ * @author Josue Rodriguez, Melissa Román
  * @version 0.0.1
  */
 public class ListAPIHook {
@@ -47,9 +47,30 @@ public class ListAPIHook {
         context.getBoard().setId(boardId);
     }
 
-    @After(value = "@CreateList", order = 0)
+    @After(value = "@CreateList, @MoveAllCards, @SortCardsByName, @CopyACard", order = 0)
     public void deleteBoard() {
         trelloAPIMethods.deleteBoard(context.getBoard().getId());
+    }
+
+    @Before("@MoveAllCards, @SortCardsByName")
+    public void createTwoListAndRandomCards() {
+        String boardId = trelloAPIMethods.createBoardWODefaultLists("MoveSortBoard");
+        context.getBoard().setId(boardId);
+        String sourceListId = trelloAPIMethods.createList(boardId, "SourceList");
+        trelloAPIMethods.createRandomCards(sourceListId, 4);
+        trelloAPIMethods.createList(boardId, "TargetList");
+    }
+
+    @Before("@CopyACard")
+    public void createTwoListAndCards() {
+        String boardId = trelloAPIMethods.createBoardWODefaultLists("CopyCardBoard");
+        context.getBoard().setId(boardId);
+        String sourceListId = trelloAPIMethods.createList(boardId, "SourceList");
+        trelloAPIMethods.createCard(sourceListId, "Card2");
+        trelloAPIMethods.createCard(sourceListId, "Card1");
+        trelloAPIMethods.createCard(sourceListId, "Card3");
+        trelloAPIMethods.createCard(sourceListId, "Card0");
+        trelloAPIMethods.createList(boardId, "TargetList");
     }
 }
 
