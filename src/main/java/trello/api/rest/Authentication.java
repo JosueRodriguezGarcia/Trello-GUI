@@ -13,7 +13,7 @@
 package trello.api.rest;
 
 import core.selenium.util.JsonConverter;
-import core.selenium.util.ReadJsonFile;
+import core.selenium.util.JsonFileReader;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
@@ -42,7 +42,7 @@ public final class Authentication {
      * @return a RequestSpecification.
      */
     public static RequestSpecification getRequestSpecification(final String userType) {
-        User user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType(userType));
+        User user = JsonConverter.jsonToUser(JsonFileReader.getInstance().getDataByUserType(userType));
         String consumerKey = user.getConsumerKey();
         String consumerSecret = user.getConsumerSecret();
         String accessToken = user.getAccessToken();

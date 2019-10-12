@@ -9,6 +9,7 @@
  * accordance with the terms of the license agreement you entered into
  * with Jala Foundation.
  */
+
 package runner;
 
 import core.selenium.WebDriverManager;
@@ -27,8 +28,8 @@ import trello.report.ReportGenerator;
         plugin = {"pretty",
                 "html:target/cucumber",
                 "json:target/cucumber.json"},
-        glue = {"trello/steps", "trello/hooks"},
-        features = {"src/test/resources/features/"},
+        glue = {"steps", "hooks"},
+        features = {"src/test/resources/features"},
         monochrome = true)
 public class RunCukesTest extends AbstractTestNGCucumberTests {
 

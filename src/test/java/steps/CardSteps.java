@@ -10,7 +10,7 @@
  * with Jala Foundation.
  */
 
-package trello.steps;
+package steps;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;

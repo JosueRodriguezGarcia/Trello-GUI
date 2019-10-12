@@ -10,7 +10,7 @@
  * with Jala Foundation.
  */
 
-package trello.hooks;
+package hooks;
 import cucumber.api.java.After;
 import trello.entities.Context;
 import trello.ui.pages.BoardPage;
@@ -38,7 +38,7 @@ public class ListHooks {
     /**
      * Archives the context's list.
      */
-    @After("@ArchiveList")
+    @After("@CreateList")
     public void archiveList() {
         boardPage = new BoardPage();
         boardPage.archiveListByTitle(context.getLists().get("list").getTitle());
@@ -50,7 +50,7 @@ public class ListHooks {
     @After("@MoveAllCards")
     public void returnCardsToFromList() {
         boardPage = new BoardPage();
-        boardPage.moveAllCards(context.getLists().get("targetList").getTitle(), context.getLists().get("sourceList")
+        boardPage.moveAllCards(context.getLists().get("TargetList").getTitle(), context.getLists().get("SourceList")
                 .getTitle());
     }
 
@@ -60,6 +60,15 @@ public class ListHooks {
     @After("@SortCardsByName")
     public void sortCardsByOldestFirst() {
         boardPage = new BoardPage();
-        boardPage.sortCardsInListByOldestFirst(context.getLists().get("list").getTitle());
+        boardPage.sortCardsInListByOldestFirst(context.getLists().get("SourceList").getTitle());
+    }
+
+    /**
+     * Deletes the copied card.
+     */
+    @After("@CopyACard")
+    public void deleteCopiedCard() {
+        boardPage = new BoardPage();
+        boardPage.deleteCardInList(context.getCard().getTitle(), context.getLists().get("targetList").getTitle());
     }
 }

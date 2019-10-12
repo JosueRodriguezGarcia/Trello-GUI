@@ -10,7 +10,7 @@
  * with Jala Foundation.
  */
 
-package trello.steps;
+package steps;
 
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -19,7 +19,6 @@ import trello.entities.Context;
 import trello.ui.pages.BoardPage;
 import trello.ui.pages.HomePage;
 import trello.ui.pages.board.BoardModalPage;
-import trello.ui.pages.board.ListForm;
 
 /**
  * BoardSteps class.

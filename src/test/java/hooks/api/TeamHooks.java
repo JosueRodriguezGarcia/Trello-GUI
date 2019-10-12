@@ -10,63 +10,43 @@
  * with Jala Foundation.
  */
 
-package trello.hooks.api;
+package hooks.api;
 
 import cucumber.api.java.After;
-import cucumber.api.java.Before;
 import io.restassured.response.Response;
 import trello.api.rest.Authentication;
 import trello.api.rest.RestClientAPI;
 import trello.entities.Context;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * BoardHook class.
+ * TeamHooks class.
  *
- * @author Josue Rodriguez.
+ * @author Raul Choque
  * @version 0.0.1
  */
-public class BoardAPIHook {
+public class TeamHooks {
 
     private Context context;
     private Response response;
     private RestClientAPI request;
-    private final int orderAfter = 3;
-    private final int orderBefore = 1;
 
     /**
      * This method constructor initializes the variables.
      *
      * @param context initializes context attribute.
      */
-    public BoardAPIHook(final Context context) {
+    public TeamHooks(final Context context) {
         this.context = context;
         request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
     }
 
     /**
-     * Makes a requestBoard for delete a Board by id.
+     * Makes the delete of team after it was created.
      */
-    @After(order = orderAfter, value = "@delete-board")
+    @After("@delete-team")
     public void afterScenario() {
-        String id = context.getBoard().getId();
-        String endPoint = "/boards/".concat(id);
+        String idTeam = context.getTeam().getId();
+        String endPoint = "/organizations/".concat(idTeam);
         response = request.delete(endPoint);
-    }
-
-    /**
-     * Makes a requestBoard for create a Board.
-     */
-    @Before(order = orderBefore, value = "@create-board")
-    public void beforeScenario() {
-        String endPoint = "/boards/";
-        Map<String, String> data = new HashMap<>();
-        data.put("name", "BoardTest");
-        String sdata = "{\"name\":\"BoardTest\",\"defaultLists\":false}";
-        request.buildSpec(sdata);
-        response = request.post(endPoint);
-        context.getBoard().setId(response.getBody().jsonPath().get("id"));
     }
 }
