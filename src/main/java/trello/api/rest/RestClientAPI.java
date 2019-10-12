@@ -124,4 +124,16 @@ public class RestClientAPI {
                 body(new Gson().toJson(body));
 
     }
+
+    /**
+     * Builds the request with a body.
+     *
+     * @param body defines parameters input in a Json.
+     */
+    public void buildSpec(final String body) {
+        requestSpecification = given().
+                spec(requestSpecification).
+                contentType(JSON).
+                body(body);
+    }
 }

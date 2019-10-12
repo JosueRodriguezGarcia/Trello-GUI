@@ -38,7 +38,7 @@ public class ListHooks {
     /**
      * Archives the context's list.
      */
-    @After("@ArchiveList")
+    @After("@CreateList")
     public void archiveList() {
         boardPage = new BoardPage();
         boardPage.archiveListByTitle(context.getLists().get("list").getTitle());

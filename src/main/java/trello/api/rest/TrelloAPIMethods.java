@@ -10,7 +10,7 @@
  * with Jala Foundation.
  */
 
-package trello.hooks.api;
+package trello.api.rest;
 
 import io.restassured.response.Response;
 import trello.api.rest.Authentication;
@@ -49,6 +49,21 @@ public class TrelloAPIMethods {
         Map<String, String> data = new HashMap<>();
         data.put("name", name);
         request.buildSpec(data);
+        response = request.post(endPoint);
+        return response.getBody().jsonPath().get("id");
+    }
+
+    /**
+     * Creates a board with the given name and without default lists.
+     *
+     * @param name is the title to be assigned to the board.
+     * @return the id of the created board.
+     */
+    public String createBoardWODefaultLists(final String name) {
+        String endPoint = "/boards/";
+        String dataJson = "{\"name\":\"%s\"," +
+                "\"defaultLists\":false}";
+        request.buildSpec(String.format(dataJson, name));
         response = request.post(endPoint);
         return response.getBody().jsonPath().get("id");
     }

@@ -14,6 +14,7 @@ package trello.hooks.api;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import trello.api.rest.TrelloAPIMethods;
 import trello.entities.Context;
 
 /**
@@ -42,11 +43,11 @@ public class ListAPIHook {
      */
     @Before("@CreateList")
     public void createBoard() {
-        String boardId = trelloAPIMethods.createBoard("BoardForList");
+        String boardId = trelloAPIMethods.createBoardWODefaultLists("BoardForList");
         context.getBoard().setId(boardId);
     }
 
-    @After("@CreateList")
+    @After(value = "@CreateList", order = 0)
     public void deleteBoard() {
         trelloAPIMethods.deleteBoard(context.getBoard().getId());
     }
