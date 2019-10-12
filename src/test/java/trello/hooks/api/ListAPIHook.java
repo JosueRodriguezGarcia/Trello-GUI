@@ -14,13 +14,7 @@ package trello.hooks.api;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import io.restassured.response.Response;
-import trello.api.rest.Authentication;
-import trello.api.rest.RestClientAPI;
 import trello.entities.Context;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * ListAPIHook class.
@@ -31,9 +25,7 @@ import java.util.Map;
 public class ListAPIHook {
 
     private Context context;
-    private Response response;
-    private RestClientAPI request;
-    private final int orderBefore = 2;
+    private TrelloAPIMethods trelloAPIMethods;
 
     /**
      * This method constructor initializes the variables.
@@ -42,39 +34,21 @@ public class ListAPIHook {
      */
     public ListAPIHook(final Context context) {
         this.context = context;
-        request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
+        trelloAPIMethods = new TrelloAPIMethods();
     }
 
     /**
      * Makes a requestBoard for create a List.
      */
-    @Before("@ArchivesList")
+    @Before("@CreateList")
     public void createBoard() {
-        String endPoint = "/boards/";
-        String name = "TestBoard";
-        Map<String, String> data = new HashMap<>();
-        data.put("name", name);
-        request.buildSpec(data);
-        response = request.post(endPoint);
-        context.getBoard().setId(response.getBody().jsonPath().get("id"));
+        String boardId = trelloAPIMethods.createBoard("BoardForList");
+        context.getBoard().setId(boardId);
     }
 
-    @After("@ArchivesList")
+    @After("@CreateList")
     public void deleteBoard() {
-        String endPoint = "/boards/";
-        String name = "TestBoard";
-        Map<String, String> data = new HashMap<>();
-        data.put("name", name);
-        request.buildSpec(data);
-        response = request.post(endPoint);
-        context.getBoard().setId(response.getBody().jsonPath().get("id"));
-    }
-
-    @After("@ArchivesList")
-    public void afterScenario() {
-        String id = context.getBoard().getId();
-        String endPoint = "/boards/".concat(id);
-        response = request.delete(endPoint);
+        trelloAPIMethods.deleteBoard(context.getBoard().getId());
     }
 }
 

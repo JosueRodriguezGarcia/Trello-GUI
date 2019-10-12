@@ -46,7 +46,6 @@ public class BoardPage extends BasePage {
     private static final String CARDS_FROM_LIST_SUFFIX = "/../following-sibling::div";
     private static final String CARDS_IN_LIST_XPATH = LIST_TITLE_XPATH + CARDS_FROM_LIST_SUFFIX;
     private static final String TARGET_LIST_TITLE_XPATH = "//a[contains(text(), '%s')]";
-    private static final String CARD_XPATH = "//span[contains(text(), '%s')]";
     private static final String ARCHIVE_CARD_QUICK_MENU_CSS = ".js-archive > .quick-card-editor-buttons-item-text";
     private static final String COPY_CARD_QUICK_MENU_CSS = ".js-copy-card > .quick-card-editor-buttons-item-text";
     private static final String CARD_PARENT_XPATH = "//span[contains(text(), '%s')]/../../../..";

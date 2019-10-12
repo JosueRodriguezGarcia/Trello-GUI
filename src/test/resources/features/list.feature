@@ -1,9 +1,9 @@
 Feature: List actions
 
-  @ArchiveList
+  @CreateList
   Scenario: New list creation
     Given I log in as admin user
-    When I select TestBoard board
+    When I select BoardForList board
     And I create a new list with "ListTest" as title
     Then I should see the new created list with the given title
 
