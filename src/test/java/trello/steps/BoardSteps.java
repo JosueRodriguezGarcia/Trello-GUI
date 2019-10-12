@@ -19,7 +19,6 @@ import trello.entities.Context;
 import trello.ui.pages.BoardPage;
 import trello.ui.pages.HomePage;
 import trello.ui.pages.board.BoardModalPage;
-import trello.ui.pages.board.ListForm;
 
 /**
  * BoardSteps class.
