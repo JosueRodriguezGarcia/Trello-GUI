@@ -62,4 +62,13 @@ public class ListHooks {
         boardPage = new BoardPage();
         boardPage.sortCardsInListByOldestFirst(context.getLists().get("SourceList").getTitle());
     }
+
+    /**
+     * Deletes the copied card.
+     */
+    @After("@CopyACard")
+    public void deleteCopiedCard() {
+        boardPage = new BoardPage();
+        boardPage.deleteCardInList(context.getCard().getTitle(), context.getLists().get("targetList").getTitle());
+    }
 }

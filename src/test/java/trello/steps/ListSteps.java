@@ -130,8 +130,8 @@ public class ListSteps {
     @Then("all cards should be displayed correctly sorted")
     public void verifyCardsSortedByName() {
         boardPage = new BoardPage();
-        Assert.assertTrue(context.getLists().get("SourceList").isSortedByName(boardPage.getCardsInList(context.getLists()
-                        .get("SourceList").getTitle())),
+        Assert.assertTrue(context.getLists().get("SourceList")
+                        .isSortedByName(boardPage.getCardsInList(context.getLists().get("SourceList").getTitle())),
                 "Cards were not correctly sorted.");
     }
 
@@ -153,7 +153,7 @@ public class ListSteps {
         String sourceListTitle = boardPage.getListWhereCardIs(card);
         sourceList.setTitle(sourceListTitle);
         context.getLists().put("sourceList", sourceList);
-        boardPage.copyCardToList(card, listTitle);
+        boardPage.copyCardToList(card, sourceListTitle, listTitle);
     }
 
     /**
@@ -170,6 +170,11 @@ public class ListSteps {
         softAssert.assertAll();
     }
 
+    /**
+     * Saves the list data in the context.
+     *
+     * @param lists is the list of lists to be saved in the context.
+     */
     @Given("there are following lists in the board")
     public void thereAreFollowingListsInTheBoard(final java.util.List<String> lists) {
         boardPage = new BoardPage();

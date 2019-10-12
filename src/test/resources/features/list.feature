@@ -25,6 +25,7 @@ Feature: List actions
     When I sort cards in SourceList list by card name
     Then all cards should be displayed correctly sorted
 
+  @CopyACard
   Scenario: Copy a card to other list
     Given I am logged in as admin user
     When I select TestBoard board
