@@ -2,7 +2,7 @@ Feature: List actions
 
   @CreateList
   Scenario: New list creation
-    Given I log in as admin user
+    Given I am logged in as admin user
     When I select BoardForList board
     And I create a new list with "ListTest" as title
     Then I should see the new created list with the given title

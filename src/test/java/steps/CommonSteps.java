@@ -25,6 +25,7 @@ import trello.entities.Context;
 import trello.entities.User;
 import trello.keys.NamePages;
 import trello.ui.PageTransporter;
+import trello.ui.components.ProvisionalTopMenu;
 import trello.ui.components.TopMenu;
 import trello.ui.pages.HomePage;
 import trello.ui.pages.LoginPage;
@@ -43,6 +44,8 @@ public class CommonSteps {
 
     private HomePage homePage;
     private LoginPage loginPage;
+    private ProvisionalTopMenu provisionalTopMenu;
+    private TopMenu topMenuOfHome;
     private User user;
     private Context context;
 
@@ -53,45 +56,33 @@ public class CommonSteps {
      */
     public CommonSteps(final Context currentContext) {
         this.context = currentContext;
-        this.user = context.getUser();
     }
 
     /**
      * Verifies if the user is logged in as given user type.
-     * If the user it is not logged in or if it is another user that is logged the method proceeds with the
+     * If the user it is not logged in or if it is another user that is logged in, the method proceeds with the
      * login of the given user.
      *
      * @param userType of the user which is wanted to get logged in.
      */
     @Given("I am logged in as (.*) user")
     public void verifyLoggedInByUserType(final String userType) {
-        PageTransporter.navigateToURL(NamePages.getHomePageUrl(user.getUsername()));
-        homePage = new HomePage();
-        TopMenu topMenuOfHome = homePage.getTopMenu();
+        PageTransporter.navigateToURL(NamePages.getHomePageUrl(context.getUser().getUsername()));
+        provisionalTopMenu = new ProvisionalTopMenu();
         user = JsonConverter.jsonToUser(ReadJsonFile.getInstance().getDataByUserType(userType));
-        final long time = 1;
-        WebDriver webDriver = WebDriverManager.getInstance().getWebDriver();
-        webDriver.
-                manage().
-                timeouts().
-                implicitlyWait(time, TimeUnit.SECONDS);
-        try {
-            String userInitials = topMenuOfHome.getFullNameInitials();
+        if(provisionalTopMenu.isLoginButtonDisplayed()) {
+            PageTransporter.navigateToURL(NamePages.getLoginPageUrl());
+            loginPage = new LoginPage();
+            loginPage.login(user);
+        } else {
+            homePage = new HomePage();
+            String userInitials = homePage.getTopMenu().getFullNameInitials();
             if (!user.getFullNameInitials().equals(userInitials)) {
                 topMenuOfHome.logoutPage();
                 PageTransporter.navigateToURL(NamePages.getLoginPageUrl());
                 loginPage = new LoginPage();
                 loginPage.login(user);
             }
-        } catch (NoSuchElementException nse) {
-            PageTransporter.navigateToURL(NamePages.getLoginPageUrl());
-            loginPage = new LoginPage();
-            loginPage.login(user);
-        } finally {
-            webDriver.
-                    manage().
-                    timeouts().
-                    implicitlyWait(WebDriverConfig.getInstance().getImplicitWaitTime(), TimeUnit.SECONDS);
         }
     }
 

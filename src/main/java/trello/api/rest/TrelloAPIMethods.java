@@ -114,8 +114,9 @@ public class TrelloAPIMethods {
 
     /**
      * Creates given quantity of random cards on given list.
+     *
      * @param listID is de id of the list where the cards will be created.
-     * @param qty is the quantity of cards to be created.
+     * @param qty    is the quantity of cards to be created.
      */
     public void createRandomCards(final String listID, final int qty) {
         for (int index = 0; index < qty; index++) {
