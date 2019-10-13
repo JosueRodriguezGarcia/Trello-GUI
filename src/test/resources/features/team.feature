@@ -8,7 +8,6 @@ Feature: Team creation
   Scenario: Create a team
     When I add a new team with this information "nameTeam"
     And I add the following members with username:
-      | josephtaylor63 |
       | jamescooper156 |
       | georgesmith118 |
     Then I should see the information of team
