@@ -13,10 +13,14 @@
 package trello.hooks.api;
 
 import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import io.restassured.response.Response;
 import trello.api.rest.Authentication;
 import trello.api.rest.RestClientAPI;
 import trello.entities.Context;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * TeamHooks class.
@@ -38,6 +42,21 @@ public class TeamHooks {
     public TeamHooks(final Context context) {
         this.context = context;
         request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
+    }
+
+    /**
+     * Makes a requestBoard for create a Board.
+     */
+    @Before("@create-team")
+    public void beforeScenario() {
+        String endPoint = "/organizations";
+        String name = "Team empty";
+        Map<String, String> data = new HashMap<>();
+        data.put("displayName", name);
+        request.buildSpec(data);
+        response = request.post(endPoint);
+        context.getTeam().setId(response.getBody().jsonPath().get("id"));
+        context.getTeam().setName(response.getBody().jsonPath().get("displayName"));
     }
 
     /**

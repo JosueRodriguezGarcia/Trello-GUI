@@ -19,7 +19,10 @@ import trello.entities.Context;
 import trello.ui.pages.BoardPage;
 import trello.ui.pages.HomePage;
 import trello.ui.pages.board.BoardModalPage;
-import trello.ui.pages.board.ListForm;
+import trello.ui.pages.board.CopyBoardSection;
+import trello.ui.pages.board.MenuBoardPage;
+import trello.ui.pages.board.MoreOptionMenu;
+import trello.ui.pages.board.TopMenuBoardContent;
 
 /**
  * BoardSteps class.
@@ -76,5 +79,30 @@ public class BoardSteps {
         Assert.assertTrue(homePage.getContentHomePage().
                 existBoardInSection(context.getBoard().getName(), nameSection),
                         "This board not exist in this section");
+    }
+
+    /**
+     * Copy the board to team with the same title of Board.
+     */
+    @When("I copy this Board to Team with same title Board")
+    public void copyBoardToTeamWithSameTitle() {
+        BoardPage boardPage = new BoardPage();
+        context.getBoard().setId(boardPage.getId());
+        MenuBoardPage menuBoardPage = new MenuBoardPage();
+        menuBoardPage.openMoreOption();
+        MoreOptionMenu moreOptionMenu = new MoreOptionMenu();
+        moreOptionMenu.openCopyBoardSection();
+        CopyBoardSection copyBoardSection = new CopyBoardSection();
+        copyBoardSection.copyBoard(context.getBoard().getName(), context.getTeam().getName());
+    }
+
+    /**
+     * Sees the name of owner boards is the name team.
+     */
+    @Then("I should see that this Board belongs to Team")
+    public void seeBoardBelongsToTeam() {
+        TopMenuBoardContent topMenuBoardContent = new TopMenuBoardContent();
+        Assert.assertEquals(topMenuBoardContent.getNameOwnerBoardButton(), context.getTeam().getName(),
+                "This name of Team not exist");
     }
 }
