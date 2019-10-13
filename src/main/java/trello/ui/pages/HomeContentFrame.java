@@ -42,7 +42,7 @@ public class HomeContentFrame extends BasePage {
     @FindBy(css = "div.board-tile.mod-add")
     private WebElement createBoardLabel;
 
-    private static final String BOARDS_TO_TEAM_XPATH= "//h3[contains(text(), '%s')]/../..//following-sibling::ul//a";
+    private static final String BOARDS_TO_TEAM_XPATH = "//h3[contains(text(), '%s')]/../..//following-sibling::ul//a";
     private static final String TEAM_SECTION_LINK_PATH = "//h3[contains(text(), '%s')]";
 
 
@@ -83,7 +83,7 @@ public class HomeContentFrame extends BasePage {
     public boolean existBoardInSection(final String nameBoard, final String nameSection) {
         List<WebElement> boardsLink = getBoarSections().get(nameSection.toLowerCase());
         return  boardsLink == null ? existBoarIntoTeam(nameBoard, nameSection)
-                :isInList(nameBoard, boardsLink);
+                : isInList(nameBoard, boardsLink);
     }
 
     /**
