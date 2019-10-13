@@ -46,8 +46,9 @@ public class BoardPage extends ApplicationBasePage {
     private static final String LIST_TITLE_XPATH = "//h2[contains(text(), '%s')]";
     private static final String LIST_MENU_SUFFIX = "/following-sibling::div";
     private static final String LIST_MENU_XPATH = LIST_TITLE_XPATH + LIST_MENU_SUFFIX;
+    private static final String CARDS_FROM_LIST_SUFFIX = "/../following-sibling::div";
+    private static final String CARDS_IN_LIST_XPATH = LIST_TITLE_XPATH + CARDS_FROM_LIST_SUFFIX;
     private static final String TARGET_LIST_TITLE_XPATH = "//a[contains(text(), '%s')]";
-    private static final String CARD_XPATH = "//span[contains(text(), '%s')]";
     private static final String ARCHIVE_CARD_QUICK_MENU_CSS = ".js-archive > .quick-card-editor-buttons-item-text";
     private static final String COPY_CARD_QUICK_MENU_CSS = ".js-copy-card > .quick-card-editor-buttons-item-text";
     private static final String CARD_PARENT_XPATH = "//span[contains(text(), '%s')]/../../../..";
@@ -202,11 +203,19 @@ public class BoardPage extends ApplicationBasePage {
      * @return a boolean with value true if card exist in list.
      */
     public boolean searchCardInList(final String listTitle, final String cardTitle) {
+        String cardName;
         boolean result = false;
         List<WebElement> cards = cardsInList(listTitle);
         for (WebElement card : cards) {
-            if (card.findElement(By.className("js-card-name")).getText().equals(cardTitle)) {
+            try {
+                cardName = card.findElement(By.className("js-card-name")).getText();
+            } catch (StaleElementReferenceException sere) {
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.className("js-card-name")));
+                cardName = card.findElement(By.className("js-card-name")).getText();
+            }
+            if (cardName.equals(cardTitle)) {
                 result = true;
+                break;
             }
         }
         return result;
@@ -346,10 +355,11 @@ public class BoardPage extends ApplicationBasePage {
      * Copies a card to another list.
      *
      * @param cardTitle  is the title of the card to be copied.
+     * @param sourceList is the list where the card is.
      * @param targetList is the list where is required the card to be copied to.
      */
-    public void copyCardToList(final String cardTitle, final String targetList) {
-        showQuickCardMenu(cardTitle);
+    public void copyCardToList(final String cardTitle, final String sourceList, final String targetList) {
+        showQuickCardMenu(cardTitle, sourceList);
         WebElement copyCardButton = driver.findElement(By.cssSelector(COPY_CARD_QUICK_MENU_CSS));
         copyCardButton.click();
         WebElement targetListDropDown = driver.findElement(By.className(TARGET_LIST_CLASS));
@@ -360,19 +370,51 @@ public class BoardPage extends ApplicationBasePage {
     }
 
     /**
+     * Verifies is there is given card title in the given list. This method is used as workaround due to
+     * searchCardInList method is not working for the scenario copy a card. It throws a StaleElementReferenceException
+     * even though there is a try/catch that retries finding the required web element.
+     *
+     * @param cardTitle is the title of the card that is wanted to verify the presence.
+     * @param listTitle is the title of the list where is wanted to verify the card presence.
+     * @return true if the card is in the list.
+     */
+    public boolean isCardInList(final String cardTitle, final String listTitle) {
+        WebElement cardsInList = driver.findElement(By.xpath(String.format(CARDS_IN_LIST_XPATH, listTitle)));
+        WebElement foundCard = cardsInList.findElement(By.cssSelector(String.format("a[href*='%s']",
+                cardTitle.toLowerCase())));
+        return foundCard.getText().equals(cardTitle);
+    }
+
+    /**
      * Shows the quick card menu.
      *
      * @param cardTitle is the title of the card which the quick menu is required.
+     * @param listTitle is the title of the list where the card is.
      */
-    public void showQuickCardMenu(final String cardTitle) {
-        WebElement card = driver.findElement(By.xpath(String.format(CARD_XPATH, cardTitle)));
+    public void showQuickCardMenu(final String cardTitle, final String listTitle) {
+        WebElement cardsInList = driver.findElement(By.xpath(String.format(CARDS_IN_LIST_XPATH, listTitle)));
+        WebElement foundCard = cardsInList.findElement(By.cssSelector(String.format("a[href*='%s']",
+                cardTitle.toLowerCase())));
         Actions actions = new Actions(driver);
-        actions.contextClick(card).perform();
+        actions.contextClick(foundCard).perform();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ARCHIVE_CARD_QUICK_MENU_CSS)));
     }
 
     /**
+     * Deletes given card according to its list and title.
+     *
+     * @param cardTitle is the title of the card to be deleted.
+     * @param listTitle is the title of the list where the card is.
+     */
+    public void deleteCardInList(final String cardTitle, final String listTitle) {
+        showQuickCardMenu(cardTitle, listTitle);
+        WebElement archiveButton = driver.findElement(By.cssSelector(ARCHIVE_CARD_QUICK_MENU_CSS));
+        archiveButton.click();
+    }
+
+    /**
      * Gets the list where the card is.
+     * It is recommendable to use this method just for cards that that are not duplicated.
      *
      * @param cardTitle is the title of the card whick the list where it belongs is required.
      * @return the list where is the card.

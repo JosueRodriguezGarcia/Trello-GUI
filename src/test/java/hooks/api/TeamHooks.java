@@ -10,52 +10,56 @@
  * with Jala Foundation.
  */
 
-package trello.hooks.api;
+package hooks.api;
 
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
 import trello.api.rest.Authentication;
 import trello.api.rest.RestClientAPI;
+import trello.api.rest.TeamAPIMethods;
 import trello.entities.Context;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * ListAPIHook class.
+ * TeamHooks class.
  *
- * @author Josue Rodriguez.
+ * @author Raul Choque
  * @version 0.0.1
  */
-public class ListAPIHook {
+public class TeamHooks {
 
     private Context context;
     private Response response;
-    private RestClientAPI request;
-    private final int orderBefore = 2;
+    private TeamAPIMethods teamAPIMethods;
 
     /**
      * This method constructor initializes the variables.
      *
      * @param context initializes context attribute.
      */
-    public ListAPIHook(final Context context) {
+    public TeamHooks(final Context context) {
         this.context = context;
-        request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
+        teamAPIMethods = new TeamAPIMethods();
     }
 
     /**
-     * Makes a requestBoard for create a List.
+     * Makes a requestBoard for create a Board.
      */
-    @Before(order = orderBefore, value = "@create-list")
+    @Before("@CreateTeam")
     public void beforeScenario() {
-        String endPoint = "/lists";
-        String idBoard = context.getBoard().getId();
-        Map<String, String> data = new HashMap<>();
-        data.put("name", "ListTest");
-        data.put("idBoard", idBoard);
-        request.buildSpec(data);
-        response = request.post(endPoint);
-        context.getList().setId(response.getBody().jsonPath().get("id"));
+        response = teamAPIMethods.createTeam("Team to test");
+        context.getTeam().setId(response.getBody().jsonPath().get("id"));
+        context.getTeam().setName(response.getBody().jsonPath().get("displayName"));
+    }
+
+    /**
+     * Makes the delete of team after it was created.
+     */
+    @After("@DeleteTeam")
+    public void afterScenario() {
+        teamAPIMethods.deleteTeam(context.getTeam().getId());
     }
 }

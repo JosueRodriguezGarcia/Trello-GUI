@@ -1,8 +1,10 @@
 Feature: Team creation
 
-  @delete-team
+  Background: I am logged in as given user type.
+    Given I am logged in as admin user
+
+  @DeleteTeam
   Scenario: Create a team
-    Given I log in as admin user
     When I add a new team with this information "nameTeam"
     And I add the following members with username:
       | josephtaylor63 |

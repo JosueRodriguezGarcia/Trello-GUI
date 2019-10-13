@@ -10,11 +10,13 @@
  * with Jala Foundation.
  */
 
-package trello.hooks.api;
+package hooks.api;
 
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
 import trello.api.rest.Authentication;
+import trello.api.rest.BoardAPIMethods;
 import trello.api.rest.RestClientAPI;
 import trello.entities.Context;
 
@@ -22,41 +24,43 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * MemberAPIHook class.
+ * BoardHook class.
  *
  * @author Josue Rodriguez.
  * @version 0.0.1
  */
-public class MemberAPIHook {
+public class BoardAPIHook {
 
     private Context context;
+    private BoardAPIMethods boardAPIMethods;
     private Response response;
-    private RestClientAPI request;
-    private final int orderBefore = 4;
+    private final int orderAfter = 3;
+    private final int orderBefore = 1;
 
     /**
      * This method constructor initializes the variables.
      *
      * @param context initializes context attribute.
      */
-    public MemberAPIHook(final Context context) {
+    public BoardAPIHook(final Context context) {
         this.context = context;
-        request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
+        boardAPIMethods = new BoardAPIMethods();
     }
 
     /**
-     * Makes a request for add members to board.
+     * Makes a requestBoard for delete a Board by id.
      */
-    @Before(order = orderBefore, value = "@add-member")
+    @After(order = orderAfter, value = "@DeleteBoard")
+    public void afterScenario() {
+        boardAPIMethods.deleteTeam(context.getBoard().getId());
+    }
+
+    /**
+     * Makes a requestBoard for create a Board.
+     */
+    @Before(order = orderBefore, value = "@CreateBoard")
     public void beforeScenario() {
-        String idBoard = context.getBoard().getId();
-        String[] members = {"5d8193194e32bb68987c99f7", "5d83941066e73463ea07bb10", "5d839a3202eee76812c1c783"};
-        Map<String, String> data = new HashMap<>();
-        data.put("type", "normal");
-        for (int i = 0; i < members.length; i++) {
-            String endPoint = "/boards/" + idBoard + "/members/" + members[i];
-            request.buildSpec(data);
-            response = request.put(endPoint);
-        }
+        response = boardAPIMethods.createBoard("Board to test");
+        context.getBoard().setId(response.jsonPath().get("id"));
     }
 }
