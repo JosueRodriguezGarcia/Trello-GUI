@@ -93,12 +93,13 @@ public class CardSteps {
      * Selects a card of board.
      *
      * @param cardTitle defines the card title that want selected.
+     * @param listTitle defines the list title that want selected.
      */
-    @And("I select (.*) card")
-    public void selectCard(final String cardTitle) {
+    @And("I select (.*) card in (.*) list")
+    public void selectCard(final String cardTitle, final String listTitle) {
         boardPage = new BoardPage();
         context.getCard().setTitle(cardTitle);
-        cardModal = boardPage.selectedCard(cardTitle);
+        cardModal = boardPage.selectInCardInList(listTitle, cardTitle);
     }
 
     /**

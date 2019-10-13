@@ -13,14 +13,14 @@ Feature: Card actions
   @AssignChecklist
   Scenario: Add a checklist to a card
      When I select BoardForCard board
-      And I select CardForChecklist card
+      And I select CardForChecklist card in ListForCard list
       And I add a checklist with TestCheckList title
      Then the checklist section is displayed on the card details
 
   @AssignDueDate
   Scenario: Assign a date to a card
      When I select BoardForCard board
-      And I select CardForDueDate card
+      And I select CardForDueDate card in ListForCard list
       And I assign a due date
         | Date     | One day from now |
         | Reminder | None             |
@@ -29,7 +29,7 @@ Feature: Card actions
   @AssignMembers
   Scenario: Assign card to a member
       And I select BoardForCard board
-     When I select CardAddMembers card
+     When I select CardAddMembers card in ListForCard list
       And I add a member
         | George Smith  |
         | James Cooper  |
