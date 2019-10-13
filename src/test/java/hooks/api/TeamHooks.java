@@ -15,13 +15,8 @@ package hooks.api;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
-import trello.api.rest.Authentication;
-import trello.api.rest.RestClientAPI;
 import trello.api.rest.TeamAPIMethods;
 import trello.entities.Context;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * TeamHooks class.
