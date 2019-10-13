@@ -15,7 +15,7 @@ package hooks.api;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
-import trello.api.rest.TeamAPIMethods;
+import trello.api.rest.TrelloAPIMethods;
 import trello.entities.Context;
 
 /**
@@ -28,7 +28,7 @@ public class TeamHooks {
 
     private Context context;
     private Response response;
-    private TeamAPIMethods teamAPIMethods;
+    private TrelloAPIMethods trelloAPIMethods;
 
     /**
      * This method constructor initializes the variables.
@@ -37,7 +37,7 @@ public class TeamHooks {
      */
     public TeamHooks(final Context context) {
         this.context = context;
-        teamAPIMethods = new TeamAPIMethods();
+        trelloAPIMethods = new TrelloAPIMethods();
     }
 
     /**
@@ -45,7 +45,7 @@ public class TeamHooks {
      */
     @Before("@CreateTeam")
     public void beforeScenario() {
-        response = teamAPIMethods.createTeam("Team to test");
+        response = trelloAPIMethods.createTeam("Team to test");
         context.getTeam().setId(response.getBody().jsonPath().get("id"));
         context.getTeam().setName(response.getBody().jsonPath().get("displayName"));
     }
@@ -55,6 +55,6 @@ public class TeamHooks {
      */
     @After("@DeleteTeam")
     public void afterScenario() {
-        teamAPIMethods.deleteTeam(context.getTeam().getId());
+        trelloAPIMethods.deleteTeam(context.getTeam().getId());
     }
 }

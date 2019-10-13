@@ -15,7 +15,7 @@ package hooks.api;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
-import trello.api.rest.BoardAPIMethods;
+import trello.api.rest.TrelloAPIMethods;
 import trello.entities.Context;
 
 /**
@@ -27,7 +27,7 @@ import trello.entities.Context;
 public class BoardAPIHook {
 
     private Context context;
-    private BoardAPIMethods boardAPIMethods;
+    private TrelloAPIMethods trelloAPIMethods;
     private Response response;
     private final int orderAfter = 3;
     private final int orderBefore = 1;
@@ -39,7 +39,7 @@ public class BoardAPIHook {
      */
     public BoardAPIHook(final Context context) {
         this.context = context;
-        boardAPIMethods = new BoardAPIMethods();
+        trelloAPIMethods = new TrelloAPIMethods();
     }
 
     /**
@@ -47,7 +47,7 @@ public class BoardAPIHook {
      */
     @After(order = orderAfter, value = "@DeleteBoard")
     public void afterScenario() {
-        boardAPIMethods.deleteTeam(context.getBoard().getId());
+        trelloAPIMethods.deleteBoard(context.getBoard().getId());
     }
 
     /**
@@ -55,7 +55,7 @@ public class BoardAPIHook {
      */
     @Before(order = orderBefore, value = "@CreateBoard")
     public void beforeScenario() {
-        response = boardAPIMethods.createBoard("Board to test");
+        response = trelloAPIMethods.createBoardGetResponse("Board to test");
         context.getBoard().setId(response.jsonPath().get("id"));
     }
 }
