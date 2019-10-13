@@ -82,7 +82,7 @@ public class BoardSteps {
     }
 
     /**
-     * Copy the board to team with the same title of Board.
+     * Copies the board to team with the same title of Board.
      */
     @When("I copy this Board to Team with same title Board")
     public void copyBoardToTeamWithSameTitle() {
