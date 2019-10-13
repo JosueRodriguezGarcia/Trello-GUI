@@ -13,9 +13,9 @@
 package hooks.api;
 
 import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import io.restassured.response.Response;
-import trello.api.rest.Authentication;
-import trello.api.rest.RestClientAPI;
+import trello.api.rest.TrelloAPIMethods;
 import trello.entities.Context;
 
 /**
@@ -28,7 +28,7 @@ public class TeamHooks {
 
     private Context context;
     private Response response;
-    private RestClientAPI request;
+    private TrelloAPIMethods trelloAPIMethods;
 
     /**
      * This method constructor initializes the variables.
@@ -37,16 +37,24 @@ public class TeamHooks {
      */
     public TeamHooks(final Context context) {
         this.context = context;
-        request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
+        trelloAPIMethods = new TrelloAPIMethods();
+    }
+
+    /**
+     * Makes a requestBoard for create a Board.
+     */
+    @Before("@CreateTeam")
+    public void beforeScenario() {
+        response = trelloAPIMethods.createTeam("Team to test");
+        context.getTeam().setId(response.getBody().jsonPath().get("id"));
+        context.getTeam().setName(response.getBody().jsonPath().get("displayName"));
     }
 
     /**
      * Makes the delete of team after it was created.
      */
-    @After("@delete-team")
+    @After("@DeleteTeam")
     public void afterScenario() {
-        String idTeam = context.getTeam().getId();
-        String endPoint = "/organizations/".concat(idTeam);
-        response = request.delete(endPoint);
+        trelloAPIMethods.deleteTeam(context.getTeam().getId());
     }
 }

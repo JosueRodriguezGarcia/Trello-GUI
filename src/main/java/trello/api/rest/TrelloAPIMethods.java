@@ -79,6 +79,20 @@ public class TrelloAPIMethods {
     }
 
     /**
+     * Creates a board with a nameBoard parameter.
+     *
+     * @param nameBoard is to set the name of board.
+     * @return a response with the name board.
+     */
+    public Response createBoardGetResponse(final String nameBoard) {
+        String endPoint = "/boards";
+        Map<String, String> data = new HashMap<>();
+        data.put("name", nameBoard);
+        request.buildSpec(data);
+        return request.post(endPoint);
+    }
+
+    /**
      * Creates a list with the given title.
      *
      * @param boardId   is the board where the list will be created in.
@@ -124,5 +138,29 @@ public class TrelloAPIMethods {
             String cardTitle = faker.job().keySkills();
             createCard(listID, cardTitle);
         }
+    }
+
+    /**
+     * Creates a team with a nameTeam parameter.
+     *
+     * @param nameTeam is to set the name of team.
+     * @return a response with the name team.
+     */
+    public Response createTeam(final String nameTeam) {
+        String endPoint = "/organizations";
+        Map<String, String> data = new HashMap<>();
+        data.put("displayName", nameTeam);
+        request.buildSpec(data);
+        return request.post(endPoint);
+    }
+
+    /**
+     * Deletes the team use the idTeam parameter.
+     *
+     * @param idTeam is to search the team.
+     */
+    public void deleteTeam(final String idTeam) {
+        String endPoint = "/organizations/".concat(idTeam);
+        request.delete(endPoint);
     }
 }
