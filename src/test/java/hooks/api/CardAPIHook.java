@@ -94,6 +94,7 @@ public class CardAPIHook {
         context.getList().setId(idList);
         String idCard = trelloAPIMethods.createCard(context.getList().getId(), "CardAddMembers");
         context.getCard().setId(idCard);
-        trelloAPIMethods.addMembersToBoard(context.getBoard().getId());
+        String[] members = {"5d8193194e32bb68987c99f7", "5d83941066e73463ea07bb10"};
+        trelloAPIMethods.addMembersToBoard(context.getBoard().getId(), members);
     }
 }
