@@ -168,6 +168,7 @@ public class TrelloAPIMethods {
      * Adds members to board.
      *
      * @param boardId is de id of the board where the members will be adding.
+     * @param members is an array with the ids of the member that will be added to the board.
      */
     public void addMembersToBoard(final String boardId, final String[] members) {
         Map<String, String> data = new HashMap<>();
