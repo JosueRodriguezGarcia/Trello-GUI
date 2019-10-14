@@ -79,6 +79,20 @@ public class TrelloAPIMethods {
     }
 
     /**
+     * Creates a board with a nameBoard parameter.
+     *
+     * @param nameBoard is to set the name of board.
+     * @return a response with the name board.
+     */
+    public Response createBoardGetResponse(final String nameBoard) {
+        String endPoint = "/boards";
+        Map<String, String> data = new HashMap<>();
+        data.put("name", nameBoard);
+        request.buildSpec(data);
+        return request.post(endPoint);
+    }
+
+    /**
      * Creates a list with the given title.
      *
      * @param boardId   is the board where the list will be created in.
@@ -127,6 +141,30 @@ public class TrelloAPIMethods {
     }
 
     /**
+     * Creates a team with a nameTeam parameter.
+     *
+     * @param nameTeam is to set the name of team.
+     * @return a response with the name team.
+     */
+    public Response createTeam(final String nameTeam) {
+        String endPoint = "/organizations";
+        Map<String, String> data = new HashMap<>();
+        data.put("displayName", nameTeam);
+        request.buildSpec(data);
+        return request.post(endPoint);
+    }
+
+    /**
+     * Deletes the team use the idTeam parameter.
+     *
+     * @param idTeam is to search the team.
+     */
+    public void deleteTeam(final String idTeam) {
+        String endPoint = "/organizations/".concat(idTeam);
+        request.delete(endPoint);
+    }
+
+    /**
      * Adds members to board.
      *
      * @param boardId is de id of the board where the members will be adding.
@@ -135,8 +173,8 @@ public class TrelloAPIMethods {
         String[] members = {"5d8193194e32bb68987c99f7", "5d83941066e73463ea07bb10", "5d839a3202eee76812c1c783"};
         Map<String, String> data = new HashMap<>();
         data.put("type", "normal");
-        for (int i = 0; i < members.length; i++) {
-            String endPoint = "/boards/" + boardId + "/members/" + members[i];
+        for (String member : members) {
+            String endPoint = "/boards/" + boardId + "/members/" + member;
             request.buildSpec(data);
             response = request.put(endPoint);
         }

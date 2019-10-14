@@ -15,12 +15,8 @@ package hooks.api;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
-import trello.api.rest.Authentication;
-import trello.api.rest.RestClientAPI;
+import trello.api.rest.TrelloAPIMethods;
 import trello.entities.Context;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * BoardHook class.
@@ -31,8 +27,8 @@ import java.util.Map;
 public class BoardAPIHook {
 
     private Context context;
+    private TrelloAPIMethods trelloAPIMethods;
     private Response response;
-    private RestClientAPI request;
     private final int orderAfter = 3;
     private final int orderBefore = 1;
 
@@ -43,30 +39,23 @@ public class BoardAPIHook {
      */
     public BoardAPIHook(final Context context) {
         this.context = context;
-        request = new RestClientAPI(Authentication.getRequestSpecification("admin"));
+        trelloAPIMethods = new TrelloAPIMethods();
     }
 
     /**
      * Makes a requestBoard for delete a Board by id.
      */
-    @After(order = orderAfter, value = "@delete-board")
+    @After(order = orderAfter, value = "@DeleteBoard")
     public void afterScenario() {
-        String id = context.getBoard().getId();
-        String endPoint = "/boards/".concat(id);
-        response = request.delete(endPoint);
+        trelloAPIMethods.deleteBoard(context.getBoard().getId());
     }
 
     /**
      * Makes a requestBoard for create a Board.
      */
-    @Before(order = orderBefore, value = "@create-board")
+    @Before(order = orderBefore, value = "@CreateBoard")
     public void beforeScenario() {
-        String endPoint = "/boards/";
-        Map<String, String> data = new HashMap<>();
-        data.put("name", "BoardTest");
-        String sdata = "{\"name\":\"BoardTest\",\"defaultLists\":false}";
-        request.buildSpec(sdata);
-        response = request.post(endPoint);
-        context.getBoard().setId(response.getBody().jsonPath().get("id"));
+        response = trelloAPIMethods.createBoardGetResponse("Board to test");
+        context.getBoard().setId(response.jsonPath().get("id"));
     }
 }

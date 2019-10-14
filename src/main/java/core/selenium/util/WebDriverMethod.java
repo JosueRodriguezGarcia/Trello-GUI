@@ -17,6 +17,7 @@ import core.utils.Log;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -84,7 +85,7 @@ public final class WebDriverMethod {
     }
 
     /**
-     * Finds webElement that is clickable.
+     * Waits until webElement will be clickable.
      *
      * @param webDriver  use to set up WebDriverWait.
      * @param webElement use to search the webElement.
@@ -96,6 +97,22 @@ public final class WebDriverMethod {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(webElement));
         } catch (NoSuchElementException e) {
             throw new ElementClickInterceptedException("This element could not be clickable: " + webElement);
+        }
+    }
+
+    /**
+     * Waits until wenElement will be visible in DOM.
+     *
+     * @param webDriver use to set up WebDriverWait
+     * @param webElement use to search the webElement.
+     */
+    public static void waitUntilFindElement(final WebDriver webDriver, final WebElement webElement) {
+        final long time = 2;
+        WebDriverWait wait = new WebDriverWait(webDriver, time);
+        try {
+            wait.until(ExpectedConditions.visibilityOf(webElement));
+        } catch (StaleElementReferenceException e) {
+            System.out.println("This webElement: " + webElement + " isn't present in DOM.");
         }
     }
 
@@ -150,6 +167,7 @@ public final class WebDriverMethod {
         byLocator.put("className", By.className(locator));
         byLocator.put("css", By.cssSelector(locator));
         byLocator.put("id", By.id(locator));
+        byLocator.put("xpath", By.xpath(locator));
     }
 
     /**
@@ -188,5 +206,18 @@ public final class WebDriverMethod {
             res = res + initLetter.substring(0, 1).toUpperCase();
         }
         return res;
+    }
+
+    /**
+     * Select the option from check list.
+     *
+     * @param driver is to get the DOM.
+     * @param locatorType is to type of locator to search a element.
+     * @param locator is to find the element into the DOM.
+     */
+    public static void selectCheckList(final WebDriver driver,
+                                       final String locatorType, final String locator) {
+        WebElement findOption = createWebElement(driver, locatorType, locator);
+        findOption.click();
     }
 }

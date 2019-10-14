@@ -63,6 +63,7 @@ public class CommonSteps {
         PageTransporter.navigateToURL(NamePages.getHomePageUrl(context.getUser().getUsername()));
         provisionalTopMenu = new ProvisionalTopMenu();
         user = JsonConverter.jsonToUser(JsonFileReader.getInstance().getDataByUserType(userType));
+        context.setUser(user);
         if (provisionalTopMenu.isLoginButtonDisplayed()) {
             PageTransporter.navigateToURL(NamePages.getLoginPageUrl());
             loginPage = new LoginPage();
