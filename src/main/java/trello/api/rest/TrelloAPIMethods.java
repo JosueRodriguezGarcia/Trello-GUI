@@ -170,7 +170,7 @@ public class TrelloAPIMethods {
      * @param boardId is de id of the board where the members will be adding.
      */
     public void addMembersToBoard(final String boardId) {
-        String[] members = {"5d8193194e32bb68987c99f7", "5d83941066e73463ea07bb10", "5d839a3202eee76812c1c783"};
+        String[] members = {"5d8193194e32bb68987c99f7", "5d83941066e73463ea07bb10"};
         Map<String, String> data = new HashMap<>();
         data.put("type", "normal");
         for (String member : members) {

@@ -33,5 +33,4 @@ Feature: Card actions
       And I add a member
         | George Smith  |
         | James Cooper  |
-        | Joseph Taylor |
      Then the member's initials are shown in the card
