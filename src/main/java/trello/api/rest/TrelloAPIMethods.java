@@ -163,4 +163,19 @@ public class TrelloAPIMethods {
         String endPoint = "/organizations/".concat(idTeam);
         request.delete(endPoint);
     }
+
+    /**
+     * Adds members to board.
+     *
+     * @param boardId is de id of the board where the members will be adding.
+     */
+    public void addMembersToBoard(final String boardId, final String[] members) {
+        Map<String, String> data = new HashMap<>();
+        data.put("type", "normal");
+        for (String member : members) {
+            String endPoint = "/boards/" + boardId + "/members/" + member;
+            request.buildSpec(data);
+            response = request.put(endPoint);
+        }
+    }
 }

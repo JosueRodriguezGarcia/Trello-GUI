@@ -444,4 +444,19 @@ public class BoardPage extends ApplicationBasePage {
         inviteButton.click();
         return new InviteToBoardModal();
     }
+
+    /**
+     * Selects a card in a list.
+     *
+     * @param cardTitle is the title of the card which the quick menu is required.
+     * @param listTitle is the title of the list where the card is.
+     * @return a instance of card Modal.
+     */
+    public CardModal selectInCardInList(final String listTitle, final String cardTitle) {
+        WebElement cardsInList = driver.findElement(By.xpath(String.format(CARDS_IN_LIST_XPATH, listTitle)));
+        WebElement foundCard = cardsInList.findElement(By.cssSelector(String.format("a[href*='%s']",
+                cardTitle.toLowerCase())));
+        foundCard.click();
+        return new CardModal();
+    }
 }

@@ -12,6 +12,9 @@
 
 package trello.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Board class.
  *
@@ -22,6 +25,14 @@ public class Board {
     private String id;
     private int number;
     private String name;
+    private List<List> lists;
+
+    /**
+     * Public constructor of the class' instances.
+     */
+    public Board() {
+        lists = new ArrayList<>();
+    }
 
     /**
      * Gets the id attribute of its class.
