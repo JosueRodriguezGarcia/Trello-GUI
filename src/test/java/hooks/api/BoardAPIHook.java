@@ -57,5 +57,6 @@ public class BoardAPIHook {
     public void beforeScenario() {
         response = trelloAPIMethods.createBoardGetResponse("Board to test");
         context.getBoard().setId(response.jsonPath().get("id"));
+        context.getBoard().setUrl(response.jsonPath().get("url"));
     }
 }

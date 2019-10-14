@@ -23,12 +23,19 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import trello.entities.Card;
 
+import trello.ui.pages.card.LabelPage;
+import trello.ui.pages.card.MemberPage;
+import trello.ui.pages.card.OptionPage;
 import trello.ui.pages.modal.CardModal;
 import trello.ui.pages.modal.InviteToBoardModal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import static trello.keys.CardKeys.*;
 
 /**
  * BoardPage class.
@@ -103,6 +110,9 @@ public class BoardPage extends ApplicationBasePage {
 
     @FindBy(className = "js-open-add-list")
     private WebElement addAnotherList;
+
+    @FindBy(css = ".cc-controls-section.mod-right")
+    private WebElement optionsLink;
 
     @FindBy(className = "js-open-manage-board-members")
     private WebElement inviteButton;
@@ -193,6 +203,87 @@ public class BoardPage extends ApplicationBasePage {
                 addCard.click();
             }
         }
+    }
+
+    /**
+     * Adds a new card to a list.
+     *
+     * @param listTitle defines the lists where add a card.
+     * @param card defines the card  to be add.
+     */
+    public void addCardInList(final String listTitle, final Card card, final Set<String> keysCard) {
+        for (WebElement list : lists) {
+            if (list.findElement(By.className("js-list-name-input")).getText().equals(listTitle)) {
+                if (list.findElement(By.className("js-add-a-card")).isDisplayed()) {
+                    list.findElement(By.className("js-add-a-card")).click();
+                } else {
+                    list.findElement(By.className("js-add-another-card")).click();
+                }
+                HashMap<String, Runnable> runnableHashMap = getRunnableMap(card);
+                card.getCardKeys();
+                keysCard.forEach(key -> runnableHashMap.get(key).run());
+                addCard.click();
+            }
+        }
+    }
+
+    /**
+     * Gets the runnable Map with the cardData parameter.
+     *
+     * @param card is to get data of card.
+     * @return an instance HashMap with keys and methods to run.
+     */
+    private HashMap<String, Runnable> getRunnableMap(final Card card) {
+        HashMap<java.lang.String, Runnable> runnableHashMap = new HashMap<>();
+        runnableHashMap.put(TITLE,  () -> setTitleCard(card.getTitle()));
+        runnableHashMap.put(MEMBER, () -> setMembersToCard(card.getMember()));
+        runnableHashMap.put(LABELS, () -> setLabelToCard(card.getLabels()));
+        return runnableHashMap;
+    }
+
+    /**
+     * Sets the title of Card to create a new Card.
+     *
+     * @param titleCard is to get the title of card.
+     */
+    private void setTitleCard(final String titleCard) {
+        WebDriverMethod.setTxtElement(this.titleCard, titleCard);
+    }
+
+    /**
+     * Sets the Member to create a new Card.
+     *
+     * @param nameMember is to gets the nameMember to create a Card.
+     */
+    private void setMembersToCard(final String nameMember) {
+        OptionPage optionPage = openOptionPage();
+        MemberPage memberPage = optionPage.openMemberPage();
+        OptionPage anotherOptionPage = memberPage.addMember(nameMember);
+        anotherOptionPage.closePage();
+    }
+
+    /**
+     * Sets the labels to create a new Card.
+     *
+     * @param nameLabels is to get the nameLabel from list to create a Card.
+     */
+    private void setLabelToCard(final List<String> nameLabels) {
+        for (final String nameLabel : nameLabels) {
+            OptionPage optionPage = openOptionPage();
+            LabelPage labelPage = optionPage.openLabelPage();
+            OptionPage anotherOptionPage = labelPage.addLabel(nameLabel);
+            anotherOptionPage.closePage();
+        }
+    }
+
+    /**
+     * Opens the OptionPage to create a Card.
+     *
+     * @return an instance of OptionPage class before to create a Card.
+     */
+    private OptionPage openOptionPage() {
+        optionsLink.click();
+        return new OptionPage();
     }
 
     /**

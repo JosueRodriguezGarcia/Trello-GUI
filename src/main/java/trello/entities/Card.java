@@ -14,8 +14,10 @@ package trello.entities;
 
 import core.selenium.util.WebDriverMethod;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
+
+import static trello.keys.CardKeys.*;
 
 /**
  * Card class.
@@ -28,7 +30,25 @@ public class Card {
     private String id;
     private String title;
     private List<Member> members;
+    private String member;
+    private List<String> labels;
+    private Set<String> cardKeys = new HashSet<String>();
 
+    /**
+     * Constructor of this class.
+     */
+    public Card() {
+        labels = new ArrayList();
+    }
+
+    /**
+     * Gets all keys of the Card.
+     *
+     * @return a set of keys of Card attributes.
+     */
+    public Set<String> getCardKeys() {
+        return cardKeys;
+    }
     /**
      * This method is used to get id.
      *
@@ -54,6 +74,26 @@ public class Card {
      */
     public String getTitle() {
         return title;
+    }
+
+    /**
+     * This method is used get list of label.
+     *
+     * @return a list with the labels of card.
+     */
+    public List<String> getLabels() {
+        return labels;
+    }
+
+
+    /**
+     * This method is used to set labels.
+     *
+     * @param labels defines of input string with the labels.
+     */
+    public void setLabels(final String labels) {
+        cardKeys.add(LABELS);
+        this.labels = Arrays.asList(labels.split(("\\s*,\\s*")));
     }
 
     /**
@@ -87,4 +127,47 @@ public class Card {
             this.members.get(i).setInitials(WebDriverMethod.getFullNameInitials(members.get(i)));
         }
     }
+
+    /**
+     * This method is used get members.
+     *
+     * @return a string with the members of card.
+     */
+    public String getMember() {
+        return member;
+    }
+    /**
+     * This method is used to set member.
+     *
+     * @param member defines of input string with the member.
+     */
+    public void setMember(final String member) {
+        cardKeys.add(MEMBER);
+        this.member = member;
+    }
+
+    /**
+     * Sets all values send into cardData parameter.
+     *
+     * @param cardData is the card data into Map.
+     */
+    public void addDataToCard(final Map<String, String> cardData) {
+        HashMap<String, Runnable> runnableMap = composeRunnableMap(cardData);
+        cardData.keySet().forEach(key -> runnableMap.get(key).run());
+    }
+
+    /**
+     * Gets the runnable Map with the cardData parameter.
+     *
+     * @param cardData is to get data of card.
+     * @return an instance HashMap with keys and methods to run.
+     */
+    private HashMap<String, Runnable> composeRunnableMap(final Map<String, String> cardData) {
+        HashMap<String, Runnable> runnableHashMap = new HashMap<>();
+        runnableHashMap.put(TITLE,  () -> setTitle(cardData.get(TITLE)));
+        runnableHashMap.put(MEMBER, () -> setMember(cardData.get(MEMBER)));
+        runnableHashMap.put(LABELS, () -> setLabels(cardData.get(LABELS)));
+        return runnableHashMap;
+    }
+
 }

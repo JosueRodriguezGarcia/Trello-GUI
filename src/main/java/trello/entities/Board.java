@@ -19,9 +19,11 @@ package trello.entities;
  * @version 0.0.1
  */
 public class Board {
+
     private String id;
     private int number;
     private String name;
+    private String url;
 
     /**
      * Gets the id attribute of its class.
@@ -75,5 +77,23 @@ public class Board {
      */
     public void setName(final String name) {
         this.name = name;
+    }
+
+    /**
+     * Gets the url attribute of Board.
+     *
+     * @return as string the url attribute.
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * Sets the url Attribute of this class.
+     *
+     * @param url is to get the new value of url attribute.
+     */
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

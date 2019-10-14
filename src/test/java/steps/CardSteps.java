@@ -15,9 +15,12 @@ package steps;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 
+import cucumber.api.java.en.When;
 import org.testng.Assert;
 
+import trello.entities.Card;
 import trello.entities.Context;
+import trello.ui.PageTransporter;
 import trello.ui.pages.BoardPage;
 import trello.ui.pages.HomePage;
 import trello.ui.pages.modal.CardModal;
@@ -28,6 +31,7 @@ import trello.ui.pages.modal.MemberModal;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * CardSteps class.
@@ -178,5 +182,31 @@ public class CardSteps {
         boardPage = new BoardPage();
         inviteToBoardModal = boardPage.clickInviteButton();
         inviteToBoardModal.fillEmailOrUserField(members);
+    }
+
+    /**
+     * Goes to the Board page using the PageTransporter.
+     */
+    @When("I go to the Board")
+    public void goToBoard() {
+        HomePage homePage = new HomePage();
+        PageTransporter.navigateToURL(context.getBoard().getUrl());
+//        PageTransporter.navigateToURL("https://trello.com/b/HxVABm4Z/board-to-card");
+    }
+
+    /**
+     * Create a new Card with cardDate parameter.
+     *
+     * @param cardData is to create a Card.
+     */
+    @When("I create a new Card with data:")
+    public void createNewCard(final Map<String, String> cardData) {
+        Card card = new Card();
+        card.addDataToCard(cardData);
+        context.setCard(card);
+        BoardPage boardPage = new BoardPage();
+        Set<String> keysCard = cardData.keySet();
+        boardPage.addCardInList(context.getListToCard().getTitle(),
+                card, keysCard);
     }
 }
